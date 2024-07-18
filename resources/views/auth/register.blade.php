@@ -28,6 +28,7 @@
     <link href="sass/blue-theme.css" rel="stylesheet">
     <link href="sass/responsive.css" rel="stylesheet">
 
+    <link href="assets/css/custom.css" rel="stylesheet">
 </head>
 
 <body class="bg-register">
@@ -98,28 +99,28 @@
                                                     <div class="row g-3">
                                                         <div class="col-12 col-lg-4">
                                                             <label class="form-label">Фамилия</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="surname" type="text" class="form-control"
                                                                 name="surname">
                                                         </div>
                                                         <div class="col-12 col-lg-4">
                                                             <label class="form-label">Имя</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="name" type="text" class="form-control"
                                                                 name="name">
                                                         </div>
                                                         <div class="col-12 col-lg-4">
                                                             <label class="form-label">Отчество</label>
-                                                            <input type="text" class="form-control"
-                                                                name="patronymic">
+                                                            <input id="patronymic" type="text"
+                                                                class="form-control" name="patronymic">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Город</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="city" type="text" class="form-control"
                                                                 name="city">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Телефон</label>
-                                                            <input type="text" class="form-control"
-                                                                name="phone">
+                                                            <input id="phone" type="text"
+                                                                class="form-control phone-mask" name="phone">
                                                         </div>
                                                         <div class="col-12">
                                                             <label class="form-label">Соц. сеть</label>
@@ -139,23 +140,23 @@
                                                     <div class="row g-3">
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Учебное заведение</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="school" type="text" class="form-control"
                                                                 name="school">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Класс/Курс</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="classroom" type="text" class="form-control"
                                                                 name="classroom">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">ФИО руководителя</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="teacher" type="text" class="form-control"
                                                                 name="teacher">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Должность руководителя</label>
-                                                            <input type="text" class="form-control"
-                                                                name="teacher_job">
+                                                            <input id="teacher_job" type="text"
+                                                                class="form-control" name="teacher_job">
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="d-flex align-items-center gap-3">
@@ -174,23 +175,25 @@
                                                     <div class="row g-3">
                                                         <div class="col-12">
                                                             <label class="form-label">E-mail</label>
-                                                            <input type="text" class="form-control"
+                                                            <input id="email" type="text" class="form-control"
                                                                 placeholder="name@example.ru" name="email">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Пароль</label>
-                                                            <input type="password" class="form-control"
-                                                                placeholder="******" name="password">
+                                                            <input id="password" type="password"
+                                                                class="form-control" placeholder="******"
+                                                                name="password">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Повторите пароль</label>
-                                                            <input type="password" class="form-control"
-                                                                placeholder="******" name="password_confirmation">
+                                                            <input id="password_confirmation" type="password"
+                                                                class="form-control" placeholder="******"
+                                                                name="password_confirmation">
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="flexSwitchCheckChecked">
+                                                                    id="flexSwitchCheckChecked" name="policy_check">
                                                                 <label class="form-check-label"
                                                                     for="flexSwitchCheckChecked">Я даю согласие на
                                                                     обработку персональных данных и соглашаюсь с
@@ -234,14 +237,14 @@
 
 
 
-
+    @vite(['resources/js/app.js'])
     <!--plugins-->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.maskedinput.min.js"></script>
 
     <script src="assets/plugins/metismenu/metisMenu.min.js"></script>
     <script src="assets/plugins/bs-stepper/js/bs-stepper.min.js"></script>
-    <script src="assets/plugins/bs-stepper/js/main.js"></script>
     <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
 
     <script>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EcoBuild | Авторизация</title>
+    <title>EcoBuild | Автор</title>
     <!--favicon-->
     <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png">
     <!-- loader-->
@@ -41,24 +41,26 @@
                             <p class="mb-0">Войдите в свой аккаунт, чтобы продолжить</p>
 
                             <div class="form-body my-5">
-                                <form class="row g-3">
+                                <form action="{{ route('login') }}" method="post" class="row g-3">
+                                    @csrf
                                     <div class="col-12">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email"
+                                        <input type="email" class="form-control" id="email" name="email"
                                             placeholder="name@example.com">
                                     </div>
                                     <div class="col-12">
                                         <label for="password" class="form-label">Пароль</label>
                                         <div class="input-group" id="show_hide_password">
                                             <input type="password" class="form-control border-end-0" id="password"
-                                                value="" placeholder="********">
+                                                placeholder="********" name="password">
                                             <a href="javascript:;" class="input-group-text bg-transparent"><i
                                                     class="bi bi-eye-slash-fill"></i></a>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                            <input name="remember" class="form-check-input" type="checkbox"
+                                                id="flexSwitchCheckChecked">
                                             <label class="form-check-label"
                                                 for="flexSwitchCheckChecked">Запомнить</label>
                                         </div>

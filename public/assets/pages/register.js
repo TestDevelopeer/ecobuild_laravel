@@ -1,18 +1,38 @@
 $(function () {
+	stepper2 = document.querySelector('#stepper2') != null ? new Stepper(document.querySelector('#stepper2'), {
+		linear: false,
+		animation: true,
+	}) : null;
+
+	let isStepValidated = false;
+
 	document.querySelector('#stepper2').addEventListener('show.bs-stepper', function (event) {
-		// You can call prevent to stop the rendering of your step
-		// event.preventDefault()
 		let from = event.detail.from + 1;
-		let data = {};
+		let to = event.detail.to + 1;
+		if (!isStepValidated && from < to) {
+			event.preventDefault()
+			console.log(event);
 
-		$('#test-nl-' + from).find('input').each(function () {
-			// добавим новое свойство к объекту $data
-			// имя свойства – значение атрибута name элемента
-			// значение свойства – значение свойство value элемента
-			data[this.name] = $(this).val();
-		});
+			let data = {};
 
-		console.log(data)
+			$('#test-nl-' + from).find('input').each(function () {
+				data[this.name] = $(this).val();
+			});
+			$('.error-text').remove();
+			$('.form-control.error').removeClass('error');
+
+			axios.post('/register/validate', { step: from, data }).then(res => {
+				isStepValidated = true;
+				stepper2.next();
+			}).catch(err => {
+				let validate = err.response.data.errors;
+				for (const key in validate) {
+					$('#' + key).addClass('error');
+					$(`<span class='error-text'>${validate[key]}</span>`).insertAfter('#' + key);
+				}
+			})
+		}
+		isStepValidated = false;
 	});
 
 	$(document).on('click', '#register', function () {
@@ -21,6 +41,15 @@ $(function () {
 			obj[item.name] = item.value;
 			return obj;
 		}, {});
-		console.log(data);
+
+		axios.post(action, data).then(res => {
+			alert('success');
+		}).catch(err => {
+			let validate = err.response.data.errors;
+			for (const key in validate) {
+				$('#' + key).addClass('error');
+				$(`<span class='error-text'>${validate[key]}</span>`).insertAfter('#' + key);
+			}
+		})
 	});
 });

@@ -6,10 +6,10 @@ var stepperForm
 
 document.addEventListener('DOMContentLoaded', function () {
 	stepper1 = document.querySelector('#stepper1') != null ? new Stepper(document.querySelector('#stepper1')) : null;
-	stepper2 = document.querySelector('#stepper2') != null ? new Stepper(document.querySelector('#stepper2'), {
+	/*stepper2 = document.querySelector('#stepper2') != null ? new Stepper(document.querySelector('#stepper2'), {
 		linear: false,
 		animation: true,
-	}) : null;
+	}) : null;*/
 
 	stepper3 = document.querySelector('#stepper3') != null ? new Stepper(document.querySelector('#stepper3')) : null;
 

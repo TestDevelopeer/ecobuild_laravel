@@ -672,8 +672,12 @@
                         <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
                                 class="material-icons-outlined">cloud_download</i>Downloads</a>
                         <hr class="dropdown-divider">
-                        <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
-                                class="material-icons-outlined">power_settings_new</i>Logout</a>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2 py-2"><i
+                                    class="material-icons-outlined">power_settings_new</i>Logout</button>
+                        </form>
+
                     </div>
                 </li>
             </ul>
