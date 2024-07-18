@@ -10,3 +10,7 @@
 .metismenu .parent-icon i {
 	font-size: 20px;
 }
+
+input:read-only {
+	cursor: not-allowed;
+}

@@ -698,7 +698,48 @@
 
             @yield('content')
 
-
+            <div class="modal fade" id="feedbackModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0 py-2 bg-primary">
+                            <h5 class="modal-title text-white">Обратная связь</h5>
+                            <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                                <i class="material-icons-outlined">close</i>
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-body">
+                                <form id="feedback-form" action="{{ route('feedback') }}" method="post"
+                                    class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input readonly type="text" class="form-control" id="email"
+                                            name="email" placeholder="Ваш email" value="{{ Auth::user()->email }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">Телефон</label>
+                                        <input readonly type="text" class="form-control phone-mask" id="phone"
+                                            name="phone" placeholder="Ваш телефон"
+                                            value="{{ Auth::user()->phone }}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="message" class="form-label">Сообщение</label>
+                                        <textarea class="form-control" id="message" name="message" placeholder="Ваше сообщение..." rows="3"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button id="send-feedback" type="button"
+                                                class="btn btn-primary px-4">Отправить</button>
+                                            <button type="button" class="btn btn-secondary px-4"
+                                                data-bs-dismiss="modal">Отмена</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <!--end main wrapper-->
@@ -707,11 +748,7 @@
     <div class="overlay btn-toggle"></div>
     <!--end overlay-->
 
-    <!--start footer-->
-    <footer class="page-footer">
-        <p class="mb-0">Copyright © 2024. All right reserved.</p>
-    </footer>
-    <!--end footer-->
+    @include('layouts.footer')
 
     <!--start cart-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart">
@@ -853,20 +890,24 @@
     </div>
     <!--end cart-->
 
+    @vite(['resources/js/app.js'])
     <!--bootstrap js-->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
     <!--plugins-->
     <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/jquery.maskedinput.min.js"></script>
     <!--plugins-->
     <script src="/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
     <script src="/assets/plugins/metismenu/metisMenu.min.js"></script>
     <script src="/assets/plugins/simplebar/js/simplebar.min.js"></script>
     <script src="/assets/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/assets/js/swal.min.js"></script>
     <script>
         $(".data-attributes span").peity("donut")
     </script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/feedback.js"></script>
 
     @yield('scripts')
 

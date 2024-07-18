@@ -74,6 +74,11 @@ class SidebarComposer
 				'title' => 'Информация',
 				'menu' => [
 					[
+						'icon' => 'fa-light fa-address-book',
+						'title' => 'Контакты',
+						'link' => route('contact')
+					],
+					[
 						'icon' => 'fa-light fa-messages-question',
 						'title' => 'FAQ',
 						'link' => route('profile', ['type' => 'faq'])
@@ -81,7 +86,8 @@ class SidebarComposer
 					[
 						'icon' => 'fa-light fa-envelopes-bulk',
 						'title' => 'Обратная связь',
-						'link' => '#'
+						'link' => '#',
+						'type' => 'feedback-modal'
 					],
 				]
 			],
@@ -91,7 +97,7 @@ class SidebarComposer
 					[
 						'icon' => 'fa-light fa-person-to-door',
 						'title' => 'Выход',
-						'link' => '#'
+						'link' => route('logout')
 					],
 				]
 			]

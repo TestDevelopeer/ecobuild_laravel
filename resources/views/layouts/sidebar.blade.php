@@ -18,7 +18,11 @@
                 <li class="menu-label">{{ $side['title'] }}</li>
                 @foreach ($side['menu'] as $menu)
                     <li>
-                        <a href="{{ isset($menu['link']) ? $menu['link'] : 'javascript:;' }}">
+                        <a @class([
+                            'feedback-modal' =>
+                                isset($menu['type']) && $menu['type'] == 'feedback-modal',
+                        ])
+                            href="{{ isset($menu['link']) ? $menu['link'] : 'javascript:;' }}">
                             <div class="parent-icon">
                                 <i class="{{ $menu['icon'] }}"></i>
                             </div>

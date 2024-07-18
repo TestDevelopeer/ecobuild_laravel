@@ -16,13 +16,30 @@ class ProfileController extends Controller
 	 */
 	public function index(Request $request): View
 	{
+		switch ($request->type) {
+			case 'results':
+				$breadcrumbText = 'Результаты';
+				break;
+			case 'rewards':
+				$breadcrumbText = 'Награды';
+				break;
+			case 'creative':
+				$breadcrumbText = 'Креативное задание';
+				break;
+			case 'faq':
+				$breadcrumbText = 'FAQ';
+				break;
+			default:
+				$breadcrumbText = $request->user()->surname . ' ' . $request->user()->name . ' ' . $request->user()->patronymic;
+				break;
+		}
 		return view('pages.profile.index', [
 			'type' => $request->type,
 			'user' => $request->user(),
 			'breadcrumb' => [
 				'pageName' => 'Профиль',
 				'breadcrumb' => [
-					['text' => $request->user()->surname . ' ' . $request->user()->name . ' ' . $request->user()->patronymic]
+					['text' => $breadcrumbText]
 				]
 			],
 			'diplomConfig' => config('custom.diplom'),

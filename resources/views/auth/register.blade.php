@@ -267,7 +267,7 @@
             });
         });
     </script>
-    <script src="/assets/pages/register.js"></script>
+    <script src="/assets/js/pages/register.js"></script>
 </body>
 
 </html>

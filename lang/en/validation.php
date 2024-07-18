@@ -228,6 +228,9 @@ return [
 		],
 		'policy_check' => [
 			'required' => 'Подтвердите согласие'
+		],
+		'message' => [
+			'required' => 'Введите сообщение'
 		]
 	],
 
