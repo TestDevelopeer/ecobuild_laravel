@@ -52,4 +52,14 @@ class User extends Authenticatable
 		'email_verified_at' => 'datetime',
 		'password' => 'hashed',
 	];
+
+	public function result($type)
+	{
+		return $this->hasOne(Result::class)->where('type', '=', $type)->first();
+	}
+
+	public function successResult()
+	{
+		return $this->hasOne(Result::class)->where('points', '>', config('custom.creative.min'))->first();
+	}
 }

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Maxton | Bootstrap 5 Admin Dashboard Template</title>
+    <link href="assets/css/all.min.css" rel="stylesheet" type="text/css">
     <!--favicon-->
     <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png">
     <!-- loader-->
@@ -28,6 +29,9 @@
     <link href="sass/semi-dark.css" rel="stylesheet">
     <link href="sass/bordered-theme.css" rel="stylesheet">
     <link href="sass/responsive.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    @yield('styles')
 </head>
 
 <body>
@@ -653,16 +657,18 @@
                             height="45" alt="">
                     </a>
                     <div class="dropdown-menu dropdown-user dropdown-menu-end shadow">
-                        <a class="dropdown-item  gap-2 py-2" href="javascript:;">
+                        <a class="dropdown-item  gap-2 py-2" href="{{ route('profile.edit') }}">
                             <div class="text-center">
                                 <img src="assets/images/avatars/01.png" class="rounded-circle p-1 shadow mb-3"
                                     width="90" height="90" alt="">
-                                <h5 class="user-name mb-0 fw-bold">Hello, Jhon</h5>
+                                <h5 class="user-name mb-0 fw-bold">{{ Auth::user()->name }}
+                                    {{ Auth::user()->patronymic }}</h5>
                             </div>
                         </a>
                         <hr class="dropdown-divider">
-                        <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
-                                class="material-icons-outlined">person_outline</i>Profile</a>
+                        <a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                            href="{{ route('profile.edit') }}"><i
+                                class="material-icons-outlined">person_outline</i>Профиль</a>
                         <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
                                 class="material-icons-outlined">local_bar</i>Setting</a>
                         <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
@@ -675,7 +681,7 @@
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <button type="submit" class="dropdown-item d-flex align-items-center gap-2 py-2"><i
-                                    class="material-icons-outlined">power_settings_new</i>Logout</button>
+                                    class="material-icons-outlined">power_settings_new</i>Выйти</button>
                         </form>
 
                     </div>
@@ -1107,40 +1113,10 @@
     <!--start main wrapper-->
     <main class="main-wrapper">
         <div class="main-content">
-            <!--breadcrumb-->
-            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="breadcrumb-title pe-3">Dashboard</div>
-                <div class="ps-3">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0 p-0">
-                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Analysis</li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="ms-auto">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary">Settings</button>
-                        <button type="button"
-                            class="btn btn-outline-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
-                                href="javascript:;">Action</a>
-                            <a class="dropdown-item" href="javascript:;">Another action</a>
-                            <a class="dropdown-item" href="javascript:;">Something else here</a>
-                            <div class="dropdown-divider"></div> <a class="dropdown-item"
-                                href="javascript:;">Separated
-                                link</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end breadcrumb-->
+            @include('components.breadcrumb')
 
 
-
+            @yield('content')
 
 
         </div>
@@ -1297,82 +1273,6 @@
     </div>
     <!--end cart-->
 
-
-
-    <!--start switcher-->
-    <button class="btn btn-grd btn-grd-primary position-fixed bottom-0 end-0 m-3 d-flex align-items-center gap-2"
-        type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop">
-        <i class="material-icons-outlined">tune</i>Customize
-    </button>
-
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="staticBackdrop">
-        <div class="offcanvas-header border-bottom h-70">
-            <div class="">
-                <h5 class="mb-0">Theme Customizer</h5>
-                <p class="mb-0">Customize your theme</p>
-            </div>
-            <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="offcanvas">
-                <i class="material-icons-outlined">close</i>
-            </a>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                <p>Theme variation</p>
-
-                <div class="row g-3">
-                    <div class="col-12 col-xl-6">
-                        <input type="radio" class="btn-check" name="theme-options" id="BlueTheme"
-                            checked="">
-                        <label
-                            class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4"
-                            for="BlueTheme">
-                            <span class="material-icons-outlined">contactless</span>
-                            <span>Blue</span>
-                        </label>
-                    </div>
-                    <div class="col-12 col-xl-6">
-                        <input type="radio" class="btn-check" name="theme-options" id="LightTheme">
-                        <label
-                            class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4"
-                            for="LightTheme">
-                            <span class="material-icons-outlined">light_mode</span>
-                            <span>Light</span>
-                        </label>
-                    </div>
-                    <div class="col-12 col-xl-6">
-                        <input type="radio" class="btn-check" name="theme-options" id="DarkTheme">
-                        <label
-                            class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4"
-                            for="DarkTheme">
-                            <span class="material-icons-outlined">dark_mode</span>
-                            <span>Dark</span>
-                        </label>
-                    </div>
-                    <div class="col-12 col-xl-6">
-                        <input type="radio" class="btn-check" name="theme-options" id="SemiDarkTheme">
-                        <label
-                            class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4"
-                            for="SemiDarkTheme">
-                            <span class="material-icons-outlined">contrast</span>
-                            <span>Semi Dark</span>
-                        </label>
-                    </div>
-                    <div class="col-12 col-xl-6">
-                        <input type="radio" class="btn-check" name="theme-options" id="BoderedTheme">
-                        <label
-                            class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4"
-                            for="BoderedTheme">
-                            <span class="material-icons-outlined">border_style</span>
-                            <span>Bordered</span>
-                        </label>
-                    </div>
-                </div><!--end row-->
-
-            </div>
-        </div>
-    </div>
-    <!--start switcher-->
-
     <!--bootstrap js-->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
@@ -1387,6 +1287,8 @@
         $(".data-attributes span").peity("donut")
     </script>
     <script src="assets/js/main.js"></script>
+
+    @yield('scripts')
 
 </body>
 

@@ -11,10 +11,7 @@ $(function () {
 		let to = event.detail.to + 1;
 		if (!isStepValidated && from < to) {
 			event.preventDefault()
-			console.log(event);
-
 			let data = {};
-
 			$('#test-nl-' + from).find('input').each(function () {
 				data[this.name] = $(this).val();
 			});
@@ -41,9 +38,10 @@ $(function () {
 			obj[item.name] = item.value;
 			return obj;
 		}, {});
-
+		$('.error-text').remove();
+		$('.form-control.error').removeClass('error');
 		axios.post(action, data).then(res => {
-			alert('success');
+			location.href = '/profile';
 		}).catch(err => {
 			let validate = err.response.data.errors;
 			for (const key in validate) {

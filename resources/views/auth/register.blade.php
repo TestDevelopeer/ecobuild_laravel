@@ -100,33 +100,35 @@
                                                         <div class="col-12 col-lg-4">
                                                             <label class="form-label">Фамилия</label>
                                                             <input id="surname" type="text" class="form-control"
-                                                                name="surname">
+                                                                name="surname" value="{{ old('surname') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-4">
                                                             <label class="form-label">Имя</label>
                                                             <input id="name" type="text" class="form-control"
-                                                                name="name">
+                                                                name="name" value="{{ old('name') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-4">
                                                             <label class="form-label">Отчество</label>
                                                             <input id="patronymic" type="text"
-                                                                class="form-control" name="patronymic">
+                                                                class="form-control" name="patronymic"
+                                                                value="{{ old('patronymic') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Город</label>
                                                             <input id="city" type="text" class="form-control"
-                                                                name="city">
+                                                                name="city" value="{{ old('city') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Телефон</label>
                                                             <input id="phone" type="text"
-                                                                class="form-control phone-mask" name="phone">
+                                                                class="form-control phone-mask" name="phone"
+                                                                value="{{ old('phone') }}">
                                                         </div>
                                                         <div class="col-12">
                                                             <label class="form-label">Соц. сеть</label>
                                                             <input type="text" class="form-control"
                                                                 placeholder="Ссылка на аккаунт в соц. сети"
-                                                                name="link">
+                                                                name="link" value="{{ old('link') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <button type="button" class="btn btn-success px-4"
@@ -141,22 +143,23 @@
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Учебное заведение</label>
                                                             <input id="school" type="text" class="form-control"
-                                                                name="school">
+                                                                name="school" value="{{ old('school') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Класс/Курс</label>
-                                                            <input id="classroom" type="text" class="form-control"
-                                                                name="classroom">
+                                                            <input id="classroom" type="number" class="form-control"
+                                                                name="classroom" value="{{ old('classroom') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">ФИО руководителя</label>
                                                             <input id="teacher" type="text" class="form-control"
-                                                                name="teacher">
+                                                                name="teacher" value="{{ old('teacher') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Должность руководителя</label>
                                                             <input id="teacher_job" type="text"
-                                                                class="form-control" name="teacher_job">
+                                                                class="form-control" name="teacher_job"
+                                                                value="{{ old('teacher_job') }}">
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="d-flex align-items-center gap-3">
@@ -176,7 +179,8 @@
                                                         <div class="col-12">
                                                             <label class="form-label">E-mail</label>
                                                             <input id="email" type="text" class="form-control"
-                                                                placeholder="name@example.ru" name="email">
+                                                                placeholder="name@example.ru" name="email"
+                                                                value="{{ old('email') }}">
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <label class="form-label">Пароль</label>
@@ -193,9 +197,9 @@
                                                         <div class="col-12">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="flexSwitchCheckChecked" name="policy_check">
-                                                                <label class="form-check-label"
-                                                                    for="flexSwitchCheckChecked">Я даю согласие на
+                                                                    id="policy_check" name="policy_check">
+                                                                <label class="form-check-label" for="policy_check">Я
+                                                                    даю согласие на
                                                                     обработку персональных данных и соглашаюсь с
                                                                     <a href="#">политикой
                                                                         конфиденциальности</a></label>
