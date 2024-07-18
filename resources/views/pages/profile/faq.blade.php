@@ -1,4 +1,7 @@
-<div class="tab-pane fade" id="primary-pills-faq" role="tabpanel">
+<div @class([
+    'tab-pane fade',
+    'show active' => isset($type) && $type == 'faq',
+]) id="primary-pills-faq" role="tabpanel">
     <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">

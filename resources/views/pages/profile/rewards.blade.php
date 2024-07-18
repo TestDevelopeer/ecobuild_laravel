@@ -1,4 +1,7 @@
-<div class="tab-pane fade" id="primary-pills-rewards" role="tabpanel">
+<div @class([
+    'tab-pane fade',
+    'show active' => isset($type) && $type == 'rewards',
+]) id="primary-pills-rewards" role="tabpanel">
     <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee
         squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes
         anderson artisan four loko farm-to-table craft beer twee. Qui photo booth

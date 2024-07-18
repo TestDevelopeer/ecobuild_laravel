@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="assets/plugins/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
+    <link href="/assets/plugins/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div
                                         class="d-flex flex-row gap-3 align-items-center justify-content-center border p-3 rounded-3 flex-fill">
-                                        <img src="assets/images/profile/planet-earth.png" width="40" height="40"
+                                        <img src="/assets/images/profile/planet-earth.png" width="40" height="40"
                                             class="rounded-circle" alt="">
                                         <div class="">
                                             <h5 class="mb-0">{{ $user->result('eco')->points ?? 0 }}</h5>
@@ -29,7 +29,7 @@
                                     </div>
                                     <div
                                         class="d-flex flex-row gap-2 align-items-center justify-content-center border p-3 rounded-3 flex-fill">
-                                        <img src="assets/images/profile/brick-wall.png" width="40" height="40"
+                                        <img src="/assets/images/profile/brick-wall.png" width="40" height="40"
                                             class="rounded-circle" alt="">
                                         <div class="">
                                             <h5 class="mb-0">{{ $user->result('build')->points ?? 0 }}</h5>
@@ -76,40 +76,40 @@
                 <div class="card-body">
                     <ul class="nav nav-pills mb-3" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" data-bs-toggle="pill" href="#primary-pills-results" role="tab"
-                                aria-selected="true">
+                            <a @class(['nav-link', 'active' => !isset($type) || $type == 'results']) data-bs-toggle="pill" href="#primary-pills-results"
+                                role="tab" aria-selected="true">
                                 <div class="d-flex align-items-center">
-                                    <div class="tab-icon"><i class="bi bi-house-door me-1 fs-6"></i>
+                                    <div class="tab-icon"><i class="fa-light fa-square-poll-vertical me-1 fs-6"></i>
                                     </div>
                                     <div class="tab-title">Результаты</div>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="pill" href="#primary-pills-rewards" role="tab"
-                                aria-selected="false">
+                            <a @class(['nav-link', 'active' => isset($type) && $type == 'rewards']) data-bs-toggle="pill" href="#primary-pills-rewards"
+                                role="tab" aria-selected="false">
                                 <div class="d-flex align-items-center">
-                                    <div class="tab-icon"><i class="bi bi-person me-1 fs-6"></i>
+                                    <div class="tab-icon"><i class="fa-light fa-medal me-1 fs-6"></i>
                                     </div>
                                     <div class="tab-title">Награды</div>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="pill" href="#primary-pills-creative" role="tab"
-                                aria-selected="false">
+                            <a @class(['nav-link', 'active' => isset($type) && $type == 'creative']) data-bs-toggle="pill" href="#primary-pills-creative"
+                                role="tab" aria-selected="false">
                                 <div class="d-flex align-items-center">
-                                    <div class="tab-icon"><i class='bi bi-headset me-1 fs-6'></i>
+                                    <div class="tab-icon"><i class='fa-light fa-pen-swirl me-1 fs-6'></i>
                                     </div>
                                     <div class="tab-title">Креативное задание</div>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="pill" href="#primary-pills-faq" role="tab"
+                            <a @class(['nav-link', 'active' => isset($type) && $type == 'faq']) data-bs-toggle="pill" href="#primary-pills-faq" role="tab"
                                 aria-selected="false">
                                 <div class="d-flex align-items-center">
-                                    <div class="tab-icon"><i class='bi bi-headset me-1 fs-6'></i>
+                                    <div class="tab-icon"><i class='fa-light fa-messages-question me-1 fs-6'></i>
                                     </div>
                                     <div class="tab-title">FAQ</div>
                                 </div>
@@ -129,10 +129,10 @@
 @endsection
 
 @section('scripts')
-    <script src="assets/plugins/fancy-file-uploader/jquery.ui.widget.js"></script>
-    <script src="assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
-    <script src="assets/plugins/fancy-file-uploader/jquery.iframe-transport.js"></script>
-    <script src="assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+    <script src="/assets/plugins/fancy-file-uploader/jquery.ui.widget.js"></script>
+    <script src="/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
+    <script src="/assets/plugins/fancy-file-uploader/jquery.iframe-transport.js"></script>
+    <script src="/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
     <script>
         $('#upload-eco').FancyFileUpload({
             params: {

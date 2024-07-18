@@ -1,4 +1,7 @@
-<div class="tab-pane fade show active" id="primary-pills-results" role="tabpanel">
+<div @class([
+    'tab-pane fade',
+    'show active' => !isset($type) || $type == 'results',
+]) id="primary-pills-results" role="tabpanel">
     @if ($user->result('eco'))
     @else
         @include('components.alert', [
