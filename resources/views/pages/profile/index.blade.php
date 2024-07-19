@@ -59,13 +59,13 @@
                                 @endif
                                 <div class="row">
                                     @foreach ($tests as $test)
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-6 mb-2">
                                             <div
                                                 class="d-flex flex-row gap-3 align-items-center justify-content-center border p-3 rounded-3 flex-fill">
-                                                <img src="/assets/images/test-icon/{{ $test->icon }}" width="40"
-                                                    height="40" class="rounded-circle" alt="">
+                                                <img src="/assets/tests/{{ $test->id }}/icon/{{ $test->icon }}"
+                                                    width="40" height="40" class="rounded-circle" alt="">
                                                 <div class="">
-                                                    <h5 class="mb-0">{{ $test->result()->points ?? 0 }} баллов</h5>
+                                                    <h5 class="mb-0">{{ $test->resultByUser()->points ?? 0 }} баллов</h5>
                                                     <p class="mb-0">{{ $test->name }}</p>
                                                 </div>
                                             </div>

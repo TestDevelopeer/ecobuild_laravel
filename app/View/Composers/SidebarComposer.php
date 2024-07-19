@@ -42,13 +42,28 @@ class SidebarComposer
 						'submenu' => [
 							[
 								'title' => 'Создать',
-								'link' => '/create'
+								'link' => route('test.create')
 							],
 							[
 								'title' => 'Редактировать',
+								'link' => route('test.all')
+							],
+							[
+								'title' => 'Типы вопросов',
 								'link' => '/create'
 							]
 						]
+					],
+					[
+						'icon' => 'fa-light fa-users',
+						'title' => 'Пользователи',
+						'link' => '#'
+					],
+					[
+						'icon' => 'fa-light fa-envelope-open-text',
+						'title' => 'Обращения',
+						'cnt' => 0,
+						'link' => '#'
 					],
 				]
 			],

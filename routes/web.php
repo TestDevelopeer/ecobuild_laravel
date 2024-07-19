@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,13 @@ Route::middleware('auth')->group(function () {
 	Route::post('/feedback/check', [FeedbackController::class, 'check']);
 
 	Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+	Route::get('/test/create', [TestController::class, 'create'])->name('test.create');
+	Route::get('/test/edit/{id}', [TestController::class, 'edit'])->name('test.edit');
+	Route::get('/test/all', [TestController::class, 'all'])->name('test.all');
+
+	Route::post('/test/create', [TestController::class, 'add'])->name('test.create');
+	Route::post('/test/delete', [TestController::class, 'delete'])->name('test.delete');
 });
 
 require __DIR__ . '/auth.php';

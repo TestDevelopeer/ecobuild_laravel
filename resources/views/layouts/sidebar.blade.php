@@ -23,7 +23,7 @@
                             <div class="parent-icon">
                                 <i class="{{ $menu['icon'] }}"></i>
                             </div>
-                            <div class="menu-title">{{ $menu['title'] }}</div>
+                            <div class="menu-title">{{ $menu['title'] }} {{ $menu['cnt'] ?? '' }}</div>
                         </a>
                         @if (isset($menu['submenu']))
                             <ul>
