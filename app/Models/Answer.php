@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-    use HasFactory;
+	use HasFactory;
+
+	protected $fillable = [
+		'question_id',
+		'text',
+		'is_true',
+	];
 }

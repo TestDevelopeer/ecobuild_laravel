@@ -46,7 +46,10 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Добавить новый вопрос</h5>
-                    <form action="" class="row mt-4">
+                    <form action="{{ route('question.add') }}" method="post" class="row mt-4"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" readonly hidden name="test_id" value="{{ $test->id }}">
                         <div class="col-12 mb-4">
                             <label for="type_id" class="form-label">Тип вопроса</label>
                             <select id="type_id" name="type_id" class="form-select">
@@ -56,20 +59,56 @@
                             </select>
                         </div>
                         <div class="col-12 mb-4 d-none" id="question_asset">
-                            <label for="formFile" class="form-label">Выберите файл для вопроса</label>
-                            <input class="form-control" type="file" id="formFile" accept="image/*, video/*, audio/*">
+                            <label for="questionAsset" class="form-label">Выберите файл для вопроса</label>
+                            <input class="form-control" type="file" id="questionAsset" name="questionAsset"
+                                accept="image/*, video/*, audio/*">
                         </div>
                         <div class="col-12">
                             <label for="text" class="form-label">Текст вопроса</label>
                             <textarea class="form-control" name="text" id="text" placeholder="Введите текст вопроса" rows="3">{{ old('text') }}</textarea>
                         </div>
-
                         <div class="col-12 mt-4">
-                            @include('pages.test.answer-repeater')
+                            <!-- Repeater Html Start -->
+                            <div id="repeater">
+                                <!-- Repeater Heading -->
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h5 class="mb-0">Ответы на вопрос</h5>
+                                </div>
+                                <!-- Repeater Items -->
+                                <div class="items" data-group="answers">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-- Repeater Content -->
+                                            <div class="item-content">
+                                                <div class="mb-3">
+                                                    <label for="text" class="form-label">Ответ</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">
+                                                            <input data-name="is_true" id="is_true"
+                                                                class="form-check-input" type="radio"
+                                                                aria-label="Правильный ответ" value="">
+                                                        </div>
+                                                        <input data-name="text" id="text" type="text"
+                                                            class="form-control"
+                                                            aria-label="Text input with radio button">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Repeater Remove Btn -->
+                                            <div class="repeater-remove-btn">
+                                                <button class="btn btn-danger remove-btn px-4">
+                                                    Удалить
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Repeater End -->
                         </div>
                         <div class="col-12 mt-4">
                             <div class="d-flex align-items-center justify-content-between">
-                                <button type="button" class="btn btn-primary repeater-add-btn px-4">Добавить еще
+                                <button type="button" class="btn btn-primary repeater-add-btn px-4">Добавить новый
                                     ответ</button>
                                 <button type="submit" class="btn btn-success px-4">Сохранить вопрос</button>
                             </div>
@@ -77,6 +116,9 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            ТАБЛИЦА ВОПРОСОВ
         </div>
     </div>
 @endsection

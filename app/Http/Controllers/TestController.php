@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Test;
 use App\Models\Type;
+use App\Models\Question;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\File;
@@ -79,6 +80,7 @@ class TestController extends Controller
 	public function edit(Request $request)
 	{
 		$test = Test::findOrFail($request->id);
+		$questions = Question::paginate(10);
 		$questionTypes = Type::all();
 		return view('pages.test.edit', [
 			'breadcrumb' => [
@@ -93,6 +95,7 @@ class TestController extends Controller
 				]
 			],
 			'test' => $test,
+			'questions' => $questions,
 			'questionTypes' => $questionTypes,
 		]);
 	}

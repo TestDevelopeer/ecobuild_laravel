@@ -31,7 +31,7 @@ $(function () {
 	});
 
 	$("#repeater").createRepeater({
-		showFirstItemToDefault: true,
+		showFirstItemToDefault: false,
 	});
 
 	$(document).on('change', '#type_id', function () {

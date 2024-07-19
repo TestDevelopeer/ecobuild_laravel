@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
 	Route::post('/test/add', [TestController::class, 'add'])->name('test.add');
 	Route::post('/test/save', [TestController::class, 'save'])->name('test.save');
 	Route::post('/test/delete', [TestController::class, 'delete'])->name('test.delete');
+
+	Route::post('/question/add', [QuestionController::class, 'add'])->name('question.add');
 });
 
 require __DIR__ . '/auth.php';
