@@ -39,7 +39,7 @@ class TestController extends Controller
 		]);
 
 		if ($test) {
-			$path = public_path("/assets/tests/$test->id");
+			$path = public_path(config('custom.tests_path') . $test->id);
 
 			$imageName = time() . '.' . $request->icon->getClientOriginalExtension();
 			$request->icon->move("$path/icon/", $imageName);
@@ -60,7 +60,8 @@ class TestController extends Controller
 	public function delete(Request $request)
 	{
 		if (Test::findOrFail($request->id)->delete()) {
-			FileFolder::deleteDirectory(public_path("/assets/tests/$request->id"));
+			$path = public_path(config('custom.tests_path') . $request->id);
+			FileFolder::deleteDirectory($path);
 			return response()->json(['success' => true]);
 		} else {
 			return response()->json(['success' => false]);

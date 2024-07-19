@@ -8,5 +8,6 @@ return [
 	],
 	'creative' => [
 		'min' => 39
-	]
+	],
+	'tests_path' => "/assets/tests/"
 ];
