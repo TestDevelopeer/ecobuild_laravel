@@ -9,5 +9,8 @@ return [
 	'creative' => [
 		'min' => 39
 	],
-	'tests_path' => "/assets/tests/"
+	'tests' => [
+		'path' => "/assets/tests/",
+		'icon' => 'test-icon.png'
+	]
 ];

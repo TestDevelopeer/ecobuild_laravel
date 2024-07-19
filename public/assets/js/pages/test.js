@@ -28,5 +28,17 @@ $(function () {
 				})
 			}
 		});
+	});
+
+	$("#repeater").createRepeater({
+		showFirstItemToDefault: true,
+	});
+
+	$(document).on('change', '#type_id', function () {
+		if ($(this).val() > 1) {
+			$('#question_asset').removeClass('d-none');
+		} else {
+			$('#question_asset').addClass('d-none');
+		}
 	})
 });
