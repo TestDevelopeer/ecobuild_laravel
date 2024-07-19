@@ -37,7 +37,8 @@ Route::middleware('auth')->group(function () {
 	Route::get('/test/edit/{id}', [TestController::class, 'edit'])->name('test.edit');
 	Route::get('/test/all', [TestController::class, 'all'])->name('test.all');
 
-	Route::post('/test/create', [TestController::class, 'add'])->name('test.create');
+	Route::post('/test/add', [TestController::class, 'add'])->name('test.add');
+	Route::post('/test/save', [TestController::class, 'save'])->name('test.save');
 	Route::post('/test/delete', [TestController::class, 'delete'])->name('test.delete');
 });
 

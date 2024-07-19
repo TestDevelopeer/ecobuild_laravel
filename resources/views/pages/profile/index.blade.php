@@ -62,7 +62,7 @@
                                         <div class="col-12 col-lg-6 mb-2">
                                             <div
                                                 class="d-flex flex-row gap-3 align-items-center justify-content-center border p-3 rounded-3 flex-fill">
-                                                <img src="{{ config('custom.tests.path') . $test->id }}/icon/{{ config('custom.tests.icon') }}"
+                                                <img src="{{ config('custom.tests.path') . $test->id }}/icon/{{ $test->icon }}"
                                                     width="40" height="40" class="rounded-circle" alt="">
                                                 <div class="">
                                                     <h5 class="mb-0">{{ $test->resultByUser()->points ?? 0 }} баллов</h5>

@@ -21,6 +21,7 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/fonts2.css?family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="/assets/fonts.css?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/plugins/notifications/css/lobibox.min.css">
     <!--main css-->
     <link href="/assets/css/bootstrap-extended.css" rel="stylesheet">
     <link href="/sass/main.css" rel="stylesheet">
@@ -903,6 +904,7 @@
     <script src="/assets/plugins/simplebar/js/simplebar.min.js"></script>
     <script src="/assets/plugins/peity/jquery.peity.min.js"></script>
     <script src="/assets/js/swal.min.js"></script>
+    <script src="/assets/plugins/notifications/js/notifications.min.js"></script>
     <script>
         $(".data-attributes span").peity("donut")
     </script>

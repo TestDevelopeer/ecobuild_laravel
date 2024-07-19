@@ -41,13 +41,39 @@ class TestController extends Controller
 
 		if ($test) {
 			$path = public_path(config('custom.tests.path') . $test->id);
-			$this->uploadIcon($request, $path);
-
+			$imageName = $this->uploadIcon($request->icon, $path, $test->icon);
+			$test->icon = $imageName;
+			$test->save();
 			FileFolder::makeDirectory("$path/questions", $mode = 0777, true, true);
 			FileFolder::makeDirectory("$path/creative", $mode = 0777, true, true);
 		}
 
 		return redirect(route('test.edit', ['id' => $test->id]));
+	}
+
+	public function save(Request $request)
+	{
+		$request->validate([
+			'name' => 'required',
+			'icon' => [
+				File::image()
+			]
+		]);
+
+		$test = Test::findOrFail($request->id);
+
+		$test->name = $request->name;
+		$test->slug = Str::slug($request->name, '-');
+
+		if ($request->icon) {
+			$path = public_path(config('custom.tests.path') . $test->id);
+			$imageName = $this->uploadIcon($request->icon, $path, $test->icon);
+			$test->icon = $imageName;
+		}
+
+		$test->save();
+
+		return redirect()->back()->with(['status' => 'success']);
 	}
 
 	public function edit(Request $request)
@@ -96,9 +122,13 @@ class TestController extends Controller
 		]);
 	}
 
-	public function uploadIcon($request, $path)
+	public function uploadIcon($icon, $path, $oldIconName)
 	{
-		$imageName = 'test-icon.' . $request->icon->getClientOriginalExtension();
-		$request->icon->move("$path/icon/", $imageName);
+		FileFolder::delete("$path/icon/$oldIconName");
+
+		$imageName = time() . '.' . $icon->getClientOriginalExtension();
+		$icon->move("$path/icon/", $imageName);
+
+		return $imageName;
 	}
 }

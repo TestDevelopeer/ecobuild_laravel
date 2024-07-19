@@ -40,5 +40,18 @@ $(function () {
 		} else {
 			$('#question_asset').addClass('d-none');
 		}
-	})
+	});
 });
+
+function successSaveTest() {
+	Lobibox.notify('success', {
+		pauseDelayOnHover: true,
+		size: 'mini',
+		rounded: true,
+		icon: 'bi bi-check2-circle',
+		delayIndicator: false,
+		continueDelayOnInactiveTab: false,
+		position: 'top center',
+		msg: 'Тестирование успешно сохранено'
+	});
+}

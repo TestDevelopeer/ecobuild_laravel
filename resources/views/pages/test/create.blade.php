@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Создать тестирование</h5>
-                    <form action="{{ route('test.create') }}" method="post" class="row g-3" enctype="multipart/form-data">
+                    <form action="{{ route('test.add') }}" method="post" class="row g-3" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <label for="name" class="form-label">Название</label>

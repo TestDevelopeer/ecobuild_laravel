@@ -6,8 +6,9 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Редактировать тестирование №{{ $test->id }}</h5>
-                    <form action="{{ route('test.create') }}" method="post" class="row g-3" enctype="multipart/form-data">
+                    <form action="{{ route('test.save') }}" method="post" class="row g-3" enctype="multipart/form-data">
                         @csrf
+                        <input type="text" readonly name="id" hidden value="{{ $test->id }}">
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label for="name" class="form-label">Название</label>
@@ -18,7 +19,7 @@
                                 <div class="card radius-10 rounded-4">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ config('custom.tests.path') . $test->id }}/icon/{{ config('custom.tests.icon') }}"
+                                            <img src="{{ config('custom.tests.path') . $test->id }}/icon/{{ $test->icon }}"
                                                 class="rounded-circle p-1 border" width="40" height="40"
                                                 alt="...">
                                             <div class="flex-grow-1 ms-3">
@@ -45,7 +46,7 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Добавить новый вопрос</h5>
-                    <form class="row mt-4">
+                    <form action="" class="row mt-4">
                         <div class="col-12 mb-4">
                             <label for="type_id" class="form-label">Тип вопроса</label>
                             <select id="type_id" name="type_id" class="form-select">
@@ -83,4 +84,9 @@
 @section('scripts')
     <script src="/assets/js/pages/test.js"></script>
     <script src="/assets/plugins/form-repeater/repeater.js"></script>
+    @if (session('status') == 'success')
+        <script>
+            successSaveTest();
+        </script>
+    @endif
 @endsection
