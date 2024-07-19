@@ -14,14 +14,11 @@
     <div class="sidebar-nav">
         <!--navigation-->
         <ul class="metismenu" id="sidenav">
-            @foreach ($sidebar as $side)
-                <li class="menu-label">{{ $side['title'] }}</li>
-                @foreach ($side['menu'] as $menu)
+            @foreach ($sidebarComposer as $sidebar)
+                <li class="menu-label">{{ $sidebar['title'] }}</li>
+                @foreach ($sidebar['menu'] as $menu)
                     <li>
-                        <a @class([
-                            'feedback-modal' =>
-                                isset($menu['type']) && $menu['type'] == 'feedback-modal',
-                        ])
+                        <a @class([$menu['modal'] ?? '', 'has-arrow' => isset($menu['submenu'])])
                             href="{{ isset($menu['link']) ? $menu['link'] : 'javascript:;' }}">
                             <div class="parent-icon">
                                 <i class="{{ $menu['icon'] }}"></i>
@@ -32,9 +29,9 @@
                             <ul>
                                 @foreach ($menu['submenu'] as $sub)
                                     <li>
-                                        <a href="{{ $sub['link'] }}">
-                                            <i class="{{ $sub['icon'] }}"></i>
-                                            {{ $sub['title'] }}"
+                                        <a href="{{ $sub['link'] }}" style="justify-content: space-between">
+                                            <i class="fa-solid fa-caret-right"></i>
+                                            {{ $sub['title'] }}
                                         </a>
                                     </li>
                                 @endforeach

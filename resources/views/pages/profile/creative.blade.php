@@ -2,7 +2,7 @@
     'tab-pane fade',
     'show active' => isset($type) && $type == 'creative',
 ]) id="primary-pills-creative" role="tabpanel">
-    @if ($user->successResult())
+    @if ($user->lastOneSuccessResultForCreative())
         <div class="row">
             <div class="col-12 d-flex">
                 <div class="card rounded-4 w-100">
@@ -62,7 +62,6 @@
                                             прикрепить в формы ниже.</strong>
                                     </p>
                                 </div>
-                                <img src="/assets/images/apps/gift-box-3.png" width="100" alt="">
                             </div>
                         </div>
                     </div>
@@ -70,27 +69,17 @@
             </div>
         </div>
         <div class="row">
+            @foreach ($user->succesResultsForCreative() as $result)
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <input class="creative-uploader" id="upload-{{ $result->test->slug }}" type="file"
+                                name="files" accept=".jpg, .png, image/jpeg, image/png" multiple="">
+                        </div>
+                    </div>
+                </div>
+            @endforeach
 
-            @if ($user->result('eco') && $user->result('eco')->points > config('custom.creative.min'))
-                <div class="col-12 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <input id="upload-eco" type="file" name="files"
-                                accept=".jpg, .png, image/jpeg, image/png" multiple="">
-                        </div>
-                    </div>
-                </div>
-            @endif
-            @if ($user->result('build') && $user->result('build')->points > config('custom.creative.min'))
-                <div class="col-12 col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <input id="upload-build" type="file" name="files"
-                                accept=".jpg, .png, image/jpeg, image/png" multiple="">
-                        </div>
-                    </div>
-                </div>
-            @endif
         </div>
     @else
         @include('components.alert', [

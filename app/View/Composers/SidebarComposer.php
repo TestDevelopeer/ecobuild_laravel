@@ -2,10 +2,11 @@
 
 namespace App\View\Composers;
 
-use App\Models\Forfuns;
 use App\Models\Form;
 use App\Models\News;
+use App\Models\Test;
 use App\Models\Users;
+use App\Models\Forfuns;
 use App\Models\FormType;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -24,30 +25,41 @@ class SidebarComposer
 	 */
 	public function compose(View $view)
 	{
-		/*[
-						'icon' => '',
-						'title' => '',
+		$testsMenu = [];
+		foreach (Test::all() as $test) {
+			array_push($testsMenu, [
+				'title' => $test->name,
+				'link' => "/$test->slug"
+			]);
+		}
+		$sidebar = [
+			[
+				'title' => 'Администратор',
+				'menu' => [
+					[
+						'icon' => 'fa-light fa-person-to-door',
+						'title' => 'Тестирование',
 						'submenu' => [
 							[
-								'title' => '',
-								'link' => ''
+								'title' => 'Создать',
+								'link' => '/create'
+							],
+							[
+								'title' => 'Редактировать',
+								'link' => '/create'
 							]
 						]
-					]*/
-		$sidebar = [
+					],
+				]
+			],
 			[
 				'title' => 'Тестирование',
 				'menu' => [
 					[
-						'icon' => 'fa-light fa-leaf',
-						'title' => 'Экология',
-						'link' => '#'
-					],
-					[
-						'icon' => 'fa-light fa-building',
-						'title' => 'Строительство',
-						'link' => '#'
-					],
+						'icon' => 'fa-light fa-block-question',
+						'title' => 'Тесты',
+						'submenu' => $testsMenu
+					]
 				]
 			],
 			[
@@ -87,7 +99,7 @@ class SidebarComposer
 						'icon' => 'fa-light fa-envelopes-bulk',
 						'title' => 'Обратная связь',
 						'link' => '#',
-						'type' => 'feedback-modal'
+						'modal' => 'feedback-modal'
 					],
 				]
 			],
@@ -103,6 +115,6 @@ class SidebarComposer
 			]
 		];
 
-		$view->with('sidebar', $sidebar);
+		$view->with('sidebarComposer', $sidebar);
 	}
 }

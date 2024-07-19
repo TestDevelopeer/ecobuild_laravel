@@ -53,12 +53,12 @@ class User extends Authenticatable
 		'password' => 'hashed',
 	];
 
-	public function result($type)
+	public function succesResultsForCreative()
 	{
-		return $this->hasOne(Result::class)->where('type', '=', $type)->first();
+		return $this->hasMany(Result::class)->where('points', '>', config('custom.creative.min'))->get();
 	}
 
-	public function successResult()
+	public function lastOneSuccessResultForCreative()
 	{
 		return $this->hasOne(Result::class)->where('points', '>', config('custom.creative.min'))->first();
 	}

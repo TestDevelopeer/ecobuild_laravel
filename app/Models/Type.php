@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Result extends Model
+class Type extends Model
 {
-	use HasFactory;
-
-	public function test()
-	{
-		return $this->belongsTo(Test::class);
-	}
+    use HasFactory;
 }
