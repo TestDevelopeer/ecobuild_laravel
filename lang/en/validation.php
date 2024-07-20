@@ -231,6 +231,12 @@ return [
 		],
 		'message' => [
 			'required' => 'Введите сообщение'
+		],
+		'text' => [
+			'required' => 'Введите текст'
+		],
+		'question_asset' => [
+			'required' => 'Выберите файл для вопроса'
 		]
 	],
 

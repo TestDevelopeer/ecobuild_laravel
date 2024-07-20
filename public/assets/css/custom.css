@@ -14,3 +14,10 @@
 input:read-only {
 	cursor: pointer;
 }
+
+.question-text { 
+	max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}

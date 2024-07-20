@@ -25,6 +25,44 @@ class TestController extends Controller
 		]);
 	}
 
+	public function edit(Request $request)
+	{
+		$test = Test::findOrFail($request->id);
+		$questions = Question::paginate(10);
+		$questionTypes = Type::all();
+
+		return view('pages.test.edit', [
+			'breadcrumb' => [
+				'pageName' => 'Администратор',
+				'breadcrumb' => [
+					['text' => 'Тестирование'],
+					[
+						'text' => 'Редактировать',
+						'link' => route('test.all')
+					],
+					['text' => $test->name],
+				]
+			],
+			'test' => $test,
+			'questions' => $questions,
+			'questionTypes' => $questionTypes,
+		]);
+	}
+
+	public function all(Request $request)
+	{
+		return view('pages.test.all', [
+			'breadcrumb' => [
+				'pageName' => 'Администратор',
+				'breadcrumb' => [
+					['text' => 'Тестирование'],
+					['text' => 'Все тесты'],
+				]
+			],
+			'tests' => Test::paginate(10)
+		]);
+	}
+
 	public function add(Request $request)
 	{
 		$request->validate([
@@ -77,29 +115,6 @@ class TestController extends Controller
 		return redirect()->back()->with(['status' => 'success']);
 	}
 
-	public function edit(Request $request)
-	{
-		$test = Test::findOrFail($request->id);
-		$questions = Question::paginate(10);
-		$questionTypes = Type::all();
-		return view('pages.test.edit', [
-			'breadcrumb' => [
-				'pageName' => 'Администратор',
-				'breadcrumb' => [
-					['text' => 'Тестирование'],
-					[
-						'text' => 'Редактировать',
-						'link' => route('test.all')
-					],
-					['text' => $test->name],
-				]
-			],
-			'test' => $test,
-			'questions' => $questions,
-			'questionTypes' => $questionTypes,
-		]);
-	}
-
 	public function delete(Request $request)
 	{
 		if (Test::findOrFail($request->id)->delete()) {
@@ -109,20 +124,6 @@ class TestController extends Controller
 		} else {
 			return response()->json(['success' => false]);
 		}
-	}
-
-	public function all(Request $request)
-	{
-		return view('pages.test.all', [
-			'breadcrumb' => [
-				'pageName' => 'Администратор',
-				'breadcrumb' => [
-					['text' => 'Тестирование'],
-					['text' => 'Все тесты'],
-				]
-			],
-			'tests' => Test::paginate(10)
-		]);
 	}
 
 	public function uploadIcon($icon, $path, $oldIconName)

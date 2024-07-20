@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 	Route::post('/test/delete', [TestController::class, 'delete'])->name('test.delete');
 
 	Route::post('/question/add', [QuestionController::class, 'add'])->name('question.add');
+	Route::post('/question/delete', [QuestionController::class, 'delete'])->name('question.delete');
 });
 
 require __DIR__ . '/auth.php';

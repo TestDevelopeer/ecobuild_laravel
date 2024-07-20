@@ -13,6 +13,12 @@ class QuestionController extends Controller
 {
 	public function add(Request $request)
 	{
+		if ($request->type_id != 1) {
+			$request->validate([
+				'question_asset' => 'required',
+			]);
+		}
+
 		$request->validate([
 			'text' => 'required',
 			'type_id' => 'required',
@@ -28,10 +34,12 @@ class QuestionController extends Controller
 		]);
 
 		if ($question) {
-			$path = public_path(config('custom.tests.path') . $request->test_id);
-			FileFolder::makeDirectory("$path/questions/$question->id/$type->slug", $mode = 0777, true, true);
-			$assetName = time() . '.' . $request->questionAsset->getClientOriginalExtension();
-			$request->questionAsset->move("$path/questions/$question->id/$type->slug", $assetName);
+			if ($question->type_id != 1) {
+				$path = public_path(config('custom.tests.path') . $request->test_id);
+				FileFolder::makeDirectory("$path/questions/$question->id/$type->slug", $mode = 0777, true, true);
+				$assetName = time() . '.' . $request->question_asset->getClientOriginalExtension();
+				$request->question_asset->move("$path/questions/$question->id/$type->slug", $assetName);
+			}
 
 			if (isset($request->answers) && $request->answers[0]['text'] != null) {
 				foreach ($request->answers as $key => $answer) {
@@ -47,5 +55,18 @@ class QuestionController extends Controller
 		}
 
 		return redirect()->back()->with(['status' => 'error']);
+	}
+
+	public function delete(Request $request)
+	{
+		$question = Question::findOrFail($request->id);
+
+		if ($question->delete()) {
+			$path = public_path(config('custom.tests.path') . "$question->test_id/questions/$question->id");
+			FileFolder::deleteDirectory($path);
+			return response()->json(['success' => true]);
+		} else {
+			return response()->json(['success' => false]);
+		}
 	}
 }

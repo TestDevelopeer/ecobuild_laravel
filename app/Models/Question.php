@@ -19,4 +19,16 @@ class Question extends Model
 	{
 		return $this->hasMany(Answer::class);
 	}
+
+	public function type()
+	{
+		return $this->belongsTo(Type::class);
+	}
+
+	public function delete()
+	{
+		$this->answers()->delete();
+
+		return parent::delete();
+	}
 }
