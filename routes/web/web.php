@@ -26,4 +26,4 @@ Route::middleware('auth')->group(function () {
 	Route::post('/answer/delete', [AnswerController::class, 'delete'])->name('answer.delete');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__ . '/../auth.php';
