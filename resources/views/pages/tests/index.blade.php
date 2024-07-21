@@ -22,7 +22,7 @@
                             <td>{{ $test->updated_at }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('test.edit', ['id' => $test->id]) }}" type="button"
+                                    <a href="{{ route('tests.edit', ['test' => $test->id]) }}" type="button"
                                         class="btn btn-outline-primary d-flex">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>

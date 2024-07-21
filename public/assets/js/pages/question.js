@@ -7,7 +7,7 @@ let showAssetQuestion = (typeSelectId) => {
 		$('#question_asset').removeClass('d-none');
 
 		if ($('#question_id').length > 0) {
-			axios.post('/question/asset/get', { type_id, id: $('#question_id').val() }).then(res => {
+			axios.post('/questions/assets/get', { type_id, id: $('#question_id').val() }).then(res => {
 				if (res.data.assets) {
 					$('#question-assets_block').html(res.data.assets);
 				} else {
@@ -76,14 +76,14 @@ $(function () {
 			// Check if the user confirmed the deletion
 			if (result.isConfirmed) {
 				// Send a POST request to /question/delete with the question ID as data
-				axios.post('/question/delete', { id }).then(res => {
+				axios.delete(`/questions/${id}`).then(res => {
 					// Display a success message if the request is successful
 					Swal.fire({
 						title: "Успешно!",
 						text: "Данный вопрос был полностью удален",
 						icon: "success"
 					});
-					location.href = `/test/edit/${test}`;
+					location.href = `/tests/${test}/edit`;
 				}).catch(err => {
 					// Display an error message if the request fails
 					Swal.fire({
@@ -99,7 +99,7 @@ $(function () {
 	$(document).on('click', '.delete-question-asset', function () {
 		let that = this;
 		let path = $(that).data('path');
-		axios.post('/question/asset/delete', { path }).then(res => {
+		axios.post('/questions/assets/delete', { path }).then(res => {
 
 			$(that).parent().parent().remove();
 			$('[data-bs-toggle="tooltip"]').tooltip();

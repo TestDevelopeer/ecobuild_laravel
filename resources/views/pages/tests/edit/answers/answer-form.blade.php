@@ -5,9 +5,9 @@
         <h5 class="mb-4">Ответы на вопрос {{ $questionEdit != null ? "№$questionEdit->id" : '' }}</h5>
     </div>
     @if ($questionEdit != null)
-        @each('pages.test.edit.answers.answer-item', $questionEdit->answers, 'answer')
+        @each('pages.tests.edit.answers.answer-item', $questionEdit->answers, 'answer')
     @else
-        @include('pages.test.edit.answers.answer-item')
+        @include('pages.tests.edit.answers.answer-item')
     @endif
 </div>
 <!-- Repeater End -->

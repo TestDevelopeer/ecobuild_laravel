@@ -42,11 +42,11 @@ class SidebarComposer
 						'submenu' => [
 							[
 								'title' => 'Создать',
-								'link' => route('test.create')
+								'link' => route('tests.create')
 							],
 							[
 								'title' => 'Редактировать',
-								'link' => route('test.all')
+								'link' => route('tests.index')
 							]
 						]
 					],

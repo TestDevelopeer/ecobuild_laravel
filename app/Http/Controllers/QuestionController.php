@@ -8,9 +8,109 @@ use App\Helpers\Helper;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;
 
 class QuestionController extends Controller
 {
+	/**
+	 * Display a listing of the resource.
+	 */
+	public function index()
+	{
+		//
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 */
+	public function create()
+	{
+		//
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 */
+	public function store(StoreQuestionRequest $request)
+	{
+		$question = Question::create([
+			'text' => $request->text,
+			'type_id' => $request->type_id,
+			'test_id' => $request->test_id
+		]);
+
+		$this->uploadAssets($question, $request->question_assets, $request->test_id);
+
+		foreach ($request->answers as $key => $answer) {
+			Answer::create([
+				'question_id' => $question->id,
+				'text' => $answer['text'],
+				'is_true' => $key == $request->is_true
+			]);
+		}
+
+		return redirect()->back()->with(['status' => 'success']);
+	}
+
+	/**
+	 * Display the specified resource.
+	 */
+	public function show(Question $question)
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 */
+	public function edit(Question $question)
+	{
+		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 */
+	public function update(UpdateQuestionRequest $request, Question $question)
+	{
+		$question->update([
+			'text' => $request->text,
+			'type_id' => $request->type_id,
+		]);
+
+		$this->uploadAssets($question, $request->question_assets, $request->test_id);
+
+		foreach ($request->answers as $key => $ans) {
+			if (isset($ans['answer_id'])) {
+				$answer = Answer::findOrFail($ans['answer_id']);
+				$answer->update([
+					'text' => $ans['text'],
+					'is_true' => $key == $request->is_true
+				]);
+			} else {
+				Answer::create([
+					'question_id' => $question->id,
+					'text' => $ans['text'],
+					'is_true' => $key == $request->is_true
+				]);
+			}
+		}
+
+		return redirect()->back()->with(['status' => 'success']);
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 */
+	public function destroy(Question $question)
+	{
+		$path = config('custom.tests.path') . "$question->test_id/questions/$question->id";
+		Helper::deleteFolder($path);
+		$question->delete();
+		return response()->json(['success' => true]);
+	}
+
 	public function uploadAssets($question, $question_assets, $test_id)
 	{
 		if ($question->type_id != 1 && $question_assets) {
@@ -19,125 +119,23 @@ class QuestionController extends Controller
 		}
 	}
 
-	public function add(Request $request)
+	public function deleteAssets(Request $request)
 	{
-		$request->validate([
-			'text' => 'required',
-			'type_id' => 'required',
-			'test_id' => 'required',
-			'answers' => 'required',
-			'answers.0.text' => 'required',
-			'question_assets' => 'exclude_if:type_id,1|required'
-		]);
-
-		$question = Question::create([
-			'text' => $request->text,
-			'type_id' => $request->type_id,
-			'test_id' => $request->test_id
-		]);
-
-		if ($question) {
-			$this->uploadAssets($question, $request->question_assets, $request->test_id);
-
-			foreach ($request->answers as $key => $answer) {
-				Answer::create([
-					'question_id' => $question->id,
-					'text' => $answer['text'],
-					'is_true' => $key == $request->is_true
-				]);
-			}
-
-			return redirect()->back()->with(['status' => 'success']);
-		}
-
-		return redirect()->back()->with(['status' => 'error']);
+		Helper::deleteFile($request->path);
+		return response()->json(['success' => true]);
 	}
 
-	public function save(Request $request)
+	public function getAssets(Request $request)
 	{
-		$request->validate([
-			'text' => 'required',
-			'type_id' => 'required',
-			'test_id' => 'required',
-			'question_id' => 'required',
-			'answers.0.text' => 'required'
-		]);
-
-		$question = Question::findOrFail($request->question_id);
-		$question->fill([
-			'text' => $request->text,
-			'type_id' => $request->type_id,
-		]);
-
-		if ($question->save()) {
-			$this->uploadAssets($question, $request->question_assets, $request->test_id);
-
-			foreach ($request->answers as $key => $ans) {
-				if (isset($ans['answer_id'])) {
-					$answer = Answer::findOrFail($ans['answer_id']);
-					$answer->fill([
-						'text' => $ans['text'],
-						'is_true' => $key == $request->is_true
-					]);
-					$answer->save();
-				} else {
-					if ($ans['text'] != null) {
-						Answer::create([
-							'question_id' => $question->id,
-							'text' => $ans['text'],
-							'is_true' => $key == $request->is_true
-						]);
-					}
-				}
-			}
-
-			return redirect()->back()->with(['status' => 'success']);
-		}
-
-		return redirect()->back()->with(['status' => 'error']);
-	}
-
-	public function delete(Request $request)
-	{
-		try {
-			$question = Question::findOrFail($request->id);
-			$path = config('custom.tests.path') . "$question->test_id/questions/$question->id";
-			Helper::deleteFolder($path);
-			$question->delete();
-			return response()->json(['success' => true]);
-		} catch (\Exception $e) {
-			return response()->json(['success' => false, 'error' => $e->getMessage()]);
-		}
-	}
-
-	public function assetDelete(Request $request)
-	{
-		try {
-			if (Helper::deleteFile($request->path)) {
-				return response()->json(['success' => true]);
-			} else {
-				return response()->json(['success' => false]);
-			}
-		} catch (\Exception $e) {
-			return response()->json(['success' => false, 'error' => $e->getMessage()]);
-		}
-	}
-
-	public function assetGet(Request $request)
-	{
-		try {
-			$question = Question::findOrFail($request->id);
-			$type = Type::findOrFail($request->type_id);
-			$path = config('custom.tests.path') . "$question->test_id/questions/$question->id/{$type->slug}";
-			$question->assets = Storage::files($path);
-			$question->type_id = $request->type_id;
-			if ($question->assets) {
-				return response(['assets' => view('pages.test.edit.questions.question-asset', ['questionEdit' => $question])->render()]);
-			} else {
-				return response()->json(['success' => false]);
-			}
-		} catch (\Exception $e) {
-			return response()->json(['success' => false, 'error' => $e->getMessage()]);
+		$question = Question::findOrFail($request->id);
+		$type = Type::findOrFail($request->type_id);
+		$path = config('custom.tests.path') . "$question->test_id/questions/$question->id/{$type->slug}";
+		$question->assets = Storage::files($path);
+		$question->type_id = $request->type_id;
+		if ($question->assets) {
+			return response(['assets' => view('pages.tests.edit.questions.question-asset', ['questionEdit' => $question])->render()]);
+		} else {
+			return response()->json(['success' => false]);
 		}
 	}
 }

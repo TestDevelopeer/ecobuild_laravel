@@ -10,7 +10,9 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Редактировать тестирование №{{ $test->id }}</h5>
-                    <form action="{{ route('test.save') }}" method="post" class="row g-3" enctype="multipart/form-data">
+                    <form action="{{ route('tests.update', ['test' => $test->id]) }}" method="post" class="row g-3"
+                        enctype="multipart/form-data">
+                        @method('PATCH')
                         @csrf
                         <input type="text" readonly name="id" hidden value="{{ $test->id }}">
                         <div class="row">
@@ -30,7 +32,7 @@
                                                 class="rounded-circle p-1 border mb-2" width="40" height="40"
                                                 alt="{{ $test->icon }}">
                                             <div class="flex-grow-1 ms-3">
-                                                <p class="mt-0">Выберите иконку тестирования для личного кабинета
+                                                <p class="mt-0">Выберите иконку для личного кабинета
                                                     пользователя</p>
                                                 <input class="form-control" name="icon" type="file" id="icon"
                                                     accept="image/*">
@@ -53,10 +55,10 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            @include('pages.test.edit.questions.question-form')
+            @include('pages.tests.edit.questions.question-form')
         </div>
         <div class="col-12">
-            @include('pages.test.edit.questions.all-questions')
+            @include('pages.tests.edit.questions.all-questions')
         </div>
     </div>
 @endsection

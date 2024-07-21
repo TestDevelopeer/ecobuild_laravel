@@ -33,14 +33,14 @@ $(function () {
 			// If the user confirms deletion
 			if (result.isConfirmed) {
 				// Send a POST request to delete the test
-				axios.post('/test/delete', { id }).then(res => {
+				axios.delete(`/tests/${id}`).then(res => {
 					// Display a success modal if the deletion is successful
 					Swal.fire({
 						title: "Успешно!",
 						text: "Данное тестирование было полностью удалено",
 						icon: "success"
 					});
-					location.href = '/test/all';
+					location.href = '/tests';
 				}).catch(err => {
 					// Display an error modal if there's an error during deletion
 					Swal.fire({

@@ -3,19 +3,22 @@
         <div class="d-flex justify-content-between mb-4">
             @if ($questionEdit != null)
                 <h5>Редактировать вопрос №{{ $questionEdit->id }}</h5>
-                <a href="{{ route('test.edit', ['id' => $test->id]) }}" class="btn btn-secondary px-4">Отмена</a>
+                <a href="{{ route('tests.edit', ['test' => $test->id]) }}" class="btn btn-secondary px-4">Отмена</a>
             @else
                 <h5>Добавить новый вопрос</h5>
             @endif
         </div>
-        <form action="{{ $questionEdit != null ? route('question.save') : route('question.add') }}" method="post"
-            class="row mt-4" enctype="multipart/form-data">
-            @csrf
-            <input type="text" readonly hidden name="test_id" value="{{ $test->id }}">
+        <form
+            action="{{ $questionEdit != null ? route('questions.update', ['question' => $questionEdit->id]) : route('questions.store') }}"
+            method="post" class="row mt-4" enctype="multipart/form-data">
             @if ($questionEdit != null)
+                @method('PATCH')
                 <input type="text" readonly hidden id="question_id" name="question_id"
                     value="{{ $questionEdit->id }}">
             @endif
+            @csrf
+            <input type="text" readonly hidden name="test_id" value="{{ $test->id }}">
+
             <div class="col-12 mb-4">
                 <label for="type_id" class="form-label">Тип вопроса</label>
                 <select id="type_id" name="type_id" class="form-select">
@@ -28,7 +31,7 @@
                 </select>
             </div>
             <div class="col-12 mb-4" id="question-assets_block">
-                @include('pages.test.edit.questions.question-asset')
+                @include('pages.tests.edit.questions.question-asset')
             </div>
             <div class="col-12 mb-4 d-none" id="question_asset">
                 <label for="question_asset" class="form-label">Выберите файл для вопроса</label>
@@ -47,7 +50,7 @@
                     placeholder="Введите текст вопроса" rows="3">{{ old('text') != null ? old('text') : (isset($questionEdit->text) ? $questionEdit->text : '') }}</textarea>
             </div>
             <div class="col-12 mt-4">
-                @include('pages.test.edit.answers.answer-form')
+                @include('pages.tests.edit.answers.answer-form')
             </div>
             <div class="col-12 mt-4">
                 <div class="d-flex align-items-center justify-content-between">
@@ -63,7 +66,7 @@
                         </x-button>
                     @else
                         <x-button type='submit' is-outline=true color='primary'>
-                            <i class="fa-solid fa-circle-plus"></i>
+                            <i class="fa-solid fa-message-plus"></i>
                             Создать вопрос
                         </x-button>
                     @endif

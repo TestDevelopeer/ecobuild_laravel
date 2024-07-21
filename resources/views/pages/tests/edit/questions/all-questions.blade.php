@@ -25,12 +25,12 @@
                         <td>{{ $question->updated_at }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('test.edit', ['id' => $test->id, 'question' => $question->id]) }}"
+                                <a href="{{ route('tests.edit', ['test' => $test->id, 'question' => $question->id]) }}"
                                     type="button" class="btn btn-outline-primary d-flex">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <x-button
-                                    href="{{ route('test.edit', ['id' => $test->id, 'question' => $question->id]) }}"
+                                    href="{{ route('tests.edit', ['test' => $test->id, 'question' => $question->id]) }}"
                                     class='delete-question' :data-question="$question->id" type='button' is-outline=true
                                     color='danger'>
                                     <i class="fa-solid fa-trash"></i>

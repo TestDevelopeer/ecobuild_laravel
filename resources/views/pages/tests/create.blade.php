@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body p-4">
                     <h5 class="mb-4">Создать тестирование</h5>
-                    <form action="{{ route('test.add') }}" method="post" class="row g-3" enctype="multipart/form-data">
+                    <form action="{{ route('tests.store') }}" method="post" class="row g-3" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <label for="name" class="form-label">Название</label>
@@ -17,7 +17,7 @@
                                 id="name" placeholder="Введите название тестирования" value="{{ old('name') }}">
                         </div>
                         <div class="col-md-6">
-                            <label for="icon" class="form-label">Выберите иконку тестирования для личного кабинета
+                            <label for="icon" class="form-label">Выберите иконку для личного кабинета
                                 пользователя</label>
                             @error('icon')
                                 <div class="alert alert-danger">{{ $message }}</div>

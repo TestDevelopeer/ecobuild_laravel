@@ -8,14 +8,37 @@ use App\Helpers\Helper;
 use App\Models\Question;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\File;
+use App\Http\Requests\StoreTestRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdateTestRequest;
 
 class TestController extends Controller
 {
+	/**
+	 * Display a listing of the resource.
+	 */
+	public function index()
+	{
+		$tests = Test::orderBy('id', 'desc')->paginate(10);
+
+		return view('pages.tests.index', [
+			'breadcrumb' => [
+				'pageName' => 'Администратор',
+				'breadcrumb' => [
+					['text' => 'Тестирование'],
+					['text' => 'Все тесты'],
+				]
+			],
+			'tests' => $tests
+		]);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 */
 	public function create()
 	{
-		return view('pages.test.create', [
+		return view('pages.tests.create', [
 			'breadcrumb' => [
 				'pageName' => 'Администратор',
 				'breadcrumb' => [
@@ -26,62 +49,11 @@ class TestController extends Controller
 		]);
 	}
 
-	public function edit(Request $request)
+	/**
+	 * Store a newly created resource in storage.
+	 */
+	public function store(StoreTestRequest $request)
 	{
-		$test = Test::findOrFail($request->id);
-		$questions = $test->questions()->paginate(10);
-		$questionTypes = Type::all();
-		$questionEdit = null;
-
-		if ($request->question) {
-			$questionEdit = Question::findOrFail($request->question);
-			$path = config('custom.tests.path') . "$test->id/questions/$questionEdit->id/{$questionEdit->type->slug}";
-			$questionEdit->assets = Storage::files($path);
-		}
-
-		return view('pages.test.edit.index', [
-			'breadcrumb' => [
-				'pageName' => 'Администратор',
-				'breadcrumb' => [
-					['text' => 'Тестирование'],
-					[
-						'text' => 'Редактировать',
-						'link' => route('test.all')
-					],
-					['text' => $test->name],
-				]
-			],
-			'test' => $test,
-			'questions' => $questions,
-			'questionTypes' => $questionTypes,
-			'questionEdit' => $questionEdit
-		]);
-	}
-
-	public function all()
-	{
-		return view('pages.test.all', [
-			'breadcrumb' => [
-				'pageName' => 'Администратор',
-				'breadcrumb' => [
-					['text' => 'Тестирование'],
-					['text' => 'Все тесты'],
-				]
-			],
-			'tests' => Test::orderBy('id', 'desc')->paginate(10)
-		]);
-	}
-
-	public function add(Request $request)
-	{
-		$request->validate([
-			'name' => 'required',
-			'icon' => [
-				'required',
-				File::image()
-			]
-		]);
-
 		$test = Test::create([
 			'name' => $request->name,
 			'slug' => Str::slug($request->name, '-')
@@ -93,19 +65,55 @@ class TestController extends Controller
 			$test->save();
 		}
 
-		return redirect(route('test.edit', ['id' => $test->id]));
+		return redirect(route('tests.edit', ['test' => $test->id]));
 	}
 
-	public function save(Request $request)
+	/**
+	 * Display the specified resource.
+	 */
+	public function show(string $id)
 	{
-		$request->validate([
-			'name' => 'required',
-			'icon' => [
-				File::image()
-			]
-		]);
+		//
+	}
 
-		$test = Test::findOrFail($request->id);
+	/**
+	 * Show the form for editing the specified resource.
+	 */
+	public function edit(Request $request, Test $test)
+	{
+		$questions = $test->questions()->paginate(10);
+		$questionTypes = Type::all();
+		$questionEdit = null;
+		if ($request->question) {
+			$questionEdit = Question::findOrFail($request->question);
+			$path = config('custom.tests.path') . "$test->id/questions/$questionEdit->id/{$questionEdit->type->slug}";
+			$questionEdit->assets = Storage::files($path);
+		}
+
+		return view('pages.tests.edit', [
+			'breadcrumb' => [
+				'pageName' => 'Администратор',
+				'breadcrumb' => [
+					['text' => 'Тестирование'],
+					[
+						'text' => 'Редактировать',
+						'link' => route('tests.index')
+					],
+					['text' => $test->name],
+				]
+			],
+			'test' => $test,
+			'questions' => $questions,
+			'questionTypes' => $questionTypes,
+			'questionEdit' => $questionEdit
+		]);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 */
+	public function update(UpdateTestRequest $request, Test $test)
+	{
 		$test->fill([
 			'name' => $request->name,
 			'slug' => Str::slug($request->name, '-')
@@ -117,21 +125,18 @@ class TestController extends Controller
 			$test->icon = Helper::uploadFiles($path, $request->icon);
 		}
 
-		if ($test->save()) {
-			return redirect()->back()->with(['status' => 'success']);
-		} else {
-			return redirect()->back()->with(['status' => 'error']);
-		}
+		$test->save();
+		return redirect()->back()->with(['status' => 'success']);
 	}
 
-	public function delete(Request $request)
+	/**
+	 * Remove the specified resource from storage.
+	 */
+	public function destroy(Test $test)
 	{
-		if (Test::findOrFail($request->id)->delete()) {
-			$path = config('custom.tests.path') . $request->id;
-			Helper::deleteFolder($path);
-			return response()->json(['success' => true]);
-		} else {
-			return response()->json(['success' => false]);
-		}
+		$test->delete();
+		$path = config('custom.tests.path') . $test->id;
+		Helper::deleteFolder($path);
+		return response()->json(['success' => true]);
 	}
 }
