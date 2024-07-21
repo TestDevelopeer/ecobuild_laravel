@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
 	Route::get('/profile/{type?}', [ProfileController::class, 'index'])->name('profile');
 	Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-	Route::post('/answer/delete', [AnswerController::class, 'delete'])->name('answer.delete');
+	Route::post('/answer/delete', [AnswerController::class, 'destroy']);
 });
 
 require __DIR__ . '/../auth.php';
