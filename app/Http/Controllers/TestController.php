@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Test;
 use App\Models\Type;
+use App\Helpers\Helper;
 use App\Models\Question;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File as FileFolder;
 
 class TestController extends Controller
@@ -31,6 +33,12 @@ class TestController extends Controller
 		$questions = Question::paginate(10);
 		$questionTypes = Type::all();
 
+		$questionEdit = isset($request->question) ? Question::findOrFail($request->question) : null;
+		if ($questionEdit != null) {
+			$path = config('custom.tests.path') . "$test->id/questions/$questionEdit->id/{$questionEdit->type->slug}";
+			$questionEdit->assets = Storage::files($path);
+		}
+
 		return view('pages.test.edit', [
 			'breadcrumb' => [
 				'pageName' => 'Администратор',
@@ -46,6 +54,7 @@ class TestController extends Controller
 			'test' => $test,
 			'questions' => $questions,
 			'questionTypes' => $questionTypes,
+			'questionEdit' => $questionEdit
 		]);
 	}
 
@@ -79,12 +88,9 @@ class TestController extends Controller
 		]);
 
 		if ($test) {
-			$path = public_path(config('custom.tests.path') . $test->id);
-			$imageName = $this->uploadIcon($request->icon, $path, $test->icon);
-			$test->icon = $imageName;
+			$path = config('custom.tests.path') . $test->id;
+			$test->icon = Helper::uploadFiles($path, $request->icon);
 			$test->save();
-			FileFolder::makeDirectory("$path/questions", $mode = 0777, true, true);
-			FileFolder::makeDirectory("$path/creative", $mode = 0777, true, true);
 		}
 
 		return redirect(route('test.edit', ['id' => $test->id]));
@@ -105,9 +111,10 @@ class TestController extends Controller
 		$test->slug = Str::slug($request->name, '-');
 
 		if ($request->icon) {
-			$path = public_path(config('custom.tests.path') . $test->id);
-			$imageName = $this->uploadIcon($request->icon, $path, $test->icon);
-			$test->icon = $imageName;
+			Storage::delete($test->icon);
+			$path = config('custom.tests.path') . $test->id;
+			$test->icon = Helper::uploadFiles($path, $request->icon);
+			$test->save();
 		}
 
 		$test->save();

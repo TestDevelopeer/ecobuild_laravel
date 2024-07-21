@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FeedbackController;
@@ -43,7 +44,12 @@ Route::middleware('auth')->group(function () {
 	Route::post('/test/delete', [TestController::class, 'delete'])->name('test.delete');
 
 	Route::post('/question/add', [QuestionController::class, 'add'])->name('question.add');
+	Route::post('/question/save', [QuestionController::class, 'save'])->name('question.save');
 	Route::post('/question/delete', [QuestionController::class, 'delete'])->name('question.delete');
+	Route::post('/question/asset/delete', [QuestionController::class, 'assetDelete'])->name('question.asset.delete');
+	Route::post('/question/asset/get', [QuestionController::class, 'assetGet'])->name('question.asset.get');
+
+	Route::post('/answer/delete', [AnswerController::class, 'delete'])->name('answer.delete');
 });
 
 require __DIR__ . '/auth.php';

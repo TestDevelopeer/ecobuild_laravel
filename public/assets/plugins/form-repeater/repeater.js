@@ -40,7 +40,10 @@ jQuery.fn.extend({
 				$(el).parent().parent().find('label').html(`Ответ №${key + 1}`)
 				if ($(el).attr('type') == 'radio') {
 					$(el).attr('name', attrName)
-					$(el).val(key)
+					$(el).val(key);
+					if (fresh == true) {
+						$(el).removeAttr('checked');
+					}
 				}
 			})
 
@@ -56,7 +59,6 @@ jQuery.fn.extend({
 			}
 
 			removeButton.attr('onclick', '$(this).parents(\'.items\').remove()');
-
 			var newItem = $("<div class='items'>" + itemClone.html() + "<div/>");
 			newItem.attr('data-index', key)
 
@@ -72,11 +74,11 @@ jQuery.fn.extend({
 		items.each(function (index, item) {
 			items.remove();
 			if (hasOption('showFirstItemToDefault') && option('showFirstItemToDefault') == true) {
-				addItem($(item), key);
+				addItem($(item), key, false);
 				key++;
 			} else {
 				if (items.length > 1) {
-					addItem($(item), key);
+					addItem($(item), key, false);
 					key++;
 				}
 			}

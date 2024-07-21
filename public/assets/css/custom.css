@@ -21,3 +21,88 @@ input:read-only {
     text-overflow: ellipsis;
     text-wrap: nowrap;
 }
+
+tr.edited {
+	background-color: #04c1043d;
+}
+.question-asset.chip.chip-md.question-image {
+	height: 100px;
+}
+.question-asset.chip.chip-md.question-video {
+	height: max-content;
+	min-height: 100px;
+	max-height: 300px;
+}
+
+.question-image,
+.question-video,
+.question-audio {
+    width: 100%;
+	
+}
+.question-asset.chip.chip-md {
+	position: relative;
+	cursor:default;
+	padding: 0;
+}
+.question-asset .closebtn,
+.question-asset .zoombtn {
+	cursor: pointer;
+	transition: all 0.5s;
+	opacity: 0;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+}
+
+.question-asset.question-image .closebtn,
+.question-asset.question-image .zoombtn {
+	height: 50%;
+}
+
+.question-asset .closebtn {
+	top: 0;
+	background-color: #d7003e;
+	border-color: #d7003e;
+}
+.question-asset .zoombtn {
+	bottom: 0;
+	background-color: #6c757d;
+	border-color: #6c757d;
+}
+.question-asset .zoombtn a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+}
+
+.question-asset .closebtn:hover {
+	background-color: #a70131
+}
+.question-asset .zoombtn:hover {
+	background-color: #46494b
+}
+.question-asset:hover .closebtn,
+.question-asset:hover .zoombtn {
+	opacity: 1;
+}
+
+.question-asset.chip.chip-md img,
+.question-asset.chip.chip-md video {
+	height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.question-asset audio {
+	width: 100%;
+	transition: all 0.5s;
+}
+.question-asset.chip.chip-md.question-audio:hover {
+	height: 110px;
+}
+.question-asset.question-audio:hover audio {
+	height: 100%;
+}
