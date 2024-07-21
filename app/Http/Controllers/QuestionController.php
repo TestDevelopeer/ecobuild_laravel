@@ -11,20 +11,23 @@ use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller
 {
+	public function uploadAssets($question, $question_assets, $test_id)
+	{
+		if ($question->type_id != 1 && $question_assets) {
+			$path = config('custom.tests.path') . "$test_id/questions/$question->id/{$question->type->slug}";
+			Helper::uploadFiles($path, $question_assets);
+		}
+	}
+
 	public function add(Request $request)
 	{
-		if ($request->type_id != 1) {
-			$request->validate([
-				'question_assets' => 'required',
-			]);
-		}
-
 		$request->validate([
 			'text' => 'required',
 			'type_id' => 'required',
 			'test_id' => 'required',
 			'answers' => 'required',
-			'answers.*.text' => 'required'
+			'answers.0.text' => 'required',
+			'question_assets' => 'exclude_if:type_id,1|required'
 		]);
 
 		$question = Question::create([
@@ -34,10 +37,7 @@ class QuestionController extends Controller
 		]);
 
 		if ($question) {
-			if ($question->type_id != 1) {
-				$path = config('custom.tests.path') . "$request->test_id/questions/$question->id/{$question->type->slug}";
-				Helper::uploadFiles($path, $request->question_assets);
-			}
+			$this->uploadAssets($question, $request->question_assets, $request->test_id);
 
 			foreach ($request->answers as $key => $answer) {
 				Answer::create([
@@ -70,10 +70,7 @@ class QuestionController extends Controller
 		]);
 
 		if ($question->save()) {
-			if ($question->type_id != 1 && $request->question_assets) {
-				$path = config('custom.tests.path') . "$request->test_id/questions/$question->id/{$question->type->slug}";
-				Helper::uploadFiles($path, $request->question_assets);
-			}
+			$this->uploadAssets($question, $request->question_assets, $request->test_id);
 
 			foreach ($request->answers as $key => $ans) {
 				if (isset($ans['answer_id'])) {
@@ -102,35 +99,45 @@ class QuestionController extends Controller
 
 	public function delete(Request $request)
 	{
-		$question = Question::findOrFail($request->id);
-
-		if ($question->delete()) {
+		try {
+			$question = Question::findOrFail($request->id);
 			$path = config('custom.tests.path') . "$question->test_id/questions/$question->id";
 			Helper::deleteFolder($path);
+			$question->delete();
 			return response()->json(['success' => true]);
-		} else {
-			return response()->json(['success' => false]);
+		} catch (\Exception $e) {
+			return response()->json(['success' => false, 'error' => $e->getMessage()]);
 		}
 	}
+
 	public function assetDelete(Request $request)
 	{
-		if (Helper::deleteFile($request->path)) {
-			return response()->json(['success' => true]);
-		} else {
-			return response()->json(['success' => false]);
+		try {
+			if (Helper::deleteFile($request->path)) {
+				return response()->json(['success' => true]);
+			} else {
+				return response()->json(['success' => false]);
+			}
+		} catch (\Exception $e) {
+			return response()->json(['success' => false, 'error' => $e->getMessage()]);
 		}
 	}
+
 	public function assetGet(Request $request)
 	{
-		$question = Question::findOrFail($request->id);
-		$type = Type::findOrFail($request->type_id);
-		$path = config('custom.tests.path') . "$question->test_id/questions/$question->id/{$type->slug}";
-		$question->assets = Storage::files($path);
-		$question->type_id = $request->type_id;
-		if ($question->assets) {
-			return response(['assets' => view('pages.test.edit.questions.question-asset', ['questionEdit' => $question])->render()]);
-		} else {
-			return response()->json(['success' => false]);
+		try {
+			$question = Question::findOrFail($request->id);
+			$type = Type::findOrFail($request->type_id);
+			$path = config('custom.tests.path') . "$question->test_id/questions/$question->id/{$type->slug}";
+			$question->assets = Storage::files($path);
+			$question->type_id = $request->type_id;
+			if ($question->assets) {
+				return response(['assets' => view('pages.test.edit.questions.question-asset', ['questionEdit' => $question])->render()]);
+			} else {
+				return response()->json(['success' => false]);
+			}
+		} catch (\Exception $e) {
+			return response()->json(['success' => false, 'error' => $e->getMessage()]);
 		}
 	}
 }

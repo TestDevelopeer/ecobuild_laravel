@@ -33,7 +33,7 @@
                                                 <p class="mt-0">Выберите иконку тестирования для личного кабинета
                                                     пользователя</p>
                                                 <input class="form-control" name="icon" type="file" id="icon"
-                                                    accept=".png">
+                                                    accept="image/*">
                                             </div>
                                         </div>
                                     </div>

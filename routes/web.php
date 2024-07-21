@@ -5,7 +5,6 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuestionController;
 
 /*
@@ -29,9 +28,6 @@ Route::middleware('auth')->group(function () {
 	})->name('dashboard');
 
 	Route::get('/profile/{type?}', [ProfileController::class, 'index'])->name('profile');
-
-	Route::post('/feedback', [FeedbackController::class, 'create'])->name('feedback');
-	Route::post('/feedback/check', [FeedbackController::class, 'check']);
 
 	Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 

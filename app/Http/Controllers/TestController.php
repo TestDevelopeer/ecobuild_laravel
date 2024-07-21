@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File as FileFolder;
 
 class TestController extends Controller
 {
@@ -30,11 +29,12 @@ class TestController extends Controller
 	public function edit(Request $request)
 	{
 		$test = Test::findOrFail($request->id);
-		$questions = Question::paginate(10);
+		$questions = $test->questions()->paginate(10);
 		$questionTypes = Type::all();
+		$questionEdit = null;
 
-		$questionEdit = isset($request->question) ? Question::findOrFail($request->question) : null;
-		if ($questionEdit != null) {
+		if ($request->question) {
+			$questionEdit = Question::findOrFail($request->question);
 			$path = config('custom.tests.path') . "$test->id/questions/$questionEdit->id/{$questionEdit->type->slug}";
 			$questionEdit->assets = Storage::files($path);
 		}
@@ -58,7 +58,7 @@ class TestController extends Controller
 		]);
 	}
 
-	public function all(Request $request)
+	public function all()
 	{
 		return view('pages.test.all', [
 			'breadcrumb' => [
@@ -68,7 +68,7 @@ class TestController extends Controller
 					['text' => 'Все тесты'],
 				]
 			],
-			'tests' => Test::paginate(10)
+			'tests' => Test::orderBy('id', 'desc')->paginate(10)
 		]);
 	}
 
@@ -106,20 +106,22 @@ class TestController extends Controller
 		]);
 
 		$test = Test::findOrFail($request->id);
-
-		$test->name = $request->name;
-		$test->slug = Str::slug($request->name, '-');
+		$test->fill([
+			'name' => $request->name,
+			'slug' => Str::slug($request->name, '-')
+		]);
 
 		if ($request->icon) {
 			Storage::delete($test->icon);
 			$path = config('custom.tests.path') . $test->id;
 			$test->icon = Helper::uploadFiles($path, $request->icon);
-			$test->save();
 		}
 
-		$test->save();
-
-		return redirect()->back()->with(['status' => 'success']);
+		if ($test->save()) {
+			return redirect()->back()->with(['status' => 'success']);
+		} else {
+			return redirect()->back()->with(['status' => 'error']);
+		}
 	}
 
 	public function delete(Request $request)
@@ -131,15 +133,5 @@ class TestController extends Controller
 		} else {
 			return response()->json(['success' => false]);
 		}
-	}
-
-	public function uploadIcon($icon, $path, $oldIconName)
-	{
-		FileFolder::delete("$path/icon/$oldIconName");
-
-		$imageName = time() . '.' . $icon->getClientOriginalExtension();
-		$icon->move("$path/icon/", $imageName);
-
-		return $imageName;
 	}
 }

@@ -23,7 +23,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <input class="form-control" name="icon" type="file" id="icon"
-                                value="{{ old('icon') }}">
+                                value="{{ old('icon') }}" accept="image/*">
                         </div>
                         <div class="col-md-12">
                             <div class="d-md-flex d-grid align-items-center gap-3">
