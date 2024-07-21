@@ -24,8 +24,6 @@ class UpdateQuestionRequest extends FormRequest
 		return [
 			'text' => 'required',
 			'type_id' => 'required',
-			'test_id' => 'required',
-			'question_id' => 'required',
 			'answers.0.text' => 'required'
 		];
 	}

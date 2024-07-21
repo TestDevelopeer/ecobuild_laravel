@@ -9,29 +9,25 @@
             @endif
         </div>
         <form
-            action="{{ $questionEdit != null ? route('questions.update', ['question' => $questionEdit->id]) : route('questions.store') }}"
+            action="{{ $questionEdit != null ? route('questions.update', ['question' => $questionEdit->id]) : route('tests.questions.store', ['test' => $test->id]) }}"
             method="post" class="row mt-4" enctype="multipart/form-data">
             @if ($questionEdit != null)
                 @method('PATCH')
-                <input type="text" readonly hidden id="question_id" name="question_id"
-                    value="{{ $questionEdit->id }}">
             @endif
             @csrf
-            <input type="text" readonly hidden name="test_id" value="{{ $test->id }}">
-
             <div class="col-12 mb-4">
                 <label for="type_id" class="form-label">Тип вопроса</label>
                 <select id="type_id" name="type_id" class="form-select">
                     @foreach ($questionTypes as $type)
                         <option
-                            {{ old('type_id') == $type->id || (isset($questionEdit->type_id) && $questionEdit->type_id == $type->id) ? 'selected' : '' }}
+                            {{ old('type_id') == $type->id || ($questionEdit != null && $questionEdit->type_id == $type->id) ? 'selected' : '' }}
                             value="{{ $type->id }}">
                             {{ $type->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-12 mb-4" id="question-assets_block">
-                @include('pages.tests.edit.questions.question-asset')
+                @include('pages.tests.questions.question-asset')
             </div>
             <div class="col-12 mb-4 d-none" id="question_asset">
                 <label for="question_asset" class="form-label">Выберите файл для вопроса</label>
@@ -47,10 +43,10 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <textarea class="form-control @error('text') error @enderror" name="text" id="text"
-                    placeholder="Введите текст вопроса" rows="3">{{ old('text') != null ? old('text') : (isset($questionEdit->text) ? $questionEdit->text : '') }}</textarea>
+                    placeholder="Введите текст вопроса" rows="3">{{ old('text') != null ? old('text') : $questionEdit->text ?? '' }}</textarea>
             </div>
             <div class="col-12 mt-4">
-                @include('pages.tests.edit.answers.answer-form')
+                @include('pages.tests.questions.answers.answer-form')
             </div>
             <div class="col-12 mt-4">
                 <div class="d-flex align-items-center justify-content-between">

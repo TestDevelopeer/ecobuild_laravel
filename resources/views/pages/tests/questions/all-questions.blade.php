@@ -15,7 +15,7 @@
             <tbody>
                 @foreach ($questions as $question)
                     <tr @class([
-                        'edited' => isset($questionEdit->id) && $questionEdit->id == $question->id,
+                        'edited' => $questionEdit != null && $questionEdit->id == $question->id,
                     ])>
                         <th scope="row">{{ $question->id }}</th>
                         <td class="question-text" data-bs-toggle="tooltip" data-bs-placement="right"

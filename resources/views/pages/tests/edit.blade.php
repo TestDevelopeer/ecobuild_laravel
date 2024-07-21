@@ -55,10 +55,10 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            @include('pages.tests.edit.questions.question-form')
+            @include('pages.tests.questions.question-form')
         </div>
         <div class="col-12">
-            @include('pages.tests.edit.questions.all-questions')
+            @include('pages.tests.questions.all-questions')
         </div>
     </div>
 @endsection

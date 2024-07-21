@@ -1,4 +1,4 @@
-@if (isset($questionEdit->id) && $questionEdit->type_id > 1 && $questionEdit->assets)
+@if ($questionEdit != null && $questionEdit->type_id > 1 && $questionEdit->assets)
     <div class="row">
         @foreach ($questionEdit->assets as $asset)
             <div @class([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Test;
 use App\Models\Type;
 use App\Models\Answer;
 use App\Helpers\Helper;
@@ -32,15 +33,15 @@ class QuestionController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(StoreQuestionRequest $request)
+	public function store(StoreQuestionRequest $request, Test $test)
 	{
 		$question = Question::create([
 			'text' => $request->text,
 			'type_id' => $request->type_id,
-			'test_id' => $request->test_id
+			'test_id' => $test->id
 		]);
 
-		$this->uploadAssets($question, $request->question_assets, $request->test_id);
+		$this->uploadAssets($question, $request->question_assets, $test->id);
 
 		foreach ($request->answers as $key => $answer) {
 			Answer::create([
@@ -79,7 +80,7 @@ class QuestionController extends Controller
 			'type_id' => $request->type_id,
 		]);
 
-		$this->uploadAssets($question, $request->question_assets, $request->test_id);
+		$this->uploadAssets($question, $request->question_assets, $question->test_id);
 
 		foreach ($request->answers as $key => $ans) {
 			if (isset($ans['answer_id'])) {
@@ -133,7 +134,7 @@ class QuestionController extends Controller
 		$question->assets = Storage::files($path);
 		$question->type_id = $request->type_id;
 		if ($question->assets) {
-			return response(['assets' => view('pages.tests.edit.questions.question-asset', ['questionEdit' => $question])->render()]);
+			return response(['assets' => view('pages.tests.questions.question-asset', ['questionEdit' => $question])->render()]);
 		} else {
 			return response()->json(['success' => false]);
 		}

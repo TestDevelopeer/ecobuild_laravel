@@ -24,7 +24,6 @@ class StoreQuestionRequest extends FormRequest
 		return [
 			'text' => 'required',
 			'type_id' => 'required',
-			'test_id' => 'required',
 			'answers' => 'required',
 			'answers.0.text' => 'required',
 			'question_assets' => 'exclude_if:type_id,1|required'
