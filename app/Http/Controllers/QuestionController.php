@@ -113,7 +113,7 @@ class QuestionController extends Controller
 		$path = config('custom.tests.path') . "$question->test_id/questions/$question->id";
 		Helper::deleteFolder($path);
 		$question->delete();
-		return response()->json(['success' => true]);
+		return response()->json(['test_id' => $question->test_id]);
 	}
 
 	public function uploadAssets($question, $question_assets, $test_id)

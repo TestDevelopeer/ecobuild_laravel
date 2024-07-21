@@ -25,13 +25,11 @@
                         <td>{{ $question->updated_at }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('tests.edit', ['test' => $test->id, 'question' => $question->id]) }}"
+                                <a href="{{ route('tests.edit', ['test' => $test->id, 'question' => $question->id, 'page' => request()->page]) }}"
                                     type="button" class="btn btn-outline-primary d-flex">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <x-button
-                                    href="{{ route('tests.edit', ['test' => $test->id, 'question' => $question->id]) }}"
-                                    class='delete-question' :data-question="$question->id" type='button' is-outline=true
+                                <x-button class='delete-question' :data-question="$question->id" type='button' is-outline=true
                                     color='danger'>
                                     <i class="fa-solid fa-trash"></i>
                                 </x-button>
@@ -46,6 +44,6 @@
 
     </div>
     <div class="mt-2 d-flex justify-content-center">
-        {{ $questions->links() }}
+        {{ $questions->appends(request()->query())->links() }}
     </div>
 </div>

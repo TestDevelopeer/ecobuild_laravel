@@ -34,6 +34,7 @@ class SidebarComposer
 		}
 		$sidebar = [
 			[
+				'role' => 'admin',
 				'title' => 'Администратор',
 				'menu' => [
 					[

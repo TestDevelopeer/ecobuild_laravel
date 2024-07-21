@@ -47,6 +47,11 @@
                                         <i class="fa-solid fa-floppy-disk"></i>
                                         Сохранить тест
                                     </x-button>
+                                    <x-button class="delete-test" type='button' :data-test="$test->id" is-outline=true
+                                        color="danger">
+                                        <i class="fa-solid fa-trash"></i>
+                                        Удалить тест
+                                    </x-button>
                                 </div>
                             </div>
                         </div>

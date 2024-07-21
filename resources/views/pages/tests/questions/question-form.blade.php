@@ -55,8 +55,8 @@
                             <i class="fa-solid fa-floppy-disk"></i>
                             Сохранить вопрос
                         </x-button>
-                        <x-button class="delete-question" type='button' :data-question="$questionEdit->id" :data-test="$test->id"
-                            is-outline=true color="danger">
+                        <x-button class="delete-question" type='button' :data-question="$questionEdit->id" is-outline=true
+                            color="danger">
                             <i class="fa-solid fa-trash"></i>
                             Удалить вопрос
                         </x-button>

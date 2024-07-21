@@ -1,4 +1,4 @@
-// Function to display a success notification when a test is saved
+
 function successSaveTest() {
 	Lobibox.notify('success', {
 		pauseDelayOnHover: true,
@@ -12,14 +12,10 @@ function successSaveTest() {
 	});
 }
 
-// Document ready function
 $(function () {
-	// Event listener for clicking on elements with the class "delete-test"
 	$(document).on('click', '.delete-test', function () {
-		// Get the test ID from the element's data attribute
 		let id = $(this).data('test');
 
-		// Display a warning modal to confirm deletion
 		Swal.fire({
 			title: "Вы уверены?",
 			text: `Удаление теста №${id} так же приведет к удалению всех его вопросов и ответов, а так же всех результатов пользователей которые его прошли и загруженных креативных заданий!`,
@@ -30,11 +26,8 @@ $(function () {
 			confirmButtonText: "Да, я понимаю риски удаления!",
 			cancelButtonText: "Отмена"
 		}).then((result) => {
-			// If the user confirms deletion
 			if (result.isConfirmed) {
-				// Send a POST request to delete the test
 				axios.delete(`/tests/${id}`).then(res => {
-					// Display a success modal if the deletion is successful
 					Swal.fire({
 						title: "Успешно!",
 						text: "Данное тестирование было полностью удалено",
@@ -42,7 +35,6 @@ $(function () {
 					});
 					location.href = '/tests';
 				}).catch(err => {
-					// Display an error modal if there's an error during deletion
 					Swal.fire({
 						title: "Ошибка!",
 						text: "Во время удаления произошла ошибка",

@@ -24,7 +24,16 @@
                                 <div class="parent-icon">
                                     <i class="{{ $menu['icon'] }}"></i>
                                 </div>
-                                <div class="menu-title">{{ $menu['title'] }} {{ $menu['cnt'] ?? '' }}</div>
+                                <div @class([
+                                    'menu-title',
+                                    'd-flex justify-content-between align-items-center w-100' => isset(
+                                        $menu['cnt']),
+                                ])>
+                                    {{ $menu['title'] }}
+                                    @if (isset($menu['cnt']))
+                                        <span class="badge rounded-pill bg-grd-royal">{{ $menu['cnt'] }}</span>
+                                    @endif
+                                </div>
                             </a>
                             @if (isset($menu['submenu']))
                                 <ul>
