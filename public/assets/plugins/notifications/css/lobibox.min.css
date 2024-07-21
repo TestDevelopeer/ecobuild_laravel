@@ -1,4 +1,4 @@
-@import url(../../../fonst-1.css);
+@import url(../../../css/fonts/fonts-1.css);
 .lobibox .lobibox-btn.lobibox-btn-cancel.active, .lobibox .lobibox-btn.lobibox-btn-cancel:active, .lobibox .lobibox-btn.lobibox-btn-default.active, .lobibox .lobibox-btn.lobibox-btn-default:active, .lobibox .lobibox-btn.lobibox-btn-no.active, .lobibox .lobibox-btn.lobibox-btn-no:active, .lobibox .lobibox-btn.lobibox-btn-ok.active, .lobibox .lobibox-btn.lobibox-btn-ok:active, .lobibox .lobibox-btn.lobibox-btn-yes.active, .lobibox .lobibox-btn.lobibox-btn-yes:active, .open>.dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-cancel, .open>.dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-default, .open>.dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-no, .open>.dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-ok, .open>.dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-yes {
 	background-image: none
 }

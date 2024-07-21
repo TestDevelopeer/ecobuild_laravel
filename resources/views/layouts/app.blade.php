@@ -19,17 +19,17 @@
     <link rel="stylesheet" type="text/css" href="/assets/plugins/simplebar/css/simplebar.css">
     <!--bootstrap css-->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/fonts2.css?family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link href="/assets/fonts.css?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="/assets/css/fonts/fonts2.css?family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="/assets/css/fonts/fonts.css?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/assets/plugins/notifications/css/lobibox.min.css">
     <!--main css-->
     <link href="/assets/css/bootstrap-extended.css" rel="stylesheet">
-    <link href="/sass/main.css" rel="stylesheet">
-    <link href="/sass/dark-theme.css" rel="stylesheet">
-    <link href="/sass/blue-theme.css" rel="stylesheet">
-    <link href="/sass/semi-dark.css" rel="stylesheet">
-    <link href="/sass/bordered-theme.css" rel="stylesheet">
-    <link href="/sass/responsive.css" rel="stylesheet">
+    <link href="/assets/css/sass/main.css" rel="stylesheet">
+    <link href="/assets/css/sass/dark-theme.css" rel="stylesheet">
+    <link href="/assets/css/sass/blue-theme.css" rel="stylesheet">
+    <link href="/assets/css/sass/semi-dark.css" rel="stylesheet">
+    <link href="/assets/css/sass/bordered-theme.css" rel="stylesheet">
+    <link href="/assets/css/sass/responsive.css" rel="stylesheet">
     <link href="/assets/css/custom.css" rel="stylesheet">
 
     @yield('styles')
