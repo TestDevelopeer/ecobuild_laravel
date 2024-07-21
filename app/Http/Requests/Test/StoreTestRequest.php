@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Test;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
-class UpdateTestRequest extends FormRequest
+class StoreTestRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class UpdateTestRequest extends FormRequest
 		return [
 			'name' => 'required',
 			'icon' => [
+				'required',
 				File::image()
 			]
 		];

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Question;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\File;
 
-class StoreTestRequest extends FormRequest
+class StoreQuestionRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -23,11 +22,12 @@ class StoreTestRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'name' => 'required',
-			'icon' => [
-				'required',
-				File::image()
-			]
+			'text' => 'required',
+			'type_id' => 'required',
+			'test_id' => 'required',
+			'answers' => 'required',
+			'answers.0.text' => 'required',
+			'question_assets' => 'exclude_if:type_id,1|required'
 		];
 	}
 }

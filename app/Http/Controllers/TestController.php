@@ -8,9 +8,9 @@ use App\Helpers\Helper;
 use App\Models\Question;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreTestRequest;
+use App\Http\Requests\Test\StoreTestRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateTestRequest;
+use App\Http\Requests\Test\UpdateTestRequest;
 
 class TestController extends Controller
 {
