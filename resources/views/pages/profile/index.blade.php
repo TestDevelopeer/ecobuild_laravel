@@ -28,7 +28,7 @@
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                         @foreach ($menuButtons as $menu)
-                            @include('pages.profile.' . $menu['type'])
+                            @include('pages.profile.tabs.' . $menu['type'])
                         @endforeach
                     </div>
                 </div>

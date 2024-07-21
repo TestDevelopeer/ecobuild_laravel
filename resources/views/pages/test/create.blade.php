@@ -10,17 +10,27 @@
                         @csrf
                         <div class="col-md-6">
                             <label for="name" class="form-label">Название</label>
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Введите название тестирования">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <input type="text" class="form-control @error('name') error @enderror" name="name"
+                                id="name" placeholder="Введите название тестирования" value="{{ old('name') }}">
                         </div>
                         <div class="col-md-6">
                             <label for="icon" class="form-label">Выберите иконку тестирования для личного кабинета
                                 пользователя</label>
-                            <input class="form-control" name="icon" type="file" id="icon">
+                            @error('icon')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <input class="form-control" name="icon" type="file" id="icon"
+                                value="{{ old('icon') }}">
                         </div>
                         <div class="col-md-12">
                             <div class="d-md-flex d-grid align-items-center gap-3">
-                                <button type="submit" class="btn btn-success px-4">Создать</button>
+                                <x-button type="submit" color='success' is-outline=true>
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                    Создать
+                                </x-button>
                             </div>
                         </div>
                     </form>

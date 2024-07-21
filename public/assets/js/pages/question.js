@@ -6,6 +6,16 @@ let showAssetQuestion = (typeSelectId) => {
 		// Show the question asset element
 		$('#question_asset').removeClass('d-none');
 
+		if ($('#question_id').length > 0) {
+			axios.post('/question/asset/get', { type_id, id: $('#question_id').val() }).then(res => {
+				if (res.data.assets) {
+					$('#question-assets_block').html(res.data.assets);
+				} else {
+					$('#question-assets_block').html('');
+				}
+			})
+		}
+
 		// Set the accept attribute of the input field based on the selected type
 		if (type_id == 2) {
 			// For type 2, accept images
@@ -37,23 +47,7 @@ $(function () {
 	showAssetQuestion('#type_id');
 
 	// Bind a change event to the type_id element
-	$(document).on('change', '#type_id', function () {
-		// Call the showAssetQuestion function when the type_id element changes
-
-		if ($('#question_id').length > 0) {
-			let type_id = $('#type_id').val();
-			axios.post('/question/asset/get', { type_id, id: $('#question_id').val() }).then(res => {
-				showAssetQuestion('#type_id');
-				if (res.data.assets) {
-					$('#question-assets_block').html(res.data.assets);
-				} else {
-					$('#question-assets_block').html('');
-				}
-			})
-		} else {
-			showAssetQuestion('#type_id');
-		}
-	});
+	$(document).on('change', '#type_id', () => showAssetQuestion('#type_id'));
 
 	// Attach an event listener to all elements with the class 'delete-question'
 	$(document).on('click', '.delete-question', function () {

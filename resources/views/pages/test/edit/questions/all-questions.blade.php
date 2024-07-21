@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-body overflow-scroll">
+    <div class="card-body overflow-auto">
         <h5 class="mb-4">Все вопросы данного теста</h5>
         <table class="table mb-0">
             <thead class="table-dark">
@@ -29,10 +29,13 @@
                                     type="button" class="btn btn-outline-primary d-flex">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <button data-question="{{ $question->id }}" type="button"
-                                    class="btn btn-outline-danger d-flex delete-question">
+                                <x-button
+                                    href="{{ route('test.edit', ['id' => $test->id, 'question' => $question->id]) }}"
+                                    class='delete-question' :data-question="$question->id" type='button' is-outline=true
+                                    color='danger'>
                                     <i class="fa-solid fa-trash"></i>
-                                </button>
+                                </x-button>
+
                             </div>
                         </td>
                     </tr>

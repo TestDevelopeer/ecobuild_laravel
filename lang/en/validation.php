@@ -235,8 +235,11 @@ return [
 		'text' => [
 			'required' => 'Введите текст'
 		],
-		'question_asset' => [
-			'required' => 'Выберите файл для вопроса'
+		'icon' => [
+			'required' => 'Выберите иконку для тестирования'
+		],
+		'question_assets' => [
+			'required' => 'Выберите файлы для вопроса'
 		],
 		'answers' => [
 			'required' => 'У вопроса должен быть хотя бы 1 ответ'

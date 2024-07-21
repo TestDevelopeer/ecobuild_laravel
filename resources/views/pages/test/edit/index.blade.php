@@ -16,8 +16,11 @@
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label for="name" class="form-label">Название</label>
-                                <input type="text" class="form-control" name="name" id="name"
-                                    placeholder="Введите название тестирования" value="{{ $test->name }}">
+                                @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <input type="text" class="form-control @error('name') error @enderror" name="name"
+                                    id="name" placeholder="Введите название тестирования" value="{{ $test->name }}">
                             </div>
                             <div class="col-12">
                                 <div class="card radius-10 rounded-4">
@@ -38,7 +41,10 @@
                             </div>
                             <div class="col-12">
                                 <div class="d-md-flex d-grid align-items-center gap-3">
-                                    <button type="submit" class="btn btn-primary px-4">Сохранить тест</button>
+                                    <x-button type='submit' is-outline=true color='success'>
+                                        <i class="fa-solid fa-floppy-disk"></i>
+                                        Сохранить тест
+                                    </x-button>
                                 </div>
                             </div>
                         </div>
@@ -47,10 +53,10 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            @include('pages.test.questions.question-form')
+            @include('pages.test.edit.questions.question-form')
         </div>
         <div class="col-12">
-            @include('pages.test.questions.all-questions')
+            @include('pages.test.edit.questions.all-questions')
         </div>
     </div>
 @endsection

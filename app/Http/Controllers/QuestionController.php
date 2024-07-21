@@ -128,7 +128,7 @@ class QuestionController extends Controller
 		$question->assets = Storage::files($path);
 		$question->type_id = $request->type_id;
 		if ($question->assets) {
-			return response(['assets' => view('pages.test.questions.question-asset', ['questionEdit' => $question])->render()]);
+			return response(['assets' => view('pages.test.edit.questions.question-asset', ['questionEdit' => $question])->render()]);
 		} else {
 			return response()->json(['success' => false]);
 		}

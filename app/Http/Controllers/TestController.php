@@ -39,7 +39,7 @@ class TestController extends Controller
 			$questionEdit->assets = Storage::files($path);
 		}
 
-		return view('pages.test.edit', [
+		return view('pages.test.edit.index', [
 			'breadcrumb' => [
 				'pageName' => 'Администратор',
 				'breadcrumb' => [

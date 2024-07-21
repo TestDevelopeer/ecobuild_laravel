@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-body">
+        <div class="card-body overflow-auto">
             <table class="table mb-0">
                 <thead class="table-dark">
                     <tr>
@@ -26,10 +26,10 @@
                                         class="btn btn-outline-primary d-flex">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <button data-test="{{ $test->id }}" type="button"
-                                        class="btn btn-outline-danger d-flex delete-test">
+                                    <x-button class="delete-test" :data-test="$test->id" type="button" is-outline=true
+                                        color='danger'>
                                         <i class="fa-solid fa-trash"></i>
-                                    </button>
+                                    </x-button>
                                 </div>
                             </td>
                         </tr>
