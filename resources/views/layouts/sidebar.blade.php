@@ -15,30 +15,32 @@
         <!--navigation-->
         <ul class="metismenu" id="sidenav">
             @foreach ($sidebarComposer as $sidebar)
-                <li class="menu-label">{{ $sidebar['title'] }}</li>
-                @foreach ($sidebar['menu'] as $menu)
-                    <li>
-                        <a @class([$menu['modal'] ?? '', 'has-arrow' => isset($menu['submenu'])])
-                            href="{{ isset($menu['link']) ? $menu['link'] : 'javascript:;' }}">
-                            <div class="parent-icon">
-                                <i class="{{ $menu['icon'] }}"></i>
-                            </div>
-                            <div class="menu-title">{{ $menu['title'] }} {{ $menu['cnt'] ?? '' }}</div>
-                        </a>
-                        @if (isset($menu['submenu']))
-                            <ul>
-                                @foreach ($menu['submenu'] as $sub)
-                                    <li>
-                                        <a href="{{ $sub['link'] }}" style="justify-content: space-between">
-                                            <i class="fa-solid fa-caret-right"></i>
-                                            {{ $sub['title'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    </li>
-                @endforeach
+                @if (!isset($sidebar['role']) || $sidebar['role'] == Auth::user()->role)
+                    <li class="menu-label">{{ $sidebar['title'] }}</li>
+                    @foreach ($sidebar['menu'] as $menu)
+                        <li>
+                            <a @class([$menu['modal'] ?? '', 'has-arrow' => isset($menu['submenu'])])
+                                href="{{ isset($menu['link']) ? $menu['link'] : 'javascript:;' }}">
+                                <div class="parent-icon">
+                                    <i class="{{ $menu['icon'] }}"></i>
+                                </div>
+                                <div class="menu-title">{{ $menu['title'] }} {{ $menu['cnt'] ?? '' }}</div>
+                            </a>
+                            @if (isset($menu['submenu']))
+                                <ul>
+                                    @foreach ($menu['submenu'] as $sub)
+                                        <li>
+                                            <a href="{{ $sub['link'] }}" style="justify-content: space-between">
+                                                <i class="fa-solid fa-caret-right"></i>
+                                                {{ $sub['title'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </li>
+                    @endforeach
+                @endif
             @endforeach
         </ul>
         <!--end navigation-->

@@ -14,6 +14,10 @@ use App\Http\Requests\Test\UpdateTestRequest;
 
 class TestController extends Controller
 {
+	public function __construct(Request $request)
+	{
+		$this->authorizeResource(Test::class, 'test');
+	}
 	/**
 	 * Display a listing of the resource.
 	 */
