@@ -710,7 +710,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-body">
-                                <form id="feedback-form" action="{{ route('feedback') }}" method="post"
+                                <form id="feedback-form" action="{{ route('feedback.create') }}" method="post"
                                     class="row g-3">
                                     <div class="col-md-6">
                                         <label for="email" class="form-label">Email</label>
