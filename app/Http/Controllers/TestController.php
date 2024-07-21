@@ -125,8 +125,8 @@ class TestController extends Controller
 	public function delete(Request $request)
 	{
 		if (Test::findOrFail($request->id)->delete()) {
-			$path = public_path(config('custom.tests.path') . $request->id);
-			FileFolder::deleteDirectory($path);
+			$path = config('custom.tests.path') . $request->id;
+			Helper::deleteFolder($path);
 			return response()->json(['success' => true]);
 		} else {
 			return response()->json(['success' => false]);

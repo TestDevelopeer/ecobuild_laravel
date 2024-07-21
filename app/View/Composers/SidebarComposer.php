@@ -37,7 +37,7 @@ class SidebarComposer
 				'title' => 'Администратор',
 				'menu' => [
 					[
-						'icon' => 'fa-light fa-person-to-door',
+						'icon' => 'fa-light fa-message-plus',
 						'title' => 'Тестирование',
 						'submenu' => [
 							[
@@ -47,10 +47,6 @@ class SidebarComposer
 							[
 								'title' => 'Редактировать',
 								'link' => route('test.all')
-							],
-							[
-								'title' => 'Типы вопросов',
-								'link' => '/create'
 							]
 						]
 					],

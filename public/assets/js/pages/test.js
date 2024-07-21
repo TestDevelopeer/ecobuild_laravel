@@ -40,6 +40,7 @@ $(function () {
 						text: "Данное тестирование было полностью удалено",
 						icon: "success"
 					});
+					location.href = '/test/all';
 				}).catch(err => {
 					// Display an error modal if there's an error during deletion
 					Swal.fire({
