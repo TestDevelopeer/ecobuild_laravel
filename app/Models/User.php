@@ -55,11 +55,16 @@ class User extends Authenticatable
 
 	public function succesResultsForCreative()
 	{
-		return $this->hasMany(Result::class)->where('points', '>', config('custom.creative.min'))->get();
+		return $this->hasMany(Result::class)->where('points', '>', config('custom.creative.min'));
 	}
 
-	public function lastOneSuccessResultForCreative()
+	public function results()
 	{
-		return $this->hasOne(Result::class)->where('points', '>', config('custom.creative.min'))->first();
+		return $this->hasMany(Result::class);
+	}
+
+	public function quiz($testId)
+	{
+		return $this->hasMany(Quiz::class)->where('test_id', '=', $testId);
 	}
 }

@@ -13,6 +13,9 @@ $(function () {
 
 		axios.patch(action, { answer_id }).then(res => {
 			axios.get(`/tests/${res.data.test}?render=true`).then(res => {
+				if (res.data.redirect) {
+					location.href = res.data.redirect;
+				}
 				$('#quiz-container').html(res.data.html);
 			});
 		});

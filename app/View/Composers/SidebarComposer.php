@@ -4,6 +4,7 @@ namespace App\View\Composers;
 
 use App\Models\Test;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class SidebarComposer
 {
@@ -21,10 +22,13 @@ class SidebarComposer
 	{
 		$testsMenu = [];
 		foreach (Test::all() as $test) {
-			array_push($testsMenu, [
-				'title' => $test->name,
-				'link' => route('tests.show', ['test' => $test->id])
-			]);
+			if ($test->questionsForQuiz()->count() > 0) {
+				array_push($testsMenu, [
+					'title' => $test->name,
+					'link' => route('tests.show', ['test' => $test->id]),
+					'is_completed' => $test->results()->where('user_id', '=', Auth::id())->first()
+				]);
+			}
 		}
 		$sidebar = [
 			[

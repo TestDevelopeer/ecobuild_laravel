@@ -45,7 +45,7 @@
                     <div class="full-info">
                         <div class="card w-100 rounded-4">
                             <div class="card-body">
-                                @if ($user->lastOneSuccessResultForCreative())
+                                @if ($user->succesResultsForCreative()->first())
                                     <div class="d-flex flex-column">
                                         @include('components.alert', [
                                             'border' => true,

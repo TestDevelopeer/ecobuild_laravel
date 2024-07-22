@@ -7,20 +7,7 @@
 
 @section('content')
     <div class="row" id="quiz-container">
-        @if (isset($questionsForQuiz) && $questionsForQuiz == 0)
-            <div class="alert alert-border-warning alert-dismissible fade show">
-                <div class="d-flex align-items-center">
-                    <div class="font-35 text-warning"><span class="material-icons-outlined fs-2">report_problem</span>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0 text-warning">Что-то пошло не так...</h6>
-                        <div class="">У данного тестирования нет вопросов :(</div>
-                    </div>
-                </div>
-            </div>
-        @else
-            @include('pages.quizzes.quiz-template')
-        @endif
+        @include('pages.quizzes.quiz-template')
     </div>
 @endsection
 

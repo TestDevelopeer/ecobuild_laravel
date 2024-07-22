@@ -2,7 +2,7 @@
     'tab-pane fade',
     'show active' => isset($type) && $type == 'creative',
 ]) id="primary-pills-creative" role="tabpanel">
-    @if ($user->lastOneSuccessResultForCreative())
+    @if ($user->succesResultsForCreative()->first())
         <div class="row">
             <div class="col-12 d-flex">
                 <div class="card rounded-4 w-100">
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach ($user->succesResultsForCreative() as $result)
+            @foreach ($user->succesResultsForCreative()->get() as $result)
                 <div class="col-12 col-lg-6">
                     <div class="card">
                         <div class="card-body">

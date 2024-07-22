@@ -2,7 +2,7 @@
     'tab-pane fade',
     'show active' => !isset($type) || $type == 'results',
 ]) id="primary-pills-results" role="tabpanel">
-    @if ($user->lastOneSuccessResultForCreative())
+    @if ($user->results()->first())
     @else
         @include('components.alert', [
             'border' => true,

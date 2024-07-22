@@ -40,8 +40,15 @@
                                     @foreach ($menu['submenu'] as $sub)
                                         <li>
                                             <a href="{{ $sub['link'] }}" style="justify-content: space-between">
-                                                <i class="fa-solid fa-caret-right"></i>
+                                                @if (isset($sub['is_completed']) && $sub['is_completed'])
+                                                    <span class="badge rounded-pill bg-success"><i
+                                                            class="fa-solid fa-check me-0"></i></span>
+                                                @else
+                                                    <i class="fa-solid fa-caret-right"></i>
+                                                @endif
+
                                                 {{ $sub['title'] }}
+
                                             </a>
                                         </li>
                                     @endforeach
