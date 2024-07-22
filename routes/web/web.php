@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RewardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
 	Route::get('/profile/{type?}', [ProfileController::class, 'index'])->name('profile');
 	Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 	Route::post('/answer/delete', [AnswerController::class, 'destroy']);
+	Route::post('/reward', [RewardController::class, 'reward']);
 });
 
 require __DIR__ . '/../auth.php';

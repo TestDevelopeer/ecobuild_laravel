@@ -76,11 +76,6 @@ class SidebarComposer
 				'title' => 'Профиль',
 				'menu' => [
 					[
-						'icon' => 'fa-light fa-square-poll-vertical',
-						'title' => 'Результаты',
-						'link' => route('profile', ['type' => 'results'])
-					],
-					[
 						'icon' => 'fa-light fa-medal',
 						'title' => 'Награды',
 						'link' => route('profile', ['type' => 'rewards'])

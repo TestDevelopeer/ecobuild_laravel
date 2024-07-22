@@ -1,6 +1,6 @@
 <div @class([
     'tab-pane fade',
-    'show active' => isset($type) && $type == 'faq',
+    'show active' => !isset($type) || $type == 'faq',
 ]) id="primary-pills-faq" role="tabpanel">
     <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
@@ -14,8 +14,8 @@
                 data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">Сертификат участника выдается за прохождение
                     тестирования. Дипломы 3, 2, 1 степени выдаются за результат тестирования выше
-                    {{ $diplomConfig['first'] }}, {{ $diplomConfig['second'] }} и
-                    {{ $diplomConfig['third'] }} процентов соответственно.</div>
+                    {{ $diplomConfig['third'] }}, {{ $diplomConfig['second'] }} и
+                    {{ $diplomConfig['first'] }} процентов соответственно.</div>
             </div>
         </div>
         <div class="accordion-item">

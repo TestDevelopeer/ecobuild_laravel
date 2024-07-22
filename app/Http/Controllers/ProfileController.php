@@ -33,11 +33,6 @@ class ProfileController extends Controller
 
 		$menuButtons = [
 			[
-				'icon' => 'fa-light fa-square-poll-vertical',
-				'title' => 'Результаты',
-				'type' => 'results'
-			],
-			[
 				'icon' => 'fa-light fa-medal',
 				'title' => 'Награды',
 				'type' => 'rewards'
@@ -54,6 +49,8 @@ class ProfileController extends Controller
 			],
 		];
 
+		$results = $request->user()->results;
+
 		return view('pages.profile.index', [
 			'breadcrumb' => [
 				'pageName' => 'Профиль',
@@ -66,6 +63,7 @@ class ProfileController extends Controller
 			'user' => $request->user(),
 			'tests' => Test::all(),
 			'diplomConfig' => config('custom.diplom'),
+			'results' => $results,
 		]);
 	}
 }

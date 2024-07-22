@@ -1,3 +1,7 @@
+h5, .h5 {
+    font-size: 1.125rem;
+}
+
 .error {
 	border: 1px solid red;
 }
@@ -125,3 +129,6 @@ tr.edited {
 	height: 300px;
 }
 
+.text-no-wrap {
+	text-wrap: nowrap;
+}

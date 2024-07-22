@@ -2,9 +2,9 @@
 
 return [
 	'diplom' => [
-		'first' => 40,
+		'first' => 80,
 		'second' => 60,
-		'third' => 80
+		'third' => 40
 	],
 	'creative' => [
 		'min' => 39
