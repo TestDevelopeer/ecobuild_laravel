@@ -27,7 +27,15 @@ class StoreTestRequest extends FormRequest
 			'icon' => [
 				'required',
 				File::image()
-			]
+			],
+			'certificate' => [
+				'required',
+				File::image()
+			],
+			'diplom' => [
+				'required',
+				File::image()
+			],
 		];
 	}
 }

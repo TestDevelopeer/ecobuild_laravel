@@ -10,8 +10,11 @@
                     <p class="mb-0">За прохождение тестирования "{{ $result->test->name }}"</p>
                 </div>
                 <div class="d-flex align-items-center justify-content-end gap-1 mt-3">
-                    <button type="button" class="btn btn-outline-success px-4 d-flex align-items-center gap-2"><i
-                            class="fa-regular fa-download"></i>Скачать</button>
+                    <form action="{{ route('reward.certificate', ['test' => $result->test->id]) }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-success px-4 d-flex align-items-center gap-2"><i
+                                class="fa-regular fa-download"></i>Скачать</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -48,8 +51,12 @@
                             class="btn btn-outline-secondary px-4 d-flex align-items-center gap-2"><i
                                 class="fa-solid fa-lock-keyhole"></i>Скачать</button>
                     @else
-                        <button type="button" class="btn btn-outline-success px-4 d-flex align-items-center gap-2"><i
-                                class="fa-regular fa-download"></i>Скачать</button>
+                        <form action="{{ route('reward.diplom', ['test' => $result->test->id]) }}" method="post">
+                            @csrf
+                            <button type="submit"
+                                class="btn btn-outline-success px-4 d-flex align-items-center gap-2"><i
+                                    class="fa-regular fa-download"></i>Скачать</button>
+                        </form>
                     @endif
                 </div>
             </div>

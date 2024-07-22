@@ -26,7 +26,13 @@ class UpdateTestRequest extends FormRequest
 			'name' => 'required',
 			'icon' => [
 				File::image()
-			]
+			],
+			'certificate' => [
+				File::image()
+			],
+			'diplom' => [
+				File::image()
+			],
 		];
 	}
 }

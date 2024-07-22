@@ -9,6 +9,7 @@ use App\Models\Result;
 use App\Helpers\Helper;
 use App\Models\Question;
 use Illuminate\Support\Str;
+use App\Models\RewardConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -69,7 +70,18 @@ class TestController extends Controller
 		if ($test) {
 			$path = config('custom.tests.path') . $test->id;
 			$test->icon = Helper::uploadFiles($path, $request->icon);
+			Helper::uploadFiles("$path/certificate", $request->certificate);
+			Helper::uploadFiles("$path/diplom", $request->diplom);
 			$test->save();
+
+			RewardConfig::create([
+				'test_id' => $test->id,
+				'type' => 'diplom'
+			]);
+			RewardConfig::create([
+				'test_id' => $test->id,
+				'type' => 'certificate'
+			]);
 		}
 
 		return redirect(route('tests.edit', ['test' => $test->id]));
@@ -83,6 +95,13 @@ class TestController extends Controller
 		$quizRemainigCount = $request->user()->quiz($test->id)->count();
 		$quizReady = $request->user()->quiz($test->id)->where('answer_id', '!=', null);
 
+		if ($quizRemainigCount == $quizReady->count()) {
+			if ($request->render) {
+				return response(['redirect' => route('tests.completed', ['test' => $test->id])]);
+			}
+			return redirect(route('tests.completed', ['test' => $test->id]));
+		}
+
 		if ($quizRemainigCount == 0) {
 			foreach ($test->questionsForQuiz as $question) {
 				Quiz::firstOrCreate([
@@ -93,43 +112,31 @@ class TestController extends Controller
 			}
 		}
 
-		$remainigQuiz = $request->session()->get("remainigQuiz.{$test->id}", function () use ($request, $test) {
-			$quiz = Quiz::where('user_id', '=', $request->user()->id)
+		$remainigQuiz = $request->session()->get("remainigQuiz.{$test->id}");
+
+		if (!$remainigQuiz || !Quiz::find($remainigQuiz->id)) {
+			$remainigQuiz = Quiz::where('user_id', '=', $request->user()->id)
 				->where('test_id', '=', $test->id)
 				->where('answer_id', '=', null)
 				->inRandomOrder()
 				->first();
+		}
 
-			if ($quiz) {
-				$request->session()->put("remainigQuiz.{$test->id}", $quiz);
-			}
+		$remainigQuiz->refresh();
+		$request->session()->put("remainigQuiz.{$test->id}", $remainigQuiz);
 
-			return $quiz;
-		});
-
-		if ($remainigQuiz) {
-			$remainigQuiz->refresh();
-
-			if ($remainigQuiz->question->type_id > 1) {
-				$path = config('custom.tests.path') . "$test->id/questions/$remainigQuiz->question_id/{$remainigQuiz->question->type->slug}";
-				$remainigQuiz->assets = Storage::files($path);
-			}
+		if ($remainigQuiz->question->type_id > 1) {
+			$path = config('custom.tests.path') . "$test->id/questions/$remainigQuiz->question_id/{$remainigQuiz->question->type->slug}";
+			$remainigQuiz->assets = Storage::files($path);
 		}
 
 		if ($request->render) {
-			if ($quizRemainigCount == $quizReady->count()) {
-				return response(['redirect' => route('tests.completed', ['test' => $test->id])]);
-			}
 			$view = view('pages.quizzes.quiz-template', [
 				'remainigQuiz' => $remainigQuiz,
 				'quizRemainigCount' => $quizRemainigCount,
 				'quizReadyCount' => $quizReady->count(),
 			]);
 			return response(['html' => $view->render()]);
-		}
-
-		if ($quizRemainigCount == $quizReady->count()) {
-			return redirect(route('tests.completed', ['test' => $test->id]));
 		}
 
 		return view('pages.quizzes.index', [
@@ -153,10 +160,30 @@ class TestController extends Controller
 		$questions = $test->questions()->paginate(10);
 		$questionTypes = Type::all();
 		$questionEdit = null;
+
 		if ($request->question) {
 			$questionEdit = Question::findOrFail($request->question);
 			$path = config('custom.tests.path') . "$test->id/questions/$questionEdit->id/{$questionEdit->type->slug}";
 			$questionEdit->assets = Storage::files($path);
+		}
+
+		$path = config('custom.tests.path') . $test->id;
+		$test->certificate = Storage::files("$path/certificate")[0] ?? '';
+		$test->diplom = Storage::files("$path/diplom")[0] ?? '';
+
+		$certificateConfig = $test->configByType('certificate')->first();
+		if (!$certificateConfig) {
+			$certificateConfig = RewardConfig::create([
+				'test_id' => $test->id,
+				'type' => 'certificate'
+			]);
+		}
+		$diplomConfig = $test->configByType('diplom')->first();
+		if (!$diplomConfig) {
+			$diplomConfig = RewardConfig::create([
+				'test_id' => $test->id,
+				'type' => 'diplom'
+			]);
 		}
 
 		return view('pages.tests.edit', [
@@ -174,7 +201,9 @@ class TestController extends Controller
 			'test' => $test,
 			'questions' => $questions,
 			'questionTypes' => $questionTypes,
-			'questionEdit' => $questionEdit
+			'questionEdit' => $questionEdit,
+			'certificateConfig' => $certificateConfig,
+			'diplomConfig' => $diplomConfig
 		]);
 	}
 
@@ -188,13 +217,25 @@ class TestController extends Controller
 			'slug' => Str::slug($request->name, '-')
 		]);
 
+		$path = config('custom.tests.path') . $test->id;
 		if ($request->icon) {
 			Storage::delete($test->icon);
-			$path = config('custom.tests.path') . $test->id;
 			$test->icon = Helper::uploadFiles($path, $request->icon);
 		}
 
+		if ($request->certificate) {
+			$certificate = Storage::files("$path/certificate")[0] ?? '';
+			Storage::delete($certificate);
+			Helper::uploadFiles("$path/certificate", $request->certificate);
+		}
+		if ($request->diplom) {
+			$diplom = Storage::files("$path/diplom")[0] ?? '';
+			Storage::delete($diplom);
+			Helper::uploadFiles("$path/diplom", $request->diplom);
+		}
+
 		$test->save();
+
 		return redirect()->back()->with(['status' => 'success']);
 	}
 
@@ -212,10 +253,11 @@ class TestController extends Controller
 	public function completed(Request $request, Test $test)
 	{
 		$quizResult = Result::where('user_id', '=', $request->user()->id)->where('test_id', '=', $test->id)->first();
-
 		if (!$quizResult) {
 			$quizReady = $request->user()->quiz($test->id);
-
+			if ($request->user()->quiz($test->id)->where('answer_id', '=', null)->first()) {
+				return redirect(route('tests.show', ['test' => $test->id]));
+			}
 			$cntTrueAnswers = 0;
 			foreach ($quizReady->get() as $key => $value) {
 				if ($value->answer->is_true) {
@@ -237,5 +279,23 @@ class TestController extends Controller
 				]
 			],
 		]);
+	}
+
+	public function rewardConfig(Request $request)
+	{
+		$config = RewardConfig::findOrFail($request->id);
+
+		$config->update([
+			'x_coord' => $request->x_coord,
+			'y_coord' => $request->y_coord,
+			'x_degree_coord' => $request->x_degree_coord ?? 0,
+			'y_degree_coord' => $request->y_degree_coord ?? 0,
+			'font_size' => $request->font_size,
+			'font_color' => $request->font_color,
+			'degree_font_size' => $request->degree_font_size ?? 0,
+			'degree_font_color' => $request->degree_font_color ?? 0,
+		]);
+
+		return response(['status' => 'success']);
 	}
 }

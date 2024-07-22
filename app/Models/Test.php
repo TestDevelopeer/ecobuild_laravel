@@ -41,12 +41,29 @@ class Test extends Model
 		return $this->hasManyThrough(Answer::class, Question::class);
 	}
 
+	public function configs()
+	{
+		return $this->hasMany(RewardConfig::class);
+	}
+
+	public function quizzes()
+	{
+		return $this->hasMany(Quiz::class);
+	}
+
 	public function delete()
 	{
 		$this->answers()->delete();
 		$this->questions()->delete();
 		$this->results()->delete();
+		$this->configs()->delete();
+		$this->quizzes()->delete();
 
 		return parent::delete();
+	}
+
+	public function configByType($type)
+	{
+		return $this->hasMany(RewardConfig::class)->where('type', '=', $type);
 	}
 }

@@ -1,3 +1,17 @@
+
+function notification(type, message) {
+	Lobibox.notify(type, {
+		pauseDelayOnHover: true,
+		size: 'mini',
+		rounded: true,
+		icon: 'fa-solid fa-triangle-exclamation',
+		delayIndicator: false,
+		continueDelayOnInactiveTab: false,
+		position: 'top center',
+		msg: message
+	});
+}
+
 $(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
 	$('.creative-uploader').FancyFileUpload({

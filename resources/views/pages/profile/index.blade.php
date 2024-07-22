@@ -66,4 +66,9 @@
     <script src="/assets/plugins/fancy-file-uploader/jquery.iframe-transport.js"></script>
     <script src="/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
     <script src="/assets/js/pages/profile.js"></script>
+    @if (session('status') == 'error')
+        <script>
+            notification('error', "{{ session('message') }}");
+        </script>
+    @endif
 @endsection

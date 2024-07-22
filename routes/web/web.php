@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
 	Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 	Route::post('/answer/delete', [AnswerController::class, 'destroy']);
 	Route::post('/reward', [RewardController::class, 'reward']);
+	Route::post('/reward/{test}/certificate', [RewardController::class, 'certificate'])->name('reward.certificate');
+	Route::post('/reward/{test}/diplom', [RewardController::class, 'diplom'])->name('reward.diplom');
+	Route::post('/reward/{test}/coords', [RewardController::class, 'getCenterCoords']);
 });
 
 require __DIR__ . '/../auth.php';

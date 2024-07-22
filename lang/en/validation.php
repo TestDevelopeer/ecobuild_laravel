@@ -238,6 +238,12 @@ return [
 		'icon' => [
 			'required' => 'Выберите иконку для тестирования'
 		],
+		'certificate' => [
+			'required' => 'Выберите сертификат'
+		],
+		'diplom' => [
+			'required' => 'Выберите диплом'
+		],
 		'question_assets' => [
 			'required' => 'Выберите файлы для вопроса'
 		],

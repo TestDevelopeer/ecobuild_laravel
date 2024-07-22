@@ -44,4 +44,55 @@ $(function () {
 			}
 		});
 	});
+
+	$(document).on('click', '.save-config', function () {
+		let data = {};
+		data['id'] = $(this).data('config');
+		$('#config-' + data['id']).find('input').each(function () {
+			data[this.name] = $(this).val();
+		});
+
+		axios.post('/tests/reward/config', data).then(res => {
+			Lobibox.notify('success', {
+				pauseDelayOnHover: true,
+				size: 'mini',
+				rounded: true,
+				icon: 'bi bi-check2-circle',
+				delayIndicator: false,
+				continueDelayOnInactiveTab: false,
+				position: 'top center',
+				msg: 'Настройки сохранены'
+			});
+		});
+	});
+
+	$(document).on('click', '.preview-config', function () {
+		let type = $(this).data('type');
+		let test = $(this).data('test');
+
+		axios.post(`/reward/${test}/${type}`, { is_link: true }).then(res => {
+			$('.preview-link').attr('href', res.data.url);
+			$('.preview-link').click();
+		}).catch(err => {
+			Lobibox.notify('error', {
+				pauseDelayOnHover: true,
+				size: 'mini',
+				rounded: true,
+				icon: 'fa-solid fa-triangle-exclamation',
+				delayIndicator: false,
+				continueDelayOnInactiveTab: false,
+				position: 'top center',
+				msg: err.response.data.message
+			});
+		});
+	});
+
+	$(document).on('click', '.center-coords', function () {
+		let type = $(this).data('type');
+		let test = $(this).data('test');
+		let coord = $(this).data('coord');
+		axios.post(`/reward/${test}/coords`, { type }).then(res => {
+			$(`#${coord}_${type}`).val(res.data[coord]);
+		})
+	})
 });
