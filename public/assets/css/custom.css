@@ -106,3 +106,22 @@ tr.edited {
 .question-asset.question-audio:hover audio {
 	height: 100%;
 }
+
+.question-assets-carousel .carousel-item {
+	height: 300px;
+}
+
+.question-assets-carousel .carousel-item img {
+	height: 100%;
+	object-fit: contain;
+	cursor: zoom-in;
+}
+.question-assets-carousel .carousel-control-prev i, 
+.question-assets-carousel .carousel-control-next i {
+	color: #3184fd;
+}
+
+.question-assets video {
+	height: 300px;
+}
+

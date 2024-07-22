@@ -20,6 +20,11 @@ class Question extends Model
 		return $this->hasMany(Answer::class);
 	}
 
+	public function answersForQuiz()
+	{
+		return $this->hasMany(Answer::class)->inRandomOrder();
+	}
+
 	public function type()
 	{
 		return $this->belongsTo(Type::class);

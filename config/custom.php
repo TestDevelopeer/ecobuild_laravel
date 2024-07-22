@@ -11,6 +11,7 @@ return [
 	],
 	'tests' => [
 		'path' => "/assets/tests/",
-		'icon' => 'test-icon.png'
+		'icon' => 'test-icon.png',
+		'max_questions' => 25
 	]
 ];

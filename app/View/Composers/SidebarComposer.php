@@ -2,14 +2,8 @@
 
 namespace App\View\Composers;
 
-use App\Models\Form;
-use App\Models\News;
 use App\Models\Test;
-use App\Models\Users;
-use App\Models\Forfuns;
-use App\Models\FormType;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 
 class SidebarComposer
 {
@@ -29,7 +23,7 @@ class SidebarComposer
 		foreach (Test::all() as $test) {
 			array_push($testsMenu, [
 				'title' => $test->name,
-				'link' => "/$test->slug"
+				'link' => route('tests.show', ['test' => $test->id])
 			]);
 		}
 		$sidebar = [

@@ -1,0 +1,165 @@
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: rgb(222, 247, 229);
+    --text-color: rgb(0,0,0);
+    --field-color: rgb(204 204 204 / 30%);
+}
+
+.step-count
+{
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 35px;
+}
+.step-bar
+{
+    width: 100%;
+    background-color: var(--field-color);
+    height: 17px;
+}
+  
+.step-bar .fill
+{
+    width: 20%;
+    height: 100%;
+    transition: 0.5s;
+    background-color: var(--primary-color);
+}
+.steps
+{
+    width: 100%;
+    height: 100%;
+}
+.step-inner
+{
+    background-color: rgb(255,255,255);
+    width: 100%;
+    min-height: 400px;
+    padding: 120px 0 50px 150px;
+    position: relative;
+}
+.quiz-question
+{
+    font-size: 50px;
+    color: var(--text-color);
+    font-weight: bold;
+    width: 70%;
+}
+fieldset
+{
+    width: 42%;
+    margin-top: 70px;
+    overflow: hidden;
+}
+.input-field 
+{
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.radio-field
+{
+    position: relative;
+    width: 100%;
+    height: 40px;
+    display: grid;
+    align-content: center;
+    margin-left: 20px;
+
+}
+.radio-field input
+{
+    -webkit-appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    background-color: var(--field-color);
+    cursor: pointer;
+    transition: 0.5s;
+	border: 2px solid transparent;
+}
+.radio-field label
+{
+    pointer-events: none;
+    position: relative;
+    z-index: 10;
+    font-size: 14px;
+    color: var(--text-color);
+    font-weight: bold;
+    margin-left: 20px;
+    transition: 0.5s;
+}
+.input-field .option
+{
+    height: 100%;
+    width: 50px;
+    background-color: var(--field-color);
+    border-radius: 6px;
+    transition: 0.5s;
+    height: 40px;
+    font-size: 14px;
+    color: rgb(1, 1, 1);
+    font-weight: bold;
+    display: grid;
+    place-content: center;
+}
+.input-field.active .option
+{
+    background-color: var(--primary-color);
+    color: rgb(255,255,255);
+}
+.input-field.active .radio-field input
+{
+    border-color: var(--primary-color);
+}
+
+.thinking_bro
+{
+    position: absolute;
+    bottom: 0;
+    right: 70px;
+    width: auto;
+}
+
+.next-prev
+{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.next-prev button
+{
+    background-color: rgb(255, 255, 255);
+    width: 300px;
+    height: 80px;
+    border: solid 1px transparent;
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.next-prev .next
+{
+    color: rgb(255, 255, 255);
+    background-color: var(--primary-color);
+}
+.next-prev button i
+{
+    position: relative;
+    top: 1;
+    margin: 0 10px;
+}
+
+#error div
+{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}

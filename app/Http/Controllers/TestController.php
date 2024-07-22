@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quiz;
 use App\Models\Test;
 use App\Models\Type;
 use App\Helpers\Helper;
 use App\Models\Question;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\Test\StoreTestRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Test\StoreTestRequest;
 use App\Http\Requests\Test\UpdateTestRequest;
 
 class TestController extends Controller
@@ -75,9 +77,72 @@ class TestController extends Controller
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(string $id)
+	public function show(Request $request, Test $test)
 	{
-		//
+		$isUserHaveQuiz = Quiz::where('user_id', '=', Auth::id())
+			->where('test_id', '=', $test->id)
+			->first();
+
+		if (!$isUserHaveQuiz) {
+			foreach ($test->questionsForQuiz as $key => $value) {
+				Quiz::firstOrCreate([
+					'user_id' => Auth::id(),
+					'test_id' => $test->id,
+					'question_id' => $value->id,
+				]);
+			}
+		}
+
+		$remainigQuiz = $request->session()->get("remainigQuiz.{$test->id}", function () use ($request, $test) {
+			$quiz = Quiz::where('user_id', '=', Auth::id())
+				->where('test_id', '=', $test->id)
+				->where('answer_id', '=', null)
+				->inRandomOrder()
+				->first();
+
+			if ($quiz) {
+				$request->session()->put("remainigQuiz.{$test->id}", $quiz);
+			}
+
+			return $quiz;
+		});
+
+		$remainigQuiz->refresh();
+
+		if ($remainigQuiz->question->type_id > 1) {
+			$path = config('custom.tests.path') . "$test->id/questions/$remainigQuiz->question_id/{$remainigQuiz->question->type->slug}";
+			$remainigQuiz->assets = Storage::files($path);
+		}
+
+		$quizRemainigCount = Quiz::where('user_id', '=', Auth::id())
+			->where('test_id', '=', $test->id)
+			->count();
+
+		$quizReadyCount = Quiz::where('user_id', '=', Auth::id())
+			->where('test_id', '=', $test->id)
+			->where('answer_id', '!=', null)
+			->count();
+
+		if ($request->render) {
+			$view = view('pages.quizzes.quiz-template', [
+				'remainigQuiz' => $remainigQuiz,
+				'quizRemainigCount' => $quizRemainigCount,
+				'quizReadyCount' => $quizReadyCount
+			]);
+			return response(['html' => $view->render()]);
+		}
+
+		return view('pages.quizzes.index', [
+			'breadcrumb' => [
+				'pageName' => 'Тестирование',
+				'breadcrumb' => [
+					['text' => $test->name],
+				]
+			],
+			'remainigQuiz' => $remainigQuiz,
+			'quizRemainigCount' => $quizRemainigCount,
+			'quizReadyCount' => $quizReadyCount
+		]);
 	}
 
 	/**

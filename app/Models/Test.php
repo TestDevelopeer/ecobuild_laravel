@@ -31,6 +31,11 @@ class Test extends Model
 		return $this->hasMany(Question::class);
 	}
 
+	public function questionsForQuiz()
+	{
+		return $this->hasMany(Question::class)->inRandomOrder()->limit(config('custom.tests.max_questions'));
+	}
+
 	public function answers()
 	{
 		return $this->hasManyThrough(Answer::class, Question::class);
