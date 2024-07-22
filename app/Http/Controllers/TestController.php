@@ -79,57 +79,72 @@ class TestController extends Controller
 	 */
 	public function show(Request $request, Test $test)
 	{
-		$isUserHaveQuiz = Quiz::where('user_id', '=', Auth::id())
-			->where('test_id', '=', $test->id)
-			->first();
-
-		if (!$isUserHaveQuiz) {
-			foreach ($test->questionsForQuiz as $key => $value) {
-				Quiz::firstOrCreate([
-					'user_id' => Auth::id(),
-					'test_id' => $test->id,
-					'question_id' => $value->id,
-				]);
-			}
-		}
-
-		$remainigQuiz = $request->session()->get("remainigQuiz.{$test->id}", function () use ($request, $test) {
-			$quiz = Quiz::where('user_id', '=', Auth::id())
+		$questionsForQuiz = $test->questionsForQuiz;
+		if (count($questionsForQuiz) > 0) {
+			$isUserHaveQuiz = Quiz::where('user_id', '=', Auth::id())
 				->where('test_id', '=', $test->id)
-				->where('answer_id', '=', null)
-				->inRandomOrder()
 				->first();
 
-			if ($quiz) {
-				$request->session()->put("remainigQuiz.{$test->id}", $quiz);
+			if (!$isUserHaveQuiz) {
+				foreach ($test->questionsForQuiz as $key => $value) {
+					Quiz::firstOrCreate([
+						'user_id' => Auth::id(),
+						'test_id' => $test->id,
+						'question_id' => $value->id,
+					]);
+				}
 			}
 
-			return $quiz;
-		});
+			$remainigQuiz = $request->session()->get("remainigQuiz.{$test->id}", function () use ($request, $test) {
+				$quiz = Quiz::where('user_id', '=', Auth::id())
+					->where('test_id', '=', $test->id)
+					->where('answer_id', '=', null)
+					->inRandomOrder()
+					->first();
 
-		$remainigQuiz->refresh();
+				if ($quiz) {
+					$request->session()->put("remainigQuiz.{$test->id}", $quiz);
+				}
 
-		if ($remainigQuiz->question->type_id > 1) {
-			$path = config('custom.tests.path') . "$test->id/questions/$remainigQuiz->question_id/{$remainigQuiz->question->type->slug}";
-			$remainigQuiz->assets = Storage::files($path);
-		}
+				return $quiz;
+			});
 
-		$quizRemainigCount = Quiz::where('user_id', '=', Auth::id())
-			->where('test_id', '=', $test->id)
-			->count();
+			$remainigQuiz->refresh();
 
-		$quizReadyCount = Quiz::where('user_id', '=', Auth::id())
-			->where('test_id', '=', $test->id)
-			->where('answer_id', '!=', null)
-			->count();
+			if ($remainigQuiz->question->type_id > 1) {
+				$path = config('custom.tests.path') . "$test->id/questions/$remainigQuiz->question_id/{$remainigQuiz->question->type->slug}";
+				$remainigQuiz->assets = Storage::files($path);
+			}
 
-		if ($request->render) {
-			$view = view('pages.quizzes.quiz-template', [
+			$quizRemainigCount = Quiz::where('user_id', '=', Auth::id())
+				->where('test_id', '=', $test->id)
+				->count();
+
+			$quizReadyCount = Quiz::where('user_id', '=', Auth::id())
+				->where('test_id', '=', $test->id)
+				->where('answer_id', '!=', null)
+				->count();
+
+			if ($request->render) {
+				$view = view('pages.quizzes.quiz-template', [
+					'remainigQuiz' => $remainigQuiz,
+					'quizRemainigCount' => $quizRemainigCount,
+					'quizReadyCount' => $quizReadyCount
+				]);
+				return response(['html' => $view->render()]);
+			}
+
+			return view('pages.quizzes.index', [
+				'breadcrumb' => [
+					'pageName' => 'Тестирование',
+					'breadcrumb' => [
+						['text' => $test->name],
+					]
+				],
 				'remainigQuiz' => $remainigQuiz,
 				'quizRemainigCount' => $quizRemainigCount,
 				'quizReadyCount' => $quizReadyCount
 			]);
-			return response(['html' => $view->render()]);
 		}
 
 		return view('pages.quizzes.index', [
@@ -139,9 +154,7 @@ class TestController extends Controller
 					['text' => $test->name],
 				]
 			],
-			'remainigQuiz' => $remainigQuiz,
-			'quizRemainigCount' => $quizRemainigCount,
-			'quizReadyCount' => $quizReadyCount
+			'questionsForQuiz' => 0
 		]);
 	}
 
