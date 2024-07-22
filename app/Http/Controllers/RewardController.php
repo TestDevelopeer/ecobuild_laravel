@@ -6,6 +6,7 @@ use App\Models\Test;
 use App\Models\Result;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -57,7 +58,9 @@ class RewardController extends Controller
 			return response(['url' => Storage::url("$path/users/$user->id/$name")]);
 		}
 
-		return Storage::download("$path/users/$user->id/$name", "Сертификат участника {$test->name}.jpg");
+		$pdf = Pdf::loadView('components.image', ['path' => asset("storage$path/users/$user->id/$name")])->setPaper('a4', 'landscape');
+		return $pdf->download("Сертификат участника {$test->name}.pdf");
+		//return Storage::download("$path/users/$user->id/$name", "Сертификат участника {$test->name}.jpg");
 	}
 
 	public function diplom(Request $request, Test $test)
@@ -118,7 +121,9 @@ class RewardController extends Controller
 			return response(['url' => Storage::url("$path/users/$user->id/$name")]);
 		}
 
-		return Storage::download("$path/users/$user->id/$name", "Диплом участника {$test->name}.jpg");
+		$pdf = Pdf::loadView('components.image', ['path' => asset("storage$path/users/$user->id/$name")])->setPaper('a4', 'landscape');
+		return $pdf->download("Диплом участника {$test->name}.pdf");
+		//return Storage::download("$path/users/$user->id/$name", "Диплом участника {$test->name}.jpg");
 	}
 
 	public function getCenterCoords(Request $request, Test $test)
