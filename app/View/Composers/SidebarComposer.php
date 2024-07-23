@@ -53,7 +53,7 @@ class SidebarComposer
 					[
 						'icon' => 'fa-light fa-users',
 						'title' => 'Пользователи',
-						'link' => '#'
+						'link' => route('users.index')
 					],
 					[
 						'icon' => 'fa-light fa-envelope-open-text',

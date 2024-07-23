@@ -42,6 +42,8 @@ class RouteServiceProvider extends ServiceProvider
 				->group(base_path('routes/web/feedback.php'));
 			Route::middleware('web')
 				->group(base_path('routes/web/quiz.php'));
+			Route::middleware('web')
+				->group(base_path('routes/web/user.php'));
 		});
 	}
 }

@@ -6,9 +6,8 @@ use App\Models\Quiz;
 use App\Models\Test;
 use App\Models\Result;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreQuizRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateQuizRequest;
+use App\Http\Requests\Quiz\UpdateQuizRequest;
 
 class QuizController extends Controller
 {
