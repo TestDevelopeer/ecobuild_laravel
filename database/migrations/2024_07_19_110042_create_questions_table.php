@@ -14,6 +14,7 @@ return new class extends Migration
 		Schema::create('questions', function (Blueprint $table) {
 			$table->id();
 			$table->mediumText('text');
+			$table->longText('html');
 			$table->string('type_id');
 			$table->string('test_id');
 			$table->timestamps();

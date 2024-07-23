@@ -13,8 +13,8 @@
             <div class="d-flex align-items-center">
                 <div class="font-35 text-secondary"><i class="fa-duotone fa-solid fa-question fa-2x"></i>
                 </div>
-                <div class="ms-3">
-                    <h6 class="mb-0 text-secondary">{{ $remainigQuiz->question->text }}</h6>
+                <div class="ms-3 quiz-text">
+                    {!! $remainigQuiz->question->html !!}
                 </div>
             </div>
         </div>
@@ -91,10 +91,9 @@
                                 </div>
                             @endforeach
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-success px-5" disabled id="next-quiz">
-                                    <span class="spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Далее
-                                </button>
+                                <button type="button" disabled id="next-quiz"
+                                    class="btn btn-outline-primary px-4 d-flex align-items-center gap-2">Далее<i
+                                        class="fa-regular fa-arrow-right"></i></button>
                             </div>
                         </form>
                     </div>

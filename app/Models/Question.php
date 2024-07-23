@@ -11,6 +11,7 @@ class Question extends Model
 
 	protected $fillable = [
 		'text',
+		'html',
 		'type_id',
 		'test_id'
 	];
@@ -18,6 +19,11 @@ class Question extends Model
 	public function answers()
 	{
 		return $this->hasMany(Answer::class);
+	}
+
+	public function quizzes()
+	{
+		return $this->hasMany(Quiz::class);
 	}
 
 	public function answersForQuiz()
@@ -30,9 +36,12 @@ class Question extends Model
 		return $this->belongsTo(Type::class);
 	}
 
+
+
 	public function delete()
 	{
 		$this->answers()->delete();
+		$this->quizzes()->delete();
 
 		return parent::delete();
 	}

@@ -52,15 +52,7 @@
     }
     .radio-field, .input-field .option
     {
-        height: 70px;
-    }
-    .radio-field input, .input-field .option
-    {
-        border-radius: 0;
-    }
-    .radio-field label, .input-field .option
-    {
-        font-size: 20px;
+        height: 40px;
     }
     .next-prev button
     {

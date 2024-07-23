@@ -1,3 +1,5 @@
+let reloadTry = 0;
+
 function loadQuiz() {
 	let id = $('#quiz-container').data('test');
 	axios.post(`/quizzes/${id}`).then(res => {
@@ -6,7 +8,17 @@ function loadQuiz() {
 		}
 		$('#quiz-container').html(res.data.html);
 		$('#quiz-container .preload').unblock();
-		$('#quiz-container .preload').delete();
+	}).catch(err => {
+		if (reloadTry < 3) {
+			reloadTry++;
+			loadQuiz();
+		} else {
+			Swal.fire({
+				title: "Упс...",
+				text: "Не смогли загрузить вопросы, пожалуйста, обновите страницу",
+				icon: "error"
+			});
+		}
 	});
 }
 

@@ -2,6 +2,7 @@
 
 @section('styles')
     <link href="/assets/plugins/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/assets/plugins/quill/quill.snow.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -325,6 +326,7 @@
 @section('scripts')
     <script src="/assets/plugins/form-repeater/repeater.js"></script>
     <script src="/assets/plugins/lightbox/js/lightbox.min.js"></script>
+    <script src="/assets/plugins/quill/quill.js"></script>
     <script src="/assets/js/pages/test.js"></script>
     <script src="/assets/js/pages/question.js"></script>
     @if (session('status') == 'success')

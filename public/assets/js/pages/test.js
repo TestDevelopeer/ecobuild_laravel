@@ -13,6 +13,19 @@ function successSaveTest() {
 }
 
 $(function () {
+	const quill = new Quill('#editor', {
+		theme: 'snow'
+	});
+
+	$(document).on('click', '.save-question', function () {
+		let form = $('#question-form');
+		const text = quill.getText();
+		const html = quill.getSemanticHTML();
+		$('#text').val(text);
+		$('#html').val(html);
+		form.submit();
+	});
+
 	$(document).on('click', '.delete-test', function () {
 		let id = $(this).data('test');
 

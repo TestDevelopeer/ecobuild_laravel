@@ -41,6 +41,7 @@ class QuestionController extends Controller
 	{
 		$question = Question::create([
 			'text' => $request->text,
+			'html' => $request->html,
 			'type_id' => $request->type_id,
 			'test_id' => $test->id
 		]);
@@ -51,6 +52,7 @@ class QuestionController extends Controller
 			Answer::create([
 				'question_id' => $question->id,
 				'text' => $answer['text'],
+				'html' => $request->html,
 				'is_true' => $key == $request->is_true
 			]);
 		}
@@ -81,6 +83,7 @@ class QuestionController extends Controller
 	{
 		$question->update([
 			'text' => $request->text,
+			'html' => $request->html,
 			'type_id' => $request->type_id,
 		]);
 

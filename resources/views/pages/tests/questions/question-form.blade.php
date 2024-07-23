@@ -10,7 +10,7 @@
         </div>
         <form
             action="{{ $questionEdit != null ? route('questions.update', ['question' => $questionEdit->id]) : route('tests.questions.store', ['test' => $test->id]) }}"
-            method="post" class="row mt-4" enctype="multipart/form-data">
+            method="post" class="row mt-4" enctype="multipart/form-data" id="question-form">
             @if ($questionEdit != null)
                 @method('PATCH')
             @endif
@@ -37,13 +37,15 @@
                 <input class="form-control" type="file" id="question_asset_input" name="question_assets[]"
                     accept="image/*, video/*, audio/*" multiple>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-4">
                 <label for="text" class="form-label">Текст вопроса</label>
                 @error('text')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <textarea class="form-control @error('text') error @enderror" name="text" id="text"
-                    placeholder="Введите текст вопроса" rows="3">{{ old('text') != null ? old('text') : $questionEdit->text ?? '' }}</textarea>
+                <div id="editor" class="form-control @error('text') error @enderror">
+                    {!! old('html') != null ? old('html') : $questionEdit->html ?? '' !!}</div>
+                <textarea hidden rows="1" name="text" id="text"></textarea>
+                <textarea hidden rows="1" name="html" id="html"></textarea>
             </div>
             <div class="col-12 mt-4">
                 @include('pages.tests.questions.answers.answer-form')
@@ -51,7 +53,7 @@
             <div class="col-12 mt-4">
                 <div class="d-flex align-items-center justify-content-between">
                     @if ($questionEdit != null)
-                        <x-button type='submit' is-outline=true color='success'>
+                        <x-button type='button' is-outline=true color='success' class="save-question">
                             <i class="fa-solid fa-floppy-disk"></i>
                             Сохранить вопрос
                         </x-button>
@@ -61,7 +63,7 @@
                             Удалить вопрос
                         </x-button>
                     @else
-                        <x-button type='submit' is-outline=true color='primary'>
+                        <x-button type='button' is-outline=true color='primary' class="save-question">
                             <i class="fa-solid fa-message-plus"></i>
                             Создать вопрос
                         </x-button>

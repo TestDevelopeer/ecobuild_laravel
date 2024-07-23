@@ -142,3 +142,11 @@ tr.edited {
 #quiz-container .preload {
 	min-height: 500px;
 }
+
+.swal2-container {
+	z-index: 999999;
+}
+
+.quiz-text p {
+	margin: 0;
+}
