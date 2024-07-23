@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quiz;
+use App\Models\Test;
 use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
+use App\Models\CreativeUpload;
 
 class UserController extends Controller
 {
@@ -59,7 +62,43 @@ class UserController extends Controller
 	 */
 	public function edit(User $user)
 	{
-		//
+		$menuButtons = [
+			[
+				'icon' => 'fa-light fa-medal',
+				'title' => 'Результаты',
+				'type' => 'results'
+			],
+			[
+				'icon' => 'fa-light fa-medal',
+				'title' => 'Креативное задание',
+				'type' => 'creative'
+			],
+		];
+
+		$results = $user->results;
+		foreach ($results as $key => $res) {
+			$res->quiz = Quiz::where('user_id', '=', $user->id)->where('test_id', '=', $res->test_id)->get();
+		}
+
+		$creatives = $user->creative;
+
+		return view('pages.users.edit', [
+			'breadcrumb' => [
+				'pageName' => 'Администратор',
+				'breadcrumb' => [
+					[
+						'text' => 'Пользователи',
+						'link' => route('users.index')
+					],
+					['text' => "{$user->surname} {$user->name}"],
+				]
+			],
+			'tests' => Test::all(),
+			'user' => $user,
+			'menuButtons' => $menuButtons,
+			'results' => $results,
+			'creatives' => $creatives
+		]);
 	}
 
 	/**
@@ -67,7 +106,22 @@ class UserController extends Controller
 	 */
 	public function update(UpdateUserRequest $request, User $user)
 	{
-		//
+		$user->update([
+			'name' => $request->name,
+			'surname' => $request->surname,
+			'patronymic' => $request->patronymic,
+			'city' => $request->city,
+			'phone' => $request->phone,
+			'school' => $request->school,
+			'classroom' => $request->classroom,
+			'teacher' => $request->teacher,
+			'teacher_job' => $request->teacher_job,
+			'email' => $request->email,
+			'link' => $request->link,
+			'role' => $request->role,
+		]);
+
+		return redirect()->back()->with(['status' => 'success', 'message' => 'Пользователь успешно сохранен']);
 	}
 
 	/**

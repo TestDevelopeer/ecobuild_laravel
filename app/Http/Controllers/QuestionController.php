@@ -57,7 +57,7 @@ class QuestionController extends Controller
 			]);
 		}
 
-		return redirect()->back()->with(['status' => 'success']);
+		return redirect()->back()->with(['status' => 'success', 'message' => 'Вопрос успешно добавлен']);
 	}
 
 	/**
@@ -105,7 +105,7 @@ class QuestionController extends Controller
 			}
 		}
 
-		return redirect()->back()->with(['status' => 'success']);
+		return redirect()->back()->with(['status' => 'success', 'message' => 'Вопрос успешно сохранен']);
 	}
 
 	/**

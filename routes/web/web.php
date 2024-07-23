@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 	Route::post('/creative', [CreativeController::class, 'creative']);
 	Route::post('/creative/process', [CreativeController::class, 'process']);
 	Route::post('/creative/{creative}/upload', [CreativeController::class, 'upload'])->name('creative.upload');
+	Route::post('/creative/archive', [CreativeController::class, 'downloadArchive'])->name('creative.archive');
 });
 
 require __DIR__ . '/../auth.php';

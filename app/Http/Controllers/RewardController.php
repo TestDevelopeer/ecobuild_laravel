@@ -88,7 +88,7 @@ class RewardController extends Controller
 		if ($request->is_link) {
 			$degree = 'III';
 		} else {
-			$result = $test->resultByUser();
+			$result = $test->resultByUser($user->id);
 			if ($result->points >= config('custom.diplom.third') && $result->points < config('custom.diplom.second')) {
 				$degree = 'III';
 			} else if ($result->points >= config('custom.diplom.second') && $result->points < config('custom.diplom.first')) {

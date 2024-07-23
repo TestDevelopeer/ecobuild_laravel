@@ -16,9 +16,9 @@ class Test extends Model
 		'icon'
 	];
 
-	public function resultByUser()
+	public function resultByUser($userId)
 	{
-		return $this->hasOne(Result::class)->where('user_id', '=', Auth::id())->first();
+		return $this->hasOne(Result::class)->where('user_id', '=', $userId)->first();
 	}
 
 	public function results()

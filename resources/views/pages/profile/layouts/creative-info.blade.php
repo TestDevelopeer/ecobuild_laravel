@@ -10,11 +10,18 @@
                 'border' => true,
                 'color' => 'success',
                 'icon' => 'fa-sharp fa-regular fa-circle-info fa-2x',
-                'title' => 'Ваши файлы загружены!',
-                'text' => 'Ваше креативное задание отправлено на проверку, ответ появится в вашем профиле',
+                'title' => 'Файлы загружены!',
+                'text' => 'Задание отправлено на проверку, ответ появится в вашем профиле',
             ])
+            <form method="post"
+                action="{{ route('creative.archive', ['creativeId' => $creative->id, 'userId' => $user->id ?? Auth::id()]) }}">
+                @csrf
+                <button type="submit" class="btn btn-primary px-4 raised align-items-center d-flex gap-2"><i
+                        class="fa-regular fa-cloud-arrow-down"></i>Скачать прикрепленные файлы</button>
+            </form>
         @else
-            <form id="creative-form" action="{{ route('creative.upload', ['creative' => $creative->id]) }}" method="POST">
+            <form id="creative-form" action="{{ route('creative.upload', ['creative' => $creative->id]) }}"
+                method="POST">
                 @csrf
                 <input id="creative-uploader" type="file" class="filepond" name="creative_assets[]" multiple
                     data-max-file-size="3MB" data-max-files="3" />

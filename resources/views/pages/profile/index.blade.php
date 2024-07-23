@@ -70,6 +70,7 @@
     <script src="/assets/plugins/filepond/ru-ru.js"></script>
     <script src="/assets/plugins/filepond/filepond.js"></script>
     <script src="/assets/js/pages/profile.js"></script>
+    <script src="/assets/js/pages/creative.js"></script>
     @if (session('status') == 'error')
         <script>
             notification('error', "{{ session('message') }}");

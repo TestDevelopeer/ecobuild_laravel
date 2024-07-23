@@ -19,7 +19,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
-                            <td>{{ $user->surname }} {{ $user->name }} {{ $user->patronymic }}</td>
+                            <td>{{ $user->surname . ' ' . $user->name . ' ' . $user->patronymic }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->city }}</td>

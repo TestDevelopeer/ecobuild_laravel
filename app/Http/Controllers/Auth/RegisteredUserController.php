@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
 			'city' => ['required', 'string', 'between:3,20'],
 			'phone' => ['required', 'string', 'size:16', 'unique:' . User::class],
 			'school' => ['required', 'string', 'between:3,30'],
-			'classroom' => ['required', 'integer', 'between:1,2'],
+			'classroom' => ['required', 'integer', 'max:11'],
 			'teacher' => ['required', 'string', 'between:10,30'],
 			'teacher_job' => ['required', 'string', 'between:3,30'],
 			'email' => ['required', 'string', 'email', 'between:5,50', 'unique:' . User::class],

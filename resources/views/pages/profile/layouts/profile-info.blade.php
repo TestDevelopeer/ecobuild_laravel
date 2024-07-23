@@ -20,7 +20,7 @@
                         <img src="{{ asset("storage/$test->icon") }}" width="40" height="40" class="rounded-circle"
                             alt="">
                         <div class="">
-                            <h5 class="mb-0">{{ $test->resultByUser()->points ?? 0 }} баллов</h5>
+                            <h5 class="mb-0">{{ $test->resultByUser(Auth::id())->points ?? 0 }} баллов</h5>
                             <p class="mb-0">{{ $test->name }}</p>
                         </div>
                     </div>

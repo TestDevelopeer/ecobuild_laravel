@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Test;
+use App\Models\User;
+use App\Helpers\Helper;
 use App\Models\Creative;
-use App\Models\CreativeUpload;
 use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\CreativeUpload;
 use Illuminate\Support\Facades\Storage;
 
 class CreativeController extends Controller
@@ -15,6 +18,7 @@ class CreativeController extends Controller
 	{
 		$creative = Creative::where('test_id', '=', $request->id)->first();
 		$creativeUpload = CreativeUpload::where('user_id', '=', $request->user()->id)->where('creative_id', '=', $creative->id)->first();
+
 		$html = view('pages.profile.layouts.creative-info', [
 			'creative' => $creative,
 			'creativeUpload' => $creativeUpload
@@ -86,5 +90,26 @@ class CreativeController extends Controller
 		])->render();
 
 		return response(['html' => $html]);
+	}
+
+	public function downloadArchive(Request $request)
+	{
+		$user = User::find($request->userId);
+		$creative = Creative::find($request->creativeId);
+		$test = Test::find($creative->test_id);
+		$creativeUpload = CreativeUpload::where('user_id', '=', $user->id)->where('creative_id', '=', $creative->id)->first();
+		if ($creativeUpload) {
+			$path = config('custom.tests.path') . $test->id . "/creative/users/{$user->id}";
+			$assets = Storage::files($path);
+			$zipLink = Helper::converToZip($assets, "$path/archive", "Креативное задание {$test->name}__{$user->surname} {$user->name}");
+
+			$headers = [
+				'Content-Type' => 'application/zip',
+			];
+
+			return response()->download($zipLink, null, $headers);
+		}
+
+		return response(['status' => 'error', 'message' => 'Файлы не найдены']);
 	}
 }

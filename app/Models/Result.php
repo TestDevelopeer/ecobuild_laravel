@@ -13,7 +13,6 @@ class Result extends Model
 		'user_id',
 		'test_id',
 		'points',
-		'creative_upload'
 	];
 
 	public function test()
