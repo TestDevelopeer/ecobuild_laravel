@@ -78,12 +78,13 @@
                         @endif
                         <form id="quiz-form" action="{{ route('quizzes.update', ['quiz' => $remainigQuiz->id]) }}"
                             method="post">
+                            @csrf
                             @foreach ($remainigQuiz->question->answersForQuiz as $key => $value)
-                                <div class="input-field">
+                                <div class="input-field bounce-left">
                                     <div class="option">
                                         {{ $key + 1 }}
                                     </div>
-                                    <div class="radio-field bounce-left">
+                                    <div class="radio-field">
                                         <input type="radio" name="answer_id" value="{{ $value->id }}">
                                         <label>{{ $value->text }}</label>
                                     </div>

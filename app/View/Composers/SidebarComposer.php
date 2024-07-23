@@ -23,10 +23,11 @@ class SidebarComposer
 		$testsMenu = [];
 		foreach (Test::all() as $test) {
 			if ($test->questionsForQuiz()->count() > 0) {
+				$completed = $test->results()->where('user_id', '=', Auth::id())->first();
 				array_push($testsMenu, [
 					'title' => $test->name,
-					'link' => route('tests.show', ['test' => $test->id]),
-					'is_completed' => $test->results()->where('user_id', '=', Auth::id())->first()
+					'link' => $completed ? route('quizzes.completed', ['test' => $test->id]) : route('quizzes.index', ['test' => $test->id]),
+					'is_completed' => $completed ? true : false
 				]);
 			}
 		}

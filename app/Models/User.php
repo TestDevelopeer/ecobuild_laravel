@@ -67,4 +67,9 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Quiz::class)->where('test_id', '=', $testId);
 	}
+
+	public function readyQuiz($testId)
+	{
+		return $this->quiz($testId)->where('answer_id', '!=', null);
+	}
 }

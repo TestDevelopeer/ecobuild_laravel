@@ -138,3 +138,7 @@ tr.edited {
 	height: 200px;
 	object-fit: contain;
 }
+
+#quiz-container .preload {
+	min-height: 500px;
+}

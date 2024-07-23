@@ -52,7 +52,7 @@ $(function () {
 			data[this.name] = $(this).val();
 		});
 
-		axios.post('/tests/reward/config', data).then(res => {
+		axios.patch('/tests/update/config', data).then(res => {
 			Lobibox.notify('success', {
 				pauseDelayOnHover: true,
 				size: 'mini',

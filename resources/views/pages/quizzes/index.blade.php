@@ -6,12 +6,14 @@
 @endsection
 
 @section('content')
-    <div class="row" id="quiz-container">
-        @include('pages.quizzes.quiz-template')
+    <div class="row" id="quiz-container" data-test="{{ $test->id }}">
+        <div class="preload"></div>
     </div>
 @endsection
 
 @section('scripts')
     <script src="/assets/plugins/lightbox/js/lightbox.min.js"></script>
+    <script src="/assets/plugins/blockui/jquery.blockUI.min.js"></script>
+
     <script src="/assets/js/pages/quiz.js"></script>
 @endsection

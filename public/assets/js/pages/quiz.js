@@ -1,4 +1,35 @@
+function loadQuiz() {
+	let id = $('#quiz-container').data('test');
+	axios.post(`/quizzes/${id}`).then(res => {
+		if (res.data.redirect) {
+			location.href = res.data.redirect;
+		}
+		$('#quiz-container').html(res.data.html);
+		$('#quiz-container .preload').unblock();
+		$('#quiz-container .preload').delete();
+	});
+}
+
 $(function () {
+	$('#quiz-container .preload').block({
+		message: 'Тестирование загружается...',
+		fadeIn: 100,
+		overlayCSS: {
+			backgroundColor: '#1b2024',
+			opacity: 0.8,
+			zIndex: 1200,
+			cursor: 'wait'
+		},
+		css: {
+			border: 0,
+			color: '#fff',
+			zIndex: 1201,
+			padding: 0,
+			backgroundColor: 'transparent'
+		}
+	});
+	loadQuiz();
+
 	$(document).on('click', ".radio-field, .option", function () {
 		$(".radio-field").parent().removeClass('active');
 		$(this).parent().addClass("active");
@@ -6,18 +37,21 @@ $(function () {
 	});
 
 	$(document).on('click', '#next-quiz', function () {
-		let action = $('#quiz-form').attr('action');
-		let answer_id = $('input[name=answer_id]:checked', '#quiz-form').val();
-		$('#next-quiz').attr('disabled', true);
-		$('#next-quiz span').addClass('spinner-border');
+		$('.input-field').removeClass('bounce-left');
+		$('.input-field').addClass('bounce-right');
 
-		axios.patch(action, { answer_id }).then(res => {
-			axios.get(`/tests/${res.data.test}?render=true`).then(res => {
+		setTimeout(() => {
+			let action = $('#quiz-form').attr('action');
+			let answer_id = $('input[name=answer_id]:checked', '#quiz-form').val();
+			$('#next-quiz').attr('disabled', true);
+			$('#next-quiz span').addClass('spinner-border');
+
+			axios.patch(action, { answer_id }).then(res => {
 				if (res.data.redirect) {
 					location.href = res.data.redirect;
 				}
 				$('#quiz-container').html(res.data.html);
 			});
-		});
+		}, 500);
 	});
 })

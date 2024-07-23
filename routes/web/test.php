@@ -9,7 +9,6 @@ Route::middleware('auth')->group(function () {
 	]);
 
 	Route::controller(TestController::class)->group(function () {
-		Route::get('/tests/{test}/completed', 'completed')->name('tests.completed');
-		Route::post('/tests/reward/config', 'rewardConfig')->name('tests.reward.config');
+		Route::patch('/tests/update/config', 'updateConfig');
 	});
 });
