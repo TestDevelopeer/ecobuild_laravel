@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="/assets/plugins/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
+    <link href="/assets/plugins/filepond/filepond-plugin-image-preview.min.css" rel="stylesheet">
+    <link href="/assets/plugins/filepond/filepond.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -61,10 +62,13 @@
 @endsection
 
 @section('scripts')
-    <script src="/assets/plugins/fancy-file-uploader/jquery.ui.widget.js"></script>
-    <script src="/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
-    <script src="/assets/plugins/fancy-file-uploader/jquery.iframe-transport.js"></script>
-    <script src="/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+    <script src="/assets/plugins/filepond/filepond-plugin-file-encode.min.js"></script>
+    <script src="/assets/plugins/filepond/filepond-plugin-file-validate-type.js"></script>
+    <script src="/assets/plugins/filepond/filepond-plugin-file-validate-size.min.js"></script>
+    <script src="/assets/plugins/filepond/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script src="/assets/plugins/filepond/filepond-plugin-image-preview.min.js"></script>
+    <script src="/assets/plugins/filepond/ru-ru.js"></script>
+    <script src="/assets/plugins/filepond/filepond.js"></script>
     <script src="/assets/js/pages/profile.js"></script>
     @if (session('status') == 'error')
         <script>

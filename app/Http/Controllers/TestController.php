@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Test;
 use App\Models\Type;
 use App\Helpers\Helper;
+use App\Models\Creative;
 use App\Models\Question;
 use Illuminate\Support\Str;
 use App\Models\RewardConfig;
@@ -174,9 +175,19 @@ class TestController extends Controller
 			Helper::uploadFiles("$path/diplom", $request->diplom);
 		}
 
+		if ($request->creative_text) {
+			Creative::updateOrCreate(
+				['test_id' => $test->id],
+				[
+					'text' => $request->creative_text,
+					'html' => $request->creative_html
+				]
+			);
+		}
+
 		$test->save();
 
-		return redirect()->back()->with(['status' => 'success']);
+		return redirect()->back()->with(['status' => 'success', 'message' => 'Тестирование успешно сохранено']);
 	}
 
 	/**
@@ -184,6 +195,8 @@ class TestController extends Controller
 	 */
 	public function destroy(Test $test)
 	{
+		$creative = Creative::find($test->creative->id);
+		$creative->creativeUpload()->delete();
 		$test->delete();
 		$path = config('custom.tests.path') . $test->id;
 		Helper::deleteFolder($path);
@@ -205,6 +218,6 @@ class TestController extends Controller
 			'degree_font_color' => $request->degree_font_color ?? 0,
 		]);
 
-		return response(['status' => 'success']);
+		return response(['status' => 'success', 'message' => "Настройки " . ($config->type == 'certificate' ? 'сертификата' : 'диплома') . " успешно сохранены"]);
 	}
 }

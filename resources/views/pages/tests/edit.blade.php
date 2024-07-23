@@ -12,10 +12,9 @@
                 <div class="card-body p-4">
                     <h5 class="mb-4">Редактировать тестирование №{{ $test->id }}</h5>
                     <form action="{{ route('tests.update', ['test' => $test->id]) }}" method="post" class="row g-3"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" id="test-form">
                         @method('PATCH')
                         @csrf
-                        <input type="text" readonly name="id" hidden value="{{ $test->id }}">
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label for="name" class="form-label">Название</label>
@@ -296,9 +295,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <label for="text" class="form-label">Креативное задание</label>
+                                        @error('creative_text')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                        <div id="creative_editor"
+                                            class="form-control @error('creative_text') error @enderror">
+                                            {!! old('creative_html') != null ? old('creative_html') : $test->creative->html ?? '' !!}</div>
+                                        <textarea hidden rows="1" name="creative_text" id="creative_text"></textarea>
+                                        <textarea hidden rows="1" name="creative_html" id="creative_html"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12">
-                                <div class="d-md-flex d-grid align-items-center gap-3">
-                                    <x-button type='submit' is-outline=true color='success'>
+                                <div class="d-md-flex d-grid align-items-center justify-content-between gap-3">
+                                    <x-button type='button' is-outline=true color='success' class="save-test">
                                         <i class="fa-solid fa-floppy-disk"></i>
                                         Сохранить тест
                                     </x-button>
@@ -331,7 +345,7 @@
     <script src="/assets/js/pages/question.js"></script>
     @if (session('status') == 'success')
         <script>
-            successSaveTest();
+            successSaveTest("{{ session('message') }}");
         </script>
     @endif
 @endsection

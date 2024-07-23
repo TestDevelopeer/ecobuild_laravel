@@ -72,4 +72,9 @@ class User extends Authenticatable
 	{
 		return $this->quiz($testId)->where('answer_id', '!=', null);
 	}
+
+	public function creative()
+	{
+		return $this->hasMany(CreativeUpload::class);
+	}
 }

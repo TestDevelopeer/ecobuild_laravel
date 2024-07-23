@@ -51,6 +51,11 @@ class Test extends Model
 		return $this->hasMany(Quiz::class);
 	}
 
+	public function creative()
+	{
+		return $this->hasOne(Creative::class);
+	}
+
 	public function delete()
 	{
 		$this->answers()->delete();
@@ -58,6 +63,7 @@ class Test extends Model
 		$this->results()->delete();
 		$this->configs()->delete();
 		$this->quizzes()->delete();
+		$this->creative()->delete();
 
 		return parent::delete();
 	}

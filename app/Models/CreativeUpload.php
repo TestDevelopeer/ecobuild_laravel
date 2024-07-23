@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Result extends Model
+class CreativeUpload extends Model
 {
 	use HasFactory;
 
 	protected $fillable = [
+		'creative_id',
 		'user_id',
-		'test_id',
-		'points',
-		'creative_upload'
+		'comment'
 	];
-
-	public function test()
-	{
-		return $this->belongsTo(Test::class);
-	}
 }

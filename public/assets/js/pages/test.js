@@ -1,29 +1,41 @@
 
-function successSaveTest() {
+function successSaveTest(text) {
 	Lobibox.notify('success', {
 		pauseDelayOnHover: true,
 		size: 'mini',
 		rounded: true,
-		icon: 'bi bi-check2-circle',
+		icon: 'fa-solid fa-check',
 		delayIndicator: false,
 		continueDelayOnInactiveTab: false,
 		position: 'top center',
-		msg: 'Тестирование успешно сохранено'
+		msg: text
 	});
 }
 
 $(function () {
-	const quill = new Quill('#editor', {
-		theme: 'snow'
+	if (typeof Quill != 'undefined') {
+		var question_quill = new Quill('#editor', {
+			theme: 'snow'
+		});
+		var creative_quill = new Quill('#creative_editor', {
+			theme: 'snow'
+		});
+	}
+
+	$(document).on('click', '.save-test', function () {
+		const text = creative_quill.getText();
+		const html = creative_quill.getSemanticHTML();
+		$('#creative_text').val(text);
+		$('#creative_html').val(html);
+		$('#test-form').submit();
 	});
 
 	$(document).on('click', '.save-question', function () {
-		let form = $('#question-form');
-		const text = quill.getText();
-		const html = quill.getSemanticHTML();
+		const text = question_quill.getText();
+		const html = question_quill.getSemanticHTML();
 		$('#text').val(text);
 		$('#html').val(html);
-		form.submit();
+		$('#question-form').submit();
 	});
 
 	$(document).on('click', '.delete-test', function () {
@@ -66,16 +78,7 @@ $(function () {
 		});
 
 		axios.patch('/tests/update/config', data).then(res => {
-			Lobibox.notify('success', {
-				pauseDelayOnHover: true,
-				size: 'mini',
-				rounded: true,
-				icon: 'bi bi-check2-circle',
-				delayIndicator: false,
-				continueDelayOnInactiveTab: false,
-				position: 'top center',
-				msg: 'Настройки сохранены'
-			});
+			successSaveTest(res.data.message)
 		});
 	});
 
@@ -87,16 +90,11 @@ $(function () {
 			$('.preview-link').attr('href', res.data.url);
 			$('.preview-link').click();
 		}).catch(err => {
-			Lobibox.notify('error', {
-				pauseDelayOnHover: true,
-				size: 'mini',
-				rounded: true,
-				icon: 'fa-solid fa-triangle-exclamation',
-				delayIndicator: false,
-				continueDelayOnInactiveTab: false,
-				position: 'top center',
-				msg: err.response.data.message
-			});
+			Swal.fire({
+				title: "Ошибка!",
+				text: err.response.data.message,
+				icon: "error"
+			})
 		});
 	});
 

@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\RewardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RewardController;
+use App\Http\Controllers\CreativeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
 	Route::post('/reward/{test}/certificate', [RewardController::class, 'certificate'])->name('reward.certificate');
 	Route::post('/reward/{test}/diplom', [RewardController::class, 'diplom'])->name('reward.diplom');
 	Route::post('/reward/{test}/coords', [RewardController::class, 'getCenterCoords']);
+	Route::post('/creative', [CreativeController::class, 'creative']);
+	Route::post('/creative/process', [CreativeController::class, 'process']);
+	Route::post('/creative/{creative}/upload', [CreativeController::class, 'upload'])->name('creative.upload');
 });
 
 require __DIR__ . '/../auth.php';
