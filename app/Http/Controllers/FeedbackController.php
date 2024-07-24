@@ -8,12 +8,23 @@ use Illuminate\Support\Carbon;
 
 class FeedbackController extends Controller
 {
+	public function index(Request $request)
+	{
+		$feedbacks = Feedback::orderBy('is_read', 'asc')->orderBy('id', 'desc')->paginate(20);
+		return view('pages.feedback.index', [
+			'breadcrumb' => [
+				'pageName' => 'Обращения',
+			],
+			'feedbacks' => $feedbacks
+		]);
+	}
+
 	public function create(Request $request)
 	{
 		$request->validate([
 			'phone' => ['required', 'string', 'size:16'],
 			'email' => ['required', 'string', 'email', 'between:5,50'],
-			'message' => ['required'],
+			'message' => ['required', 'string', 'max: 255'],
 		]);
 
 		$feedback = Feedback::create([
@@ -44,5 +55,14 @@ class FeedbackController extends Controller
 		} else {
 			return response('success');
 		}
+	}
+
+	public function read(Request $request)
+	{
+		Feedback::findOrFail($request->feedbackId)->update([
+			'is_read' => 1
+		]);
+
+		return response(['status' => 'succes', 'message' => 'Обращение прочитано']);
 	}
 }

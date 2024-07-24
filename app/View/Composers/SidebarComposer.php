@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Models\Feedback;
 use App\Models\Test;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,9 @@ class SidebarComposer
 				]);
 			}
 		}
+
+		$cntFeedbacks = Feedback::where('is_read', '=', false)->count();
+
 		$sidebar = [
 			[
 				'role' => 'admin',
@@ -58,7 +62,7 @@ class SidebarComposer
 					[
 						'icon' => 'fa-light fa-envelope-open-text',
 						'title' => 'Обращения',
-						'cnt' => 0,
+						'cnt' => $cntFeedbacks,
 						'link' => '#'
 					],
 				]

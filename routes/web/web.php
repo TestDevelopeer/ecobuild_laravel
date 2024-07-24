@@ -6,6 +6,7 @@ use App\Http\Controllers\RewardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CreativeController;
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
 	Route::post('/creative/{creative}/upload', [CreativeController::class, 'upload'])->name('creative.upload');
 	Route::post('/creative/archive', [CreativeController::class, 'downloadArchive'])->name('creative.archive');
 	Route::post('/creative/comment', [CreativeController::class, 'comment'])->name('creative.comment');
+
+	Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
+	Route::post('/feedbacks/read', [FeedbackController::class, 'read'])->name('feedbacks.read');
 });
 
 require __DIR__ . '/../auth.php';

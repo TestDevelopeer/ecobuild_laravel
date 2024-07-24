@@ -25,6 +25,10 @@ input:read-only {
     text-overflow: ellipsis;
     text-wrap: nowrap;
 }
+.feedback-text { 
+	max-width: 300px;
+    word-break: break-all;
+}
 
 tr.edited {
 	background-color: #04c1043d;
@@ -153,4 +157,12 @@ tr.edited {
 
 table span.active {
 	color: #e56c00;
+}
+
+.email-list {
+	height: 100%;
+}
+
+.table-hover>tbody>tr:hover>* {
+	--bs-table-bg-state: rgb(0 0 0 / 8%);
 }

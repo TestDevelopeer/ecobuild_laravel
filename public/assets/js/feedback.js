@@ -36,4 +36,13 @@ $(function () {
 			}
 		})
 	})
+
+	$(document).on('click', '.read-feedback', function () {
+		let that = this;
+		let feedbackId = $(that).data('feedback');
+
+		axios.post('/feedbacks/read', { feedbackId }).then(res => {
+			$(that).addClass('text-dark');
+		})
+	})
 });
