@@ -49,7 +49,6 @@ Route::get('/clear-production', function () {
 	Artisan::call('route:clear');
 
 	Artisan::call('config:cache');
-	Artisan::call('view:cache');
 	Artisan::call('route:cache');
 	return "Кэш очищен и обновлен.";
 });
