@@ -25,4 +25,12 @@ $(function () {
 			$('#user-creative').html(res.data.html);
 		})
 	});
+
+	$(document).on('click', '.send-comment', function () {
+		let creativeUpload = $(this).data('creative');
+
+		axios.post('/creative/comment', { creativeUpload, comment: $('#comment').val() }).then(res => {
+			successSaveTest(res.data.message);
+		})
+	});
 })

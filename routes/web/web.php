@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 	Route::post('/creative/process', [CreativeController::class, 'process']);
 	Route::post('/creative/{creative}/upload', [CreativeController::class, 'upload'])->name('creative.upload');
 	Route::post('/creative/archive', [CreativeController::class, 'downloadArchive'])->name('creative.archive');
+	Route::post('/creative/comment', [CreativeController::class, 'comment'])->name('creative.comment');
 });
 
 require __DIR__ . '/../auth.php';

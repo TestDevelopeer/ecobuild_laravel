@@ -6,6 +6,7 @@ use App\Models\Quiz;
 use App\Models\Test;
 use App\Models\User;
 use App\Helpers\Helper;
+use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 
@@ -18,9 +19,20 @@ class UserController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$users = User::orderBy('id', 'desc')->paginate(15);
+		//dd($request->all());
+		if ($request->search) {
+			$users = User::orderBy('id', 'desc');
+			foreach ($request->search as $key => $value) {
+				if ($value != '') {
+					$users->where($key, '=', $value);
+				}
+			}
+			$users = $users->paginate(15);
+		} else {
+			$users = User::orderBy('id', 'desc')->paginate(15);
+		}
 		return view('pages.users.index', [
 			'breadcrumb' => [
 				'pageName' => 'Администратор',
@@ -29,7 +41,8 @@ class UserController extends Controller
 					['text' => 'Все пользователи'],
 				]
 			],
-			'users' => $users
+			'users' => $users,
+			'search' => $request->search ?? null
 		]);
 	}
 

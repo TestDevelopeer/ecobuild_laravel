@@ -113,4 +113,12 @@ class CreativeController extends Controller
 
 		return response(['status' => 'error', 'message' => 'Файлы не найдены']);
 	}
+
+	public function comment(Request $request)
+	{
+		CreativeUpload::findOrFail($request->creativeUpload)->update([
+			'comment' => $request->comment
+		]);
+		return response(['status' => 'success', 'message' => 'Комментарий успешно добавлен']);
+	}
 }

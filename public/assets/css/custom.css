@@ -150,3 +150,7 @@ tr.edited {
 .quiz-text p {
 	margin: 0;
 }
+
+table span.active {
+	color: #e56c00;
+}
