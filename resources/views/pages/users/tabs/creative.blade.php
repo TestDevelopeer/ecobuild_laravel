@@ -8,7 +8,8 @@
                         @foreach ($user->succesResultsForCreative()->get() as $result)
                             <div class="col">
                                 <button type="button" class="btn btn-outline-secondary show-creative"
-                                    data-test="{{ $result->test->id }}">{{ $result->test->name }}</button>
+                                    data-test="{{ $result->test->id }}"
+                                    data-user="{{ $user->id }}">{{ $result->test->name }}</button>
                             </div>
                         @endforeach
                     </div>

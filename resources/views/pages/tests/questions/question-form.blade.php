@@ -31,17 +31,14 @@
             </div>
             <div class="col-12 mb-4 d-none" id="question_asset">
                 <label for="question_asset" class="form-label">Выберите файл для вопроса</label>
-                @error('question_assets')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+
                 <input class="form-control" type="file" id="question_asset_input" name="question_assets[]"
                     accept="image/*, video/*, audio/*" multiple>
+                @include('components.error-text', ['name' => 'question_assets'])
             </div>
             <div class="col-12 mb-4">
                 <label for="text" class="form-label">Текст вопроса</label>
-                @error('text')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @include('components.error-text', ['name' => 'text'])
                 <div id="editor" class="form-control @error('text') error @enderror">
                     {!! old('html') != null ? old('html') : $questionEdit->html ?? '' !!}</div>
                 <textarea hidden rows="1" name="text" id="text"></textarea>

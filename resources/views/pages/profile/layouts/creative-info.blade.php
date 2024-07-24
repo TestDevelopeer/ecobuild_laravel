@@ -6,15 +6,18 @@
     </div>
     <div class="col-12" id="creative-upload-container">
         @if ($creativeUpload)
-            @include('components.alert', [
-                'border' => true,
-                'color' => 'success',
-                'icon' => 'fa-sharp fa-regular fa-circle-info fa-2x',
-                'title' => 'Файлы загружены!',
-                'text' => 'Задание отправлено на проверку, ответ появится в вашем профиле',
-            ])
+            @if ($userId == null)
+                @include('components.alert', [
+                    'border' => true,
+                    'color' => 'success',
+                    'icon' => 'fa-sharp fa-regular fa-circle-info fa-2x',
+                    'title' => 'Файлы загружены!',
+                    'text' => 'Задание отправлено на проверку, ответ появится в вашем профиле',
+                ])
+            @else
+            @endif
             <form method="post"
-                action="{{ route('creative.archive', ['creativeId' => $creative->id, 'userId' => $user->id ?? Auth::id()]) }}">
+                action="{{ route('creative.archive', ['creativeId' => $creative->id, 'userId' => $userId ?? Auth::id()]) }}">
                 @csrf
                 <button type="submit" class="btn btn-primary px-4 raised align-items-center d-flex gap-2"><i
                         class="fa-regular fa-cloud-arrow-down"></i>Скачать прикрепленные файлы</button>

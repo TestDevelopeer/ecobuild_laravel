@@ -18,11 +18,9 @@
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label for="name" class="form-label">Название</label>
-                                @error('name')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                                 <input type="text" class="form-control @error('name') error @enderror" name="name"
                                     id="name" placeholder="Введите название тестирования" value="{{ $test->name }}">
+                                @include('components.error-text', ['name' => 'name'])
                             </div>
                             <div class="col-12">
                                 <div class="card radius-10 rounded-4">
@@ -51,11 +49,9 @@
                                                 <img class="test-reward mb-4"
                                                     src="{{ asset("storage/{$test->certificate}") }}" alt="Сертификат">
                                             </a>
-                                            @error('certificate')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                            @enderror
                                             <input class="form-control" name="certificate" type="file" id="certificate"
                                                 value="{{ old('certificate') }}" accept="image/*">
+                                            @include('components.error-text', ['name' => 'certificate'])
                                         </div>
                                         <div class="accordion" id="accordionCertificateConfig">
                                             <div class="accordion-item">
@@ -153,11 +149,9 @@
                                                 <img class="test-reward  mb-4"
                                                     src="{{ asset("storage/{$test->diplom}") }}" alt="Диплом">
                                             </a>
-                                            @error('diplom')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                            @enderror
                                             <input class="form-control" name="diplom" type="file" id="diplom"
                                                 value="{{ old('diplom') }}" accept="image/*">
+                                            @include('components.error-text', ['name' => 'diplom'])
                                         </div>
                                         <div class="accordion" id="accordionDiplomConfig">
                                             <div class="accordion-item">
@@ -299,9 +293,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <label for="text" class="form-label">Креативное задание</label>
-                                        @error('creative_text')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
+                                        @include('components.error-text', ['name' => 'creative_text'])
                                         <div id="creative_editor"
                                             class="form-control @error('creative_text') error @enderror">
                                             {!! old('creative_html') != null ? old('creative_html') : $test->creative->html ?? '' !!}</div>

@@ -29,9 +29,9 @@ class RewardController extends Controller
 		$user = $request->user();
 		$path = config('custom.tests.path') . $test->id;
 
-		Storage::deleteDirectory("$path/users/$user->id");
-		if (!Storage::exists("$path/users/$user->id")) {
-			Storage::makeDirectory("$path/users/$user->id");
+		Storage::deleteDirectory("$path/users/$user->id/rewards");
+		if (!Storage::exists("$path/users/$user->id/rewards")) {
+			Storage::makeDirectory("$path/users/$user->id/rewards");
 		}
 
 		$image_path = Storage::files("$path/certificate")[0] ?? '';
@@ -52,15 +52,14 @@ class RewardController extends Controller
 		});
 
 		$name = Str::uuid() . "_certificate.jpg";
-		$image->toJpeg()->save("storage$path/users/$user->id/$name");
+		$image->toJpeg()->save("storage$path/users/$user->id/rewards/$name");
 
 		if ($request->is_link) {
-			return response(['url' => Storage::url("$path/users/$user->id/$name")]);
+			return response(['url' => Storage::url("$path/users/$user->id/rewards/$name")]);
 		}
 
-		$pdf = Pdf::loadView('components.image', ['path' => asset("storage$path/users/$user->id/$name")])->setPaper('a4', 'landscape');
+		$pdf = Pdf::loadView('components.image', ['path' => asset("storage$path/users/$user->id/rewards/$name")])->setPaper('a4', 'landscape');
 		return $pdf->download("Сертификат участника {$test->name}.pdf");
-		//return Storage::download("$path/users/$user->id/$name", "Сертификат участника {$test->name}.jpg");
 	}
 
 	public function diplom(Request $request, Test $test)
@@ -71,9 +70,9 @@ class RewardController extends Controller
 		$user = $request->user();
 		$path = config('custom.tests.path') . $test->id;
 
-		Storage::deleteDirectory("$path/users/$user->id");
-		if (!Storage::exists("$path/users/$user->id")) {
-			Storage::makeDirectory("$path/users/$user->id");
+		Storage::deleteDirectory("$path/users/$user->id/rewards");
+		if (!Storage::exists("$path/users/$user->id/rewards")) {
+			Storage::makeDirectory("$path/users/$user->id/rewards");
 		}
 
 		$image_path = Storage::files("$path/diplom")[0] ?? '';
@@ -115,15 +114,14 @@ class RewardController extends Controller
 		});
 
 		$name = Str::uuid() . "_diplom.jpg";
-		$image->toJpeg()->save("storage$path/users/$user->id/$name");
+		$image->toJpeg()->save("storage$path/users/$user->id/rewards/$name");
 
 		if ($request->is_link) {
-			return response(['url' => Storage::url("$path/users/$user->id/$name")]);
+			return response(['url' => Storage::url("$path/users/$user->id/rewards/$name")]);
 		}
 
-		$pdf = Pdf::loadView('components.image', ['path' => asset("storage$path/users/$user->id/$name")])->setPaper('a4', 'landscape');
+		$pdf = Pdf::loadView('components.image', ['path' => asset("storage$path/users/$user->id/rewards/$name")])->setPaper('a4', 'landscape');
 		return $pdf->download("Диплом участника {$test->name}.pdf");
-		//return Storage::download("$path/users/$user->id/$name", "Диплом участника {$test->name}.jpg");
 	}
 
 	public function getCenterCoords(Request $request, Test $test)

@@ -17,11 +17,12 @@ class CreativeController extends Controller
 	public function creative(Request $request)
 	{
 		$creative = Creative::where('test_id', '=', $request->id)->first();
-		$creativeUpload = CreativeUpload::where('user_id', '=', $request->user()->id)->where('creative_id', '=', $creative->id)->first();
+		$creativeUpload = CreativeUpload::where('user_id', '=', $request->userId ?? $request->user()->id)->where('creative_id', '=', $creative->id)->first();
 
 		$html = view('pages.profile.layouts.creative-info', [
 			'creative' => $creative,
-			'creativeUpload' => $creativeUpload
+			'creativeUpload' => $creativeUpload,
+			'userId' => $request->userId ?? null
 		])->render();
 
 		return response(['html' => $html]);
@@ -71,7 +72,7 @@ class CreativeController extends Controller
 
 		foreach ($request->creative_assets as $value) {
 			Storage::putFile(
-				path: config('custom.tests.path') . $creative->test_id . "/creative/users/" . $request->user()->id,
+				path: config('custom.tests.path') . $creative->test_id . "/users/" . $request->user()->id . '/creative',
 				file: new File(Storage::path($value))
 			);
 		}
@@ -99,7 +100,7 @@ class CreativeController extends Controller
 		$test = Test::find($creative->test_id);
 		$creativeUpload = CreativeUpload::where('user_id', '=', $user->id)->where('creative_id', '=', $creative->id)->first();
 		if ($creativeUpload) {
-			$path = config('custom.tests.path') . $test->id . "/creative/users/{$user->id}";
+			$path = config('custom.tests.path') . $test->id . "/users/{$user->id}/creative";
 			$assets = Storage::files($path);
 			$zipLink = Helper::converToZip($assets, "$path/archive", "Креативное задание {$test->name}__{$user->surname} {$user->name}");
 

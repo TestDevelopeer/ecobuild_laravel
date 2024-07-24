@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use App\Models\Test;
 use App\Models\User;
+use App\Helpers\Helper;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Models\CreativeUpload;
 
 class UserController extends Controller
 {
@@ -130,5 +130,16 @@ class UserController extends Controller
 	public function destroy(User $user)
 	{
 		//
+	}
+
+	public function refresh(User $user, Test $test)
+	{
+		$test->resultByUser($user->id)->delete();
+		$user->quiz($test->id)->delete();
+		$test->creative->creativeUpload()->where('user_id', '=', $user->id)->delete();
+		$path = config('custom.tests.path') . "$test->id/users/$user->id";
+		Helper::deleteFolder($path);
+
+		return redirect()->back()->with(['status' => 'success', 'message' => 'Тестирование сброшено']);
 	}
 }

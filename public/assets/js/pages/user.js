@@ -15,12 +15,13 @@ $(function () {
 	$('[data-bs-toggle="tooltip"]').tooltip();
 
 	$(document).on('click', '.show-creative', function () {
-		let id = $(this).data('test');
+		let testId = $(this).data('test');
+		let userId = $(this).data('user');
 
 		$('.show-creative').removeClass('btn-success');
 		$(this).addClass('btn-success');
 
-		axios.post('/creative', { id }).then(res => {
+		axios.post('/creative', { id: testId, userId }).then(res => {
 			$('#user-creative').html(res.data.html);
 		})
 	});

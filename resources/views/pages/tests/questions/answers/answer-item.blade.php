@@ -6,9 +6,7 @@
             <div class="item-content">
                 <div class="mb-3">
                     <label for="text" class="form-label">Ответ</label>
-                    @error('answers.0.text')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                    @include('components.error-text', ['name' => 'answers.0.text'])
                     <div class="input-group">
                         <div class="input-group-text">
                             <input data-name="is_true" id="is_true" class="form-check-input" type="radio"

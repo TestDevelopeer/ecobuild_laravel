@@ -28,7 +28,7 @@ function fileUploaderInit() {
 		acceptedFileTypes: ["image/png", "image/jpeg", "video/mp4", "video/avi", "application/msword", "text/plain"],
 		server: {
 			process: {
-				url: './creative/process',
+				url: '/creative/process',
 				onload: function (res) {
 					assets.push(res);
 					$('#creative-upload').addClass('btn-outline-success');

@@ -84,7 +84,7 @@ class RegisteredUserController extends Controller
 			case 2:
 				$validation = Validator::make($request->data, [
 					'school' => ['required', 'string', 'between:3,30'],
-					'classroom' => ['required', 'integer', 'between:1,2'],
+					'classroom' => ['required', 'integer', 'max:11'],
 					'teacher' => ['required', 'string', 'between:10,30'],
 					'teacher_job' => ['required', 'string', 'between:3,30'],
 				]);
