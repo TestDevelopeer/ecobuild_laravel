@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\ContactController;
@@ -39,6 +40,25 @@ Route::middleware('auth')->group(function () {
 
 	Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
 	Route::post('/feedbacks/read', [FeedbackController::class, 'read'])->name('feedbacks.read');
+});
+
+Route::get('/clear-production', function () {
+	Artisan::call('cache:clear');
+	Artisan::call('config:clear');
+	Artisan::call('view:clear');
+	Artisan::call('route:clear');
+
+	Artisan::call('config:cache');
+	Artisan::call('view:cache');
+	Artisan::call('route:cache');
+	return "Кэш очищен и обновлен.";
+});
+Route::get('/clear-local', function () {
+	Artisan::call('cache:clear');
+	Artisan::call('config:clear');
+	Artisan::call('view:clear');
+	Artisan::call('route:clear');
+	return "Кэш очищен.";
 });
 
 require __DIR__ . '/../auth.php';
