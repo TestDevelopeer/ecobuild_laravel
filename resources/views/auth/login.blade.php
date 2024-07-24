@@ -25,6 +25,7 @@
     <link href="/assets/css/sass/dark-theme.css" rel="stylesheet">
     <link href="/assets/css/sass/blue-theme.css" rel="stylesheet">
     <link href="/assets/css/sass/responsive.css" rel="stylesheet">
+    <link href="/assets/css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -45,17 +46,22 @@
                                     @csrf
                                     <div class="col-12">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            placeholder="name@example.com">
+                                        <input type="email" class="form-control @error('email') error @enderror"
+                                            id="email" name="email" placeholder="name@example.com"
+                                            value="{{ old('email') }}">
+                                        @include('components.error-text', ['name' => 'email'])
                                     </div>
                                     <div class="col-12">
                                         <label for="password" class="form-label">Пароль</label>
                                         <div class="input-group" id="show_hide_password">
-                                            <input type="password" class="form-control border-end-0" id="password"
-                                                placeholder="********" name="password">
-                                            <a href="javascript:;" class="input-group-text bg-transparent"><i
+                                            <input type="password"
+                                                class="form-control border-end-0 @error('email') error @enderror"
+                                                id="password" placeholder="********" name="password">
+                                            <a href="javascript:;"
+                                                class="input-group-text bg-transparent @error('email') error @enderror"><i
                                                     class="bi bi-eye-slash-fill"></i></a>
                                         </div>
+                                        @include('components.error-text', ['name' => 'password'])
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-check form-switch">

@@ -63,7 +63,7 @@ class SidebarComposer
 						'icon' => 'fa-light fa-envelope-open-text',
 						'title' => 'Обращения',
 						'cnt' => $cntFeedbacks,
-						'link' => '#'
+						'link' => route('feedbacks.index')
 					],
 				]
 			],

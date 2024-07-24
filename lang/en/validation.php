@@ -205,6 +205,7 @@ return [
 			'email' => 'Неверный формат Email',
 			'between' => 'Email должен быть от 5 до 50 символов (с учетом @ и точки)',
 			'unique' => 'Данный Email уже зарегистрирован.',
+			'auth.failed' => 'test'
 		],
 		'password' => [
 			'required' => 'Введите пароль',

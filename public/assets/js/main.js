@@ -4,16 +4,6 @@ $(function () {
 	"use strict";
 
 
-	/* scrollar */
-
-	new PerfectScrollbar(".notify-list")
-
-	new PerfectScrollbar(".search-content")
-
-	// new PerfectScrollbar(".mega-menu-widgets")
-
-
-
 	/* toggle button */
 
 	$(".btn-toggle").click(function () {

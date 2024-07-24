@@ -2,7 +2,7 @@
 <aside class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
         <div class="logo-icon">
-            <img src="/assets/images/logo-icon.png" class="logo-img" alt="">
+            <img src="/assets/images/logo.jpg" class="logo-img" alt="">
         </div>
         <div class="logo-name flex-grow-1">
             <h5 class="mb-0">Абитуриент</h5>
@@ -24,11 +24,7 @@
                                 <div class="parent-icon">
                                     <i class="{{ $menu['icon'] }}"></i>
                                 </div>
-                                <div @class([
-                                    'menu-title',
-                                    'd-flex justify-content-between align-items-center w-100' => isset(
-                                        $menu['cnt']),
-                                ])>
+                                <div @class(['menu-title'])>
                                     {{ $menu['title'] }}
                                     @if (isset($menu['cnt']))
                                         <span class="badge rounded-pill bg-grd-royal">{{ $menu['cnt'] }}</span>
